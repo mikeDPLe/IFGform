@@ -1,0 +1,22 @@
+
+    <h3>
+       Assess the travel path
+    </h3>
+    <div >
+  <form #f= "ngForm" class="nonInit" id="specForm" action="#">      
+    <ol>
+      
+           <div class="form-group">
+           
+               <h5>  <li> Determine the height and width of the doorway</li></h5>
+               <label for="travel_height">Doorway Height:</label>
+               <input name="travel_height" [(ngModel)] = "travelDim.height" type="text" class="form-control"  autocomplete="off">
+               <label for="travel_width">Doorway Width:</label>
+               <input name="travel_width" [(ngModel)] = "travelDim.width" type="text" class="form-control"  autocomplete="off">
+            
+            </div>   
+        </ol>
+    <button (click)="check()" class="btn btn-primary">Next</button>
+</form> 
+</div>
+

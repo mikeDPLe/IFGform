@@ -1,0 +1,73 @@
+  <div *ngIf="showConfirm == false && isRemove == false" class="form-group">
+        <ol>
+            <li>
+               <p>STOP! Inform customer that new product cannot be safely transported and installed in the final location.</p>
+               <p>The product width or height is larger than the dimensions of the travel path.</p>
+            </li>
+            <li>
+               If customer wishes to continue installation, explain that IFG will not be held responsible for any damages to the product or 
+               products within the travel path including:
+            </li>  
+               <ul>
+                   <li>
+                       Scratches
+                   </li>
+                   <li>
+                       Gouges
+                   </li>
+                   <li>
+                       Dents
+                   </li>
+                   <li>
+                       Loss of manufacturer warranty
+                   </li>
+                   <li>
+                       Decrease or loss of product functionality
+                   </li>
+                </ul> 
+        </ol>
+        <button class="btn btn-primary" (click)="next()"> Next</button> 
+    </div>
+    <div *ngIf="showConfirm == false && isRemove == true" class="form-group">
+    <ol>
+        <li>
+           <p>STOP! Inform customer that the old equipment cannot be removed safely.</p>
+           <p>The product width or height is larger than the dimensions of the travel path.</p>
+        </li>
+        <li>
+           If customer wishes to continue removal, explain that IFG will not be held responsible for any damages to the product or 
+           products within the travel path including:
+        </li>  
+           <ul>
+               <li>
+                   Scratches
+               </li>
+               <li>
+                   Gouges
+               </li>
+               <li>
+                   Dents
+               </li>
+               <li>
+                   Loss of manufacturer warranty
+               </li>
+               <li>
+                   Decrease or loss of product functionality
+               </li>
+            </ul> 
+    </ol>
+    <button class="btn btn-primary" (click)="next()"> Next</button> 
+    </div>
+
+
+    <div *ngIf="showConfirm == true" class="form-group">
+        <p>
+            Did you inform the customer of the possible complications?
+        </p>
+     <div style="padding:5px">
+        <button (click)="next()"  class="btn btn-primary"> Yes</button>
+    </div>
+    <div style="padding:5px">
+     <button (click)="back()" style="padding:5px" class="btn btn-danger">  No </button>
+    </div>
+    </div>

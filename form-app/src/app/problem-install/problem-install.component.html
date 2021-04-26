@@ -1,0 +1,63 @@
+<!-- <div id="problemInstall" class="form-group" *ngIf="showDiv == 'a1'">
+    <p>
+        IFG has informed me, (customer owner or customer employee) that there was an issue installing this product in the final location.
+        The issues are related to the product width and height exceeding the width and height of one or more of the doorways along the delivery path. 
+    </p>
+    <p>
+        The customer (customer owner or customer employee) signed written consent with IFG to continue with the installation.
+        IFG will not be responsible for any damage to the product during product travel or installation.
+    </p>
+</div> -->
+
+<div id="travelDisclaimertext" *ngIf="showDiv == 'a2' || showDiv =='a3'" class="nonInit form-group">
+    <p>
+        By signing here, customer acknowledges IFG has explained the risks and conditions regarding product logistics.
+        Customer will accept full liability for possible damages during installation, including:
+    </p>
+        <ul>
+                <li>
+                    Scratches
+                </li>
+                <li>
+                    Gouges
+                </li>
+                <li>
+                    Dents
+                </li>
+                <li>
+                    Loss of manufacturer warranty
+                </li>
+                <li>
+                    Decrease or loss of product functionality
+                </li>
+        </ul>
+        <p>
+        Customer may also decline to sign, but product may not be installed.
+    </p>
+</div>
+<div id="travelDisclaimertext" *ngIf="showDiv == 'c1' " class="nonInit form-group">
+    <p>
+        By signing here, customer acknowledges IFG has explained the risks and conditions regard product removal
+        Customer will accept full liability for possible damages during installation, including:
+    </p>
+        <ul>
+                <li>
+                    Scratches
+                </li>
+                <li>
+                    Gouges
+                </li>
+                <li>
+                    Dents
+                </li>
+                <li>
+                    Loss of manufacturer warranty
+                </li>
+                <li>
+                    Decrease or loss of product functionality
+                </li>
+        </ul>
+        <p>
+        Customer may also decline to sign, but product may not be installed.
+    </p>
+</div>

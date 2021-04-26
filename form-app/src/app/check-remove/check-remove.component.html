@@ -1,0 +1,15 @@
+<div *ngIf="showConfirm == false">
+    
+    <p>
+       Is there any old equipment to remove?
+    </p>
+</div>
+ 
+<div *ngIf="showConfirm == true;">
+    <p>
+      Is the uninstall travel path the same as the one for product installation?
+     </p>
+
+</div>
+<button class="btn btn-primary" (click)="yes()" > Yes </button>
+<button class="btn btn-primary" (click)="no()" > No </button>

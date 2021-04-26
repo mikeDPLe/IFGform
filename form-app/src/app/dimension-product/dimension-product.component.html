@@ -1,0 +1,16 @@
+
+<div id="productDiv" class="form-group">
+                
+    <h5> <li>Determine width and height of equipment to 
+        <div *ngIf="isInstall; else elseBlock"> install </div> 
+        <ng-template #elseBlock> remove</ng-template>
+    </li>
+    </h5>
+    <label for="product_height">Equipment Height:</label>
+    <input name="product_height"  [(ngModel)] = "productDim.height" type="text" class="form-control" autocomplete="off">
+    <label for="product_width">Equipment Width:</label>
+    <input name="product_width" [(ngModel)] = "productDim.width" type="text" class="form-control"  autocomplete="off">
+
+   
+</div>
+<button (click)="check()" class="btn btn-primary">Next</button>
