@@ -18,22 +18,29 @@ export class DimensionFormComponent implements OnInit {
     width: "",
     height: "",
   }
-
+  isInstall:boolean;
  
   
     
   constructor(private DimService:DimensionService, private router: Router) {
+    if(!this.DimService.isInstall) this.isInstall = false;
+    else this.isInstall = true;
   }
 
   ngOnInit(): void {
+
     this.DimService.travelArray.subscribe(message => {this.travelDimArray = message; console.log(message)})
   }
 
   check() {
-    this.DimService.pushDimensionArray(this.travelDimArray,this.travelDim.width,this.travelDim.height)
-    this.DimService.setTravelArray(this.travelDimArray)
-    this.router.navigate(["check-door"])
+    this.DimService.pushDimensionArray(this.travelDimArray, this.travelDim.width, this.travelDim.height)
+    if (!this.isInstall) {
+      this.DimService.setTravelArray(this.travelDimArray)
+    } else {
+      this.DimService.setTravelRemoveArray(this.travelDimArray)
     }
+    this.router.navigate(["check-door"])
+  }
   
 
  

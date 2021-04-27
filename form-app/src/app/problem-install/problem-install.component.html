@@ -9,7 +9,7 @@
     </p>
 </div> -->
 
-<div id="travelDisclaimertext" *ngIf="showDiv == 'a2' || showDiv =='a3'" class="nonInit form-group">
+<div id="travelDisclaimertext" *ngIf="isInstall" class="nonInit form-group">
     <p>
         By signing here, customer acknowledges IFG has explained the risks and conditions regarding product logistics.
         Customer will accept full liability for possible damages during installation, including:
@@ -35,7 +35,7 @@
         Customer may also decline to sign, but product may not be installed.
     </p>
 </div>
-<div id="travelDisclaimertext" *ngIf="showDiv == 'c1' " class="nonInit form-group">
+<div id="travelDisclaimertext" *ngIf="!isInstall" class="nonInit form-group">
     <p>
         By signing here, customer acknowledges IFG has explained the risks and conditions regard product removal
         Customer will accept full liability for possible damages during installation, including:

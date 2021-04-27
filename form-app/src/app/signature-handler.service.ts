@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Params } from '@angular/router';
+import { Params, Router } from '@angular/router';
 import { SignatureInfo } from './classes/signature-info';
+import { DimensionService } from './dimension.service';
 import { StepService } from './step.service';
 
 @Injectable({
@@ -11,7 +12,28 @@ export class SignatureHandlerService {
 
   custSigArray: SignatureInfo[] = []
   employSigArray: SignatureInfo[] = []
-  constructor(private step: StepService) { }
+
+  isCust: boolean = true 
+  isEmployee: boolean = false;
+  constructor(private dim: DimensionService,
+    private router: Router,
+    private step: StepService) { }
+
+  checkRepeat(){
+    if(this.custSigArray.length !=1 || this.employSigArray.length !=1 )
+    this.step.reloadComponent()
+    else {
+        if (this.dim.isInstall) {
+        this.router.navigate(['check-remove'])
+        
+      } else {
+        this.router.navigate(['proceed'])
+      }
+    }
+    
+  }
+
+
 
   checkSigIsCust() {
    var v = this.checkCustStep() ? true : false
@@ -45,51 +67,28 @@ export class SignatureHandlerService {
   }
 
   private checkCustStep() {
-    var v = this.step.currentStep
-    console.log(v)
-    var result;
-    switch (v) {
-      case "a2":
-        result = true;
-        break;
-      case "a3":
-        result = false;
-        break;
-      default:
-        result = false;
-    }
+    var result 
+    if(this.custSigArray.length < 1) result = true;
+    else result = false;
+    this.isCust = result;
     return result
   }
   private checkEmpStep() {
-    var v = this.step.currentStep
     var result;
-    switch (v) {
-      case "a2":
-        result = false;
-        break;
-      case "a3":
-        result = true;
-        break;
-      default:
-        result = false;
-    }
-    return result
+    if(this.employSigArray.length < 1 && this.custSigArray.length > 0) result = true
+    else result = false;
+    this.isEmployee = result;
+    return result;
   }
 
   private checkStep() {
-    var v = this.step.currentStep
-    var result;
-    switch (v) {
-      case "a2":
-        result = "custAcknowledge"
-        break;
-      case "a3":
-        result = "empAcknowledge"
-        break;
-      default:
-        result = "unknown"
-    }
-    return result;
+    var person;
+    var state;
+    if(this.dim.isRemove) state = 'remove'
+    else state = 'install';
+    if(this.isCust) person = 'customer'
+    else person = 'employee'
+    return (person + " " + state)
   }
 
 }

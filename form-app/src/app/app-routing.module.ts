@@ -9,6 +9,7 @@ import { DimFailEmployee1Component } from './dim-fail-employee1/dim-fail-employe
 import { DimensionFormComponent } from './dimension-form/dimension-form.component';
 import { DimensionProductComponent } from './dimension-product/dimension-product.component';
 import { LoginComponent } from './login/login.component';
+import { ProceedComponent } from './proceed/proceed.component';
 import { SafetyComponent } from './safety/safety.component';
 
 const routes: Routes = [
@@ -20,7 +21,8 @@ const routes: Routes = [
   {path:"dim-fail", component:DimFailEmployee1Component},
   {path:"customer-sign", component:CustomerSignaturePadComponent},
   {path:"cust-refuse", component:CustRefuseComponent},
-  {path:"check-remove" ,component:CheckRemoveComponent}
+  {path:"check-remove" ,component:CheckRemoveComponent},
+  {path:"proceed", component: ProceedComponent}
 ];
 
 @NgModule({

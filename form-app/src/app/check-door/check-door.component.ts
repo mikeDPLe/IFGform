@@ -15,12 +15,7 @@ export class CheckDoorComponent implements OnInit {
   }
 
   next(){
-     if(this.step.currentStep){
-       this.step.incrementStep()
-       this.step.nextNavigate()
-     }
-     else {
       this.route.navigate(['dimension-product'])
      }
   }
-}
+

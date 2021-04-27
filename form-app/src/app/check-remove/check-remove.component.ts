@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { DimensionService } from '../dimension.service';
 import { StepService } from '../step.service';
 
@@ -10,7 +11,8 @@ import { StepService } from '../step.service';
 export class CheckRemoveComponent implements OnInit {
 
   constructor(private step:StepService, 
-    private dim: DimensionService) { }
+    private dim: DimensionService,
+    private router: Router) { }
   showConfirm: Boolean = false;
   ngOnInit(): void {
   }
@@ -18,15 +20,18 @@ export class CheckRemoveComponent implements OnInit {
 
   yes(){
     if(this.showConfirm) {
+      this.dim.preRemove()
       this.dim.useOldTravel();
-      this.step.incrementStep();
-      this.step.nextNavigate();
+      this.router.navigate(['dimension-product'])
       console.log(this.step.currentStep)
     } else  this.showConfirm = true;
   }
 
   no(){
-    if(!this.showConfirm) this.step.nextNavigate()
-    this.step.nextNavigate();
+    if(!this.showConfirm) this.router.navigate(['proceed'])
+    else{
+      this.dim.preRemove();
+      this.router.navigate(['dimension-form'])
+    } 
   }
 }

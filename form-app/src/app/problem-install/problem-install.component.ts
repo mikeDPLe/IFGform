@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DimensionService } from '../dimension.service';
 import { StepService } from '../step.service';
 
 @Component({
@@ -8,14 +9,13 @@ import { StepService } from '../step.service';
 })
 export class ProblemInstallComponent implements OnInit {
 
-  constructor(step:StepService) { 
-    if(step.currentStep) 
+  constructor(dim:DimensionService) { 
+    if(dim.isInstall) 
       {
-        this.showDiv = step.currentStep
-      }
+        this.isInstall = true; 
+      } else this.isInstall = false;
   }
-    showDiv?:string
-
+    isInstall:boolean;
 
   ngOnInit(): void {
   }

@@ -24,7 +24,20 @@ export class DimensionService {
   productRemoveArray = this.productRemoveArraysubject.asObservable()
 
   constructor() { }
+  isRemove!: boolean;
+  isInstall!: boolean;
 
+
+  preInstall (){
+    this.isInstall = true;
+    this.isRemove = false;
+    console.log('install called')
+  }
+  preRemove() {
+    this.isInstall = false;
+    this.isRemove = true;
+    console.log('remove called')
+  }
 
   setTravelArray(pArray:Array<Dimensions>){
     this.travelArraysubject.next(pArray)
@@ -56,7 +69,5 @@ export class DimensionService {
     array.push(dimParsed)
     return array
   }
-
-   
 
 }

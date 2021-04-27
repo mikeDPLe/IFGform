@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 export class StepService {
 
   constructor(private route: Router) { }
+
   currentStep:string = ""
   incrementTimes:number = 0
 
@@ -23,6 +24,7 @@ export class StepService {
   setStepRefuse(){
     this.currentStep = "r1"
   }
+
   incrementStep(){
     console.log('increment called')
     var v = this.currentStep
@@ -33,32 +35,35 @@ export class StepService {
     this.currentStep = c;
     this.incrementTimes = this.incrementTimes + 1
   }
+
+
   nextNavigate(){
     var v = this.currentStep
     var result;
     switch (v) {
       case "a1":
+      case "c3":
         result = "customer-sign"
         break;
-      case "a2": 
+      case "a2":
       result = "reload"
       break;
    // end of install product, prep remove     
-      case "a3":
+      case "a3": 
         this.setStepProdRemove();
         result = "check-remove"
         break;
-      case "c0": 
+      case "d1":
         result = "proceed"
         break;  
-      case "c1":
+      case "c0":
         result = "dimension-form"
         break;
       case "c2":
         result = "dimension-product"
         break;
       case "r1":
-        result ="cust-refuse"
+        result = "cust-refuse"
         break;
       default:
         result = "/"
@@ -67,7 +72,7 @@ export class StepService {
     if(result == "reload") {
       this.reloadComponent()
     } else {
-      this.route.navigate([result],{skipLocationChange:true})
+      this.route.navigate([result])
     }
   }
 
@@ -77,7 +82,7 @@ export class StepService {
     return this.currentStep
   }
 
-  private reloadComponent() {
+  reloadComponent() {
     let currentUrl = this.route.url;
         this.route.routeReuseStrategy.shouldReuseRoute = () => false;
         this.route.onSameUrlNavigation = 'reload';
