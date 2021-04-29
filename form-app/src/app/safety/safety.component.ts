@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DimensionService } from '../dimension.service';
+import { StepService } from '../step.service';
 
 
 @Component({
@@ -10,14 +11,15 @@ import { DimensionService } from '../dimension.service';
 })
 export class SafetyComponent implements OnInit {
 
-  constructor(private router: Router, private dim : DimensionService) { }
+  constructor(private router: Router, 
+    private step:StepService) { }
 
   ngOnInit(): void {
   }
 
   next() {
-    this.dim.preInstall()
-    this.router.navigate(['dimension-form'],{skipLocationChange:true})
+    this.step.preInstall()
+    this.router.navigate(['dimension-form'])
   }
 
 }

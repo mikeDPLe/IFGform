@@ -9,10 +9,11 @@
     </p>
 </div> -->
 
-<div id="travelDisclaimertext" *ngIf="isInstall" class="nonInit form-group">
-    <p>
-        By signing here, customer acknowledges IFG has explained the risks and conditions regarding product logistics.
-        Customer will accept full liability for possible damages during installation, including:
+<div id="travelDisclaimertext" *ngIf="!isCompleteInstall" class="nonInit form-group">
+    <p> 
+        By signing here, customer acknowledges IFG has explained the complications regarding installion.
+        This may be due to product height, width, or other equipment specifications.
+        Customer also gives permission to continue installation and releases IFG of all liability during installation, including:
     </p>
         <ul>
                 <li>
@@ -35,10 +36,10 @@
         Customer may also decline to sign, but product may not be installed.
     </p>
 </div>
-<div id="travelDisclaimertext" *ngIf="!isInstall" class="nonInit form-group">
+<div id="travelDisclaimertext" *ngIf="!isCompleteRemove && isCompleteInstall &&!isFinalRemoveStep" class="nonInit form-group">
     <p>
         By signing here, customer acknowledges IFG has explained the risks and conditions regard product removal
-        Customer will accept full liability for possible damages during installation, including:
+        Customer will accept full liability for possible damages during removal, including:
     </p>
         <ul>
                 <li>
@@ -61,3 +62,17 @@
         Customer may also decline to sign, but product may not be installed.
     </p>
 </div>
+<div *ngIf="isComplete">
+    <p>The customer (customer or customer employee) has accepted / 
+     inspected the product at the agreed final location and that the product is
+     defect free and in working condition. </p> 
+     <p>The customer agrees to release all liability to IFG</p>
+ </div>
+ 
+ <div *ngIf="isFinalRemoveStep && !isComplete">
+     The customer has giving the permission to IFG to remove the old equipment for dispose. IFG will not reimburse credit
+ To the customer for the old unit. IFG will not be responsible if there is any damage done during the product
+ movement from the product location to the truck location.
+ The customer (customer owner or customer employee) gave a written / sign consent for IFG to remove their old
+ product for disposal.
+ </div>

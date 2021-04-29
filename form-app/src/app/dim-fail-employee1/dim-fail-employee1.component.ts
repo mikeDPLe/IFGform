@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { DimensionService } from '../dimension.service';
-import { sigQueryParams } from '../sigParams';
 import { StepService } from '../step.service';
 
 
@@ -13,8 +11,8 @@ import { StepService } from '../step.service';
 export class DimFailEmployee1Component implements OnInit {
 
   constructor(private router: Router,
-    private dim :DimensionService) {
-      if(this.dim.isRemove) this.isRemove = true;
+    private step: StepService) {
+      if(this.step.isRemove) this.isRemove = true;
      }
 
 
@@ -25,9 +23,9 @@ export class DimFailEmployee1Component implements OnInit {
 
   next(){
     console.log(this.isRemove)
-    if(this.showConfirm && !this.isRemove){
+    if(this.showConfirm){
       this.router.navigate(['customer-sign'])
-    } else
+    } else 
     this.showConfirm = true;
   }
   back(){

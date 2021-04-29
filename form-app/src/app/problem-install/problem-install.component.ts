@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DimensionService } from '../dimension.service';
+import { SignatureHandlerService } from '../signature-handler.service';
 import { StepService } from '../step.service';
+import { ValidDimService } from '../valid-dim.service';
 
 @Component({
   selector: 'problem-install',
@@ -9,13 +11,24 @@ import { StepService } from '../step.service';
 })
 export class ProblemInstallComponent implements OnInit {
 
-  constructor(dim:DimensionService) { 
-    if(dim.isInstall) 
-      {
-        this.isInstall = true; 
-      } else this.isInstall = false;
+  constructor(private valid:ValidDimService,
+    private sig:SignatureHandlerService) { 
+    this.valid.testObs.subscribe(install => this.isCompleteInstall = install)
+    this.valid.testObs2.subscribe(remove => this.isCompleteRemove = remove)
+    if(this.isCompleteInstall && this.isCompleteRemove) 
+    {
+      this.isComplete = true;
+    } else this.isComplete = false;
+    if(sig.finalRemoveStep)
+    {
+      this.isFinalRemoveStep = true;
+    }
+
   }
-    isInstall:boolean;
+    isCompleteInstall:boolean = false;
+    isCompleteRemove:boolean = false;
+    isComplete:boolean;
+    isFinalRemoveStep:boolean = false;
 
   ngOnInit(): void {
   }

@@ -1,8 +1,7 @@
-
-    <h3>
-       Assess the travel path
-    </h3>
-    <div >
+    <div *ngIf="!checkDoor" >
+        <h3>
+            Assess the travel path
+         </h3>
   <form #f= "ngForm" class="nonInit" id="specForm" action="#">      
     <ol>
       
@@ -19,4 +18,19 @@
     <button (click)="check()" class="btn btn-primary">Next</button>
 </form> 
 </div>
+
+
+<div *ngIf="checkDoor" class="form-group">
+    <p>
+        Is there another doorway?
+    </p>
+    <div style="padding:5px" >
+    <button (click)='yes()' class="btn btn-primary"> Yes</button> 
+    </div>
+    <div style="padding:5px">
+    <button (click)='no()' class="btn btn-danger"> No </button>
+    </div>
+
+</div>
+
 

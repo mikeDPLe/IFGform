@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DimensionService } from '../dimension.service';
+import { SignatureHandlerService } from '../signature-handler.service';
+
 import { StepService } from '../step.service';
 
 @Component({
@@ -12,25 +14,30 @@ export class CheckRemoveComponent implements OnInit {
 
   constructor(private step:StepService, 
     private dim: DimensionService,
-    private router: Router) { }
+    private router: Router,
+    
+ ) { 
+    //  state.checkStateInstall()
+    //  this.checkInstall = this.state.passInstall
+    }
   showConfirm: Boolean = false;
   ngOnInit(): void {
   }
-
+  // checkInstall: boolean;
 
   yes(){
     if(this.showConfirm) {
-      this.dim.preRemove()
+      this.step.preRemove()
       this.dim.useOldTravel();
       this.router.navigate(['dimension-product'])
-      console.log(this.step.currentStep)
-    } else  this.showConfirm = true;
+    } 
+     this.showConfirm = true;
   }
 
   no(){
     if(!this.showConfirm) this.router.navigate(['proceed'])
     else{
-      this.dim.preRemove();
+      this.step.preRemove();
       this.router.navigate(['dimension-form'])
     } 
   }

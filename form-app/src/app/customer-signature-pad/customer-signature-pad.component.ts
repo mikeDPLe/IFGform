@@ -51,7 +51,6 @@ export class CustomerSignaturePadComponent implements OnInit {
   }
   onRefuse(){
     this.step.setStepRefuse()
-    this.step.nextNavigate()
   }
 
 }

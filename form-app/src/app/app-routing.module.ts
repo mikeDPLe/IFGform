@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { CheckDoorComponent } from './check-door/check-door.component';
 import { CheckRemoveComponent } from './check-remove/check-remove.component';
+import { CompleteComponent } from './complete/complete.component';
 import { CustRefuseComponent } from './cust-refuse/cust-refuse.component';
 import { CustomerSignaturePadComponent } from './customer-signature-pad/customer-signature-pad.component';
 import { DimFailEmployee1Component } from './dim-fail-employee1/dim-fail-employee1.component';
@@ -22,7 +23,8 @@ const routes: Routes = [
   {path:"customer-sign", component:CustomerSignaturePadComponent},
   {path:"cust-refuse", component:CustRefuseComponent},
   {path:"check-remove" ,component:CheckRemoveComponent},
-  {path:"proceed", component: ProceedComponent}
+  {path:"proceed", component: ProceedComponent},
+  {path:"complete", component:CompleteComponent}
 ];
 
 @NgModule({

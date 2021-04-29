@@ -1,10 +1,9 @@
 import { Component, destroyPlatform, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DimensionService } from '../dimension.service';
-import { Dimensions } from '../classes/dimensions';;
+import { Dimensions } from '../classes/dimensions';
 import { ValidDimService } from '../valid-dim.service';
 import { StepService } from '../step.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-dimension-product',
@@ -16,34 +15,30 @@ export class DimensionProductComponent implements OnInit {
   constructor(private dimService:DimensionService, 
     private router:Router, 
     private checkService:ValidDimService, 
-    private dim:DimensionService) { 
-      if(!this.dim.isInstall) this.isInstall = false; 
+    private step: StepService) { 
+      if(!this.step.isInstall) this.isInstall = false; 
       else this.isInstall = true;
       console.log('isinstall', this.isInstall)
     }
 
-  productDimArray!:Array<Dimensions>
+  productDimArray:Array<Dimensions> = []
   productDim = {
     width:"",
     height:""
   }
   isInstall:boolean;
-  $subscription! :Subscription
+ 
 
   ngOnInit(): void { 
-    if(this.isInstall) {
-      this.$subscription = this.dimService.productArray.subscribe(array => {this.productDimArray = array})
-    } else {
-     this.$subscription = this.dimService.productRemoveArray.subscribe(array => {this.productDimArray = array})
-    }
   }
 
 
   check() {
     if (this.isInstall) {
       this.dimService.pushDimensionArray(this.productDimArray, this.productDim.width, this.productDim.height)
-      this.dimService.setProductArray(this.productDimArray)
-      var result = this.checkService.checkValues()
+      this.dimService.productDimArray = this.productDimArray
+      console.log('dimservice product', this.dimService.productDimArray)
+      var result = this.checkService.checkValues(false)
       if (result) {
         this.router.navigate(["check-remove"], { skipLocationChange: true })
       } else[
@@ -57,7 +52,7 @@ export class DimensionProductComponent implements OnInit {
   }
   check2(){
     this.dimService.pushDimensionArray(this.productDimArray, this.productDim.width, this.productDim.height)
-    this.dimService.setProductRemoveArray(this.productDimArray)
+    this.dimService.productRemoveDimArray = this.productDimArray
     var result = this.checkService.checkValues(true)
     if(result){
       console.log('placeholder success',result)
