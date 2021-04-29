@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { MakePDFService } from '../make-pdf.service';
+import {DomSanitizer } from '@angular/platform-browser'
 @Component({
   selector: 'app-pdf-holder',
   templateUrl: './pdf-holder.component.html',
@@ -7,9 +8,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PdfHolderComponent implements OnInit {
 
-  constructor() { }
+  constructor(private pdf:MakePDFService,
+    private sanitizer:DomSanitizer) { }
 
-  ngOnInit(): void {
+  @ViewChild('pdf') pagePdf!:ElementRef;
+  uri!:any;
+  
+  //access by tying /pdf in root
+ async ngOnInit(): Promise<void> {
+    this.pdf.poopy().then(x =>
+      this.uri = this.sanitizer.bypassSecurityTrustResourceUrl(x)
+    )
+  }
+  ngAfterViewInit(){
+    
   }
 
+  
 }
+

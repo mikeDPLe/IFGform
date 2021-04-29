@@ -18,8 +18,6 @@ import { CustRefuseComponent } from './cust-refuse/cust-refuse.component';
 import { CheckRemoveComponent } from './check-remove/check-remove.component';
 import { ProceedComponent } from './proceed/proceed.component';
 import { CheckInitialComponent } from './check-initial/check-initial.component';
-import { ConfirmSigComponent } from './confirm-sig/confirm-sig.component';
-import { ConfirmTextComponent } from './confirm-text/confirm-text.component';
 import { CompleteComponent } from './complete/complete.component';
 import { PdfHolderComponent } from './pdf-holder/pdf-holder.component';
 
@@ -40,8 +38,6 @@ import { PdfHolderComponent } from './pdf-holder/pdf-holder.component';
     CheckRemoveComponent,
     ProceedComponent,
     CheckInitialComponent,
-    ConfirmSigComponent,
-    ConfirmTextComponent,
     CompleteComponent,
     PdfHolderComponent,
   ],

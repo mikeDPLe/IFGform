@@ -10,6 +10,7 @@ import { DimFailEmployee1Component } from './dim-fail-employee1/dim-fail-employe
 import { DimensionFormComponent } from './dimension-form/dimension-form.component';
 import { DimensionProductComponent } from './dimension-product/dimension-product.component';
 import { LoginComponent } from './login/login.component';
+import { PdfHolderComponent } from './pdf-holder/pdf-holder.component';
 import { ProceedComponent } from './proceed/proceed.component';
 import { SafetyComponent } from './safety/safety.component';
 
@@ -24,7 +25,8 @@ const routes: Routes = [
   {path:"cust-refuse", component:CustRefuseComponent},
   {path:"check-remove" ,component:CheckRemoveComponent},
   {path:"proceed", component: ProceedComponent},
-  {path:"complete", component:CompleteComponent}
+  {path:"complete", component:CompleteComponent},
+  {path:"pdf", component:PdfHolderComponent}
 ];
 
 @NgModule({
