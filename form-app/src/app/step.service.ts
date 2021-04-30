@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { ValidDimService } from './valid-dim.service';
 
 @Injectable({
@@ -22,13 +22,13 @@ export class StepService {
   $remove:Subscription
 
 
+
+
   preInstall (){
     this.isInstall = true;
-    this.isRemove = false;
     console.log('install called')
   }
   preRemove() {
-    this.isInstall = false;
     this.isRemove = true;
    
     console.log('remove called')

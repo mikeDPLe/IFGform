@@ -17,6 +17,7 @@ export class ProblemInstallComponent implements OnInit {
     this.valid.testObs2.subscribe(remove => this.isCompleteRemove = remove)
     if(this.isCompleteInstall && this.isCompleteRemove) 
     {
+      console.log('completetrue')
       this.isComplete = true;
     } else this.isComplete = false;
     if(sig.finalRemoveStep)

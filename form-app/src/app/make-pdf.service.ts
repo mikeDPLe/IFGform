@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { DimensionService } from './dimension.service';
 import { SignatureHandlerService } from './signature-handler.service';
-import { PDFDocument, StandardFonts, rgb } from 'pdf-lib'
+import { PDFDocument, StandardFonts, rgb, values } from 'pdf-lib'
 import { Dimensions } from './classes/dimensions';
 import { SignatureInfo } from './classes/signature-info';
+import { SignatureType } from './classes/signature-type';
 
 @Injectable({
   providedIn: 'root'
@@ -22,24 +23,27 @@ export class MakePDFService {
 
    }
    arrayCustomer: Array<SignatureInfo> = []
-   arrayEmployee: Array <any> = []
-   arrayInstallDoorDim:Array<any> = []
-   arrayInstallProductDim:Array<any> = []
-   arrayRemoveDoorDim:Array<any> = []
-   arrayRemoveProductDim:Array<any> = []
+   arrayEmployee: Array <SignatureInfo> = []
+   arrayInstallDoorDim:Array<Dimensions> = []
+   arrayInstallProductDim:Array<Dimensions> = []
+   arrayRemoveDoorDim:Array<Dimensions> = []
+   arrayRemoveProductDim:Array<Dimensions> = []
 
    formUrl = 'https://pdf-lib.js.org/assets/dod_character.pdf'
 
   private iterateCustomer(){
-     this.arrayCustomer.forEach( array => {
-       return array.isCustomer
-     })
+    var result:Array<any> = []
+   this.arrayCustomer.forEach(poop => {
+      result.push(poop.isCustomer)
+    })
+    return result.toString()
    }
 
    async poopy(){
     const formPdfBytes = await fetch(this.formUrl).then(res => res.arrayBuffer());
     const pdfDoc = await PDFDocument.load(formPdfBytes);
     const form = pdfDoc.getForm();
+    console.log(this.iterateCustomer())
     // const dateField = form.getTextField('Text1')
     // dateField.setText(this.iterateCustomer.toString())
     const pdfDataUri = await pdfDoc.saveAsBase64({ dataUri: true });

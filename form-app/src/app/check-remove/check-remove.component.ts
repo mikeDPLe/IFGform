@@ -4,6 +4,7 @@ import { DimensionService } from '../dimension.service';
 import { SignatureHandlerService } from '../signature-handler.service';
 
 import { StepService } from '../step.service';
+import { ValidDimService } from '../valid-dim.service';
 
 @Component({
   selector: 'app-check-remove',
@@ -15,6 +16,7 @@ export class CheckRemoveComponent implements OnInit {
   constructor(private step:StepService, 
     private dim: DimensionService,
     private router: Router,
+    private valid: ValidDimService,
     
  ) { 
     //  state.checkStateInstall()
@@ -35,8 +37,10 @@ export class CheckRemoveComponent implements OnInit {
   }
 
   no(){
-    if(!this.showConfirm) this.router.navigate(['proceed'])
-    else{
+    if(!this.showConfirm){
+     this.valid.testObs2.next(true);
+     this.router.navigate(['proceed'])
+    }else{
       this.step.preRemove();
       this.router.navigate(['dimension-form'])
     } 

@@ -8,7 +8,7 @@ import { Dimensions } from './classes/dimensions';
 export class DimensionService {
 
   travelDimArray: Array<Dimensions> = []
-  travelArraysubject = new BehaviorSubject(this.travelDimArray)
+  private travelArraysubject = new BehaviorSubject(this.travelDimArray)
   travelArray = this.travelArraysubject.asObservable()
 
   productDimArray: Array<Dimensions> = []
