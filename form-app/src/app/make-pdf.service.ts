@@ -39,10 +39,18 @@ export class MakePDFService {
     return result.toString()
    }
 
+   private getDate(){
+    var date = new Date().toLocaleDateString()
+    return date.toString()
+
+   }
+
    private iterateEmployee(){
     var result:Array<any> = []
+    this.arrayEmployee.every
    this.arrayEmployee.forEach(poop => {
       result.push(poop.isCustomer)
+      
     })
     return result.toString()
    }
@@ -51,12 +59,19 @@ export class MakePDFService {
     const formPdfBytes = await fetch(this.formUrl).then(res => res.arrayBuffer());
     const pdfDoc = await PDFDocument.load(formPdfBytes);
     const form = pdfDoc.getForm();
+
+  
     console.log(this.iterateCustomer())
+    
     const dateField = form.getTextField('Date')
+    const imageField = form.getButton('Image2_af_image')
     var res = this.iterateCustomer()
+    var embimg = await pdfDoc.embedPng(res)
+    imageField.setImage(embimg)
     console.log("result" + res)
-    //dateField.setText(result)
-    dateField.setText("helo")
+    dateField.setText(this.getDate())
+    // dateField.setText("result" + res)
+    // dateField.setImage(embimg)
 
     const marioUrl = 'https://pdf-lib.js.org/assets/small_mario.png'
     //const marioImageBytes = await fetch(marioUrl).then(res => res.arrayBuffer())
