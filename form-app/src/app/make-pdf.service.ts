@@ -29,11 +29,19 @@ export class MakePDFService {
    arrayRemoveDoorDim:Array<Dimensions> = []
    arrayRemoveProductDim:Array<Dimensions> = []
 
-   formUrl = 'https://pdf-lib.js.org/assets/dod_character.pdf'
+   formUrl = 'assets/equipment.pdf'
 
   private iterateCustomer(){
     var result:Array<any> = []
    this.arrayCustomer.forEach(poop => {
+      result.push(poop.isCustomer)
+    })
+    return result.toString()
+   }
+
+   private iterateEmployee(){
+    var result:Array<any> = []
+   this.arrayEmployee.forEach(poop => {
       result.push(poop.isCustomer)
     })
     return result.toString()
@@ -44,8 +52,11 @@ export class MakePDFService {
     const pdfDoc = await PDFDocument.load(formPdfBytes);
     const form = pdfDoc.getForm();
     console.log(this.iterateCustomer())
-    // const dateField = form.getTextField('Text1')
-    // dateField.setText(this.iterateCustomer.toString())
+    const dateField = form.getTextField('Date')
+    var res = this.iterateEmployee()
+    console.log("result" + res)
+    //dateField.setText(result)
+    dateField.setText("helo")
     const pdfDataUri = await pdfDoc.saveAsBase64({ dataUri: true });
     return pdfDataUri
       
