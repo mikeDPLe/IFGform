@@ -20,6 +20,7 @@
     "@angular/platform-browser-dynamic": "~11.2.9",
     "@angular/router": "~11.2.9",
     "bootstrap": "^4.6.0",
+    "downloadjs": "^1.4.7",
     "pdf-lib": "^1.16.0",
     "rxjs": "~6.6.0",
     "signature_pad": "^3.0.0-beta.4",

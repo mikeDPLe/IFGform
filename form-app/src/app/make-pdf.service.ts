@@ -34,7 +34,7 @@ export class MakePDFService {
   private iterateCustomer(){
     var result:Array<any> = []
    this.arrayCustomer.forEach(poop => {
-      result.push(poop.isCustomer)
+      result.push(poop.signatureImg)
     })
     return result.toString()
    }
@@ -53,11 +53,25 @@ export class MakePDFService {
     const form = pdfDoc.getForm();
     console.log(this.iterateCustomer())
     const dateField = form.getTextField('Date')
-    var res = this.iterateEmployee()
+    var res = this.iterateCustomer()
     console.log("result" + res)
     //dateField.setText(result)
     dateField.setText("helo")
+
+    const marioUrl = 'https://pdf-lib.js.org/assets/small_mario.png'
+    //const marioImageBytes = await fetch(marioUrl).then(res => res.arrayBuffer())
+    const marioImageBytes = res
+    //const marioImage = await pdfDoc.embedPng(marioImageBytes)
+
+    //const sigField = form.getButton('Image1_af_image')
+    //sigField.setImage(marioImage)
+
     const pdfDataUri = await pdfDoc.saveAsBase64({ dataUri: true });
+    
+    //trigger auto downloading (broken)
+    const pdfBytes = await pdfDoc.save()
+    //download(pdfBytes, "pdf-lib_form_creation_example.pdf", "application/pdf");
+
     return pdfDataUri
       
   }

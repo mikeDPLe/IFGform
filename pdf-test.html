@@ -1,0 +1,50 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <script src="https://unpkg.com/pdf-lib@1.11.0"></script>
+    <script src="https://unpkg.com/downloadjs@1.4.7"></script>
+  </head>
+
+  <body>
+    <iframe id="pdf" style="width: 100%; height: 100%;"></iframe>
+  </body>
+
+  <script>
+    //createPdf();
+    //import { degrees, PDFDocument, rgb, StandardFonts } from 'pdf-lib';
+    const { degrees, PDFDocument, rgb, StandardFonts } = PDFLib
+    //import PDFDocument from 'pdf-lib'
+
+    modifyPdf()
+    async function modifyPdf() {
+      //const url = 'http://localhost:1313/img/equipment.pdf'
+      //const existingPdfBytes = await fetch(url).then(res => res.arrayBuffer())
+
+      const formUrl = 'https://www.kchow.org/img/equipment.pdf'
+      const formPdfBytes = await fetch(formUrl).then(res => res.arrayBuffer())
+
+
+      const pdfDoc = await PDFDocument.load(formPdfBytes)
+      
+      const form = pdfDoc.getForm()
+
+
+      const dateField = form.getTextField('Date')
+      dateField.setText('24 years')
+
+      const marioUrl = 'https://pdf-lib.js.org/assets/small_mario.png'
+      const marioImageBytes = await fetch(marioUrl).then(res => res.arrayBuffer())
+      const marioImage = await pdfDoc.embedPng(marioImageBytes)
+
+
+      const sigField = form.getButton('SigImage')
+      sigField.setImage(marioImage)
+
+
+      //const pdfBytes = await pdfDoc.save()
+      const pdfDataUri = await pdfDoc.saveAsBase64({ dataUri: true });
+      document.getElementById('pdf').src = pdfDataUri;
+    }
+
+  </script>
+</html>
