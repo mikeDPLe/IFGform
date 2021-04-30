@@ -4,7 +4,8 @@ import { SignatureHandlerService } from './signature-handler.service';
 import { PDFDocument, StandardFonts, rgb, values } from 'pdf-lib'
 import { Dimensions } from './classes/dimensions';
 import { SignatureInfo } from './classes/signature-info';
-import { SignatureType } from './classes/signature-type';
+import { PdfInfo } from './classes/pdf-info';
+import download from 'downloadjs'
 
 @Injectable({
   providedIn: 'root'
@@ -29,14 +30,46 @@ export class MakePDFService {
    arrayRemoveDoorDim:Array<Dimensions> = []
    arrayRemoveProductDim:Array<Dimensions> = []
 
+   //defines all of the fields in the pdf to fill
+   p = new PdfInfo
+  
    formUrl = 'assets/equipment.pdf'
 
   private iterateCustomer(){
     var result:Array<any> = []
-   this.arrayCustomer.forEach(poop => {
+    if(this.arrayCustomer.length != 0) {
+    this.arrayCustomer.forEach(poop => {
       result.push(poop.signatureImg)
     })
     return result.toString()
+  } return ""
+   }
+
+   private iterate(){
+    var result:Array<any> = []
+    if(this.arrayCustomer.length != 0) {
+    this.arrayCustomer.forEach(poop => {
+       switch(poop.step){
+         case "install_customer":
+           this.p.Customer_print_sign = poop.name
+           this.p.Image3_af_image = poop.signatureImg           
+         break;
+         case "remove_customer":
+          //needs ids to update class
+         break;
+         case "customer_installFinal":
+          this.p.Image2_af_image = poop.signatureImg;
+          this.p.Names_print_and_sign = poop.name;
+         break;
+         case "customer_removeFinal":
+          this.p.Image1_af_image = poop.signatureImg
+         break;
+         default:
+         break;
+       }
+    })
+    return result.toString()
+  } return ""
    }
 
    private getDate(){
@@ -85,7 +118,7 @@ export class MakePDFService {
     
     //trigger auto downloading (broken)
     const pdfBytes = await pdfDoc.save()
-    //download(pdfBytes, "pdf-lib_form_creation_example.pdf", "application/pdf");
+    download(pdfBytes, "pdf-lib_form_creation_example.pdf", "application/pdf");
 
     return pdfDataUri
       
