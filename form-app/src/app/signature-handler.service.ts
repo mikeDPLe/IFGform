@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+  import { Injectable } from '@angular/core';
 import { Params, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { SignatureInfo } from './classes/signature-info';
@@ -149,7 +149,7 @@ export class SignatureHandlerService {
       person = "customer"
       this.finalRemoveStep = false;
     }
-    return (person + " " + state)
+    return (person + "_" + state)
   }
 
 }
