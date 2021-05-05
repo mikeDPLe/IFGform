@@ -39,6 +39,22 @@ export class MakePDFService {
     return result.toString()
    }
 
+   private iterateDoorHeight(){
+    var result:Array<any> = []
+   this.arrayInstallDoorDim.forEach(poop => {
+      result.push(poop.height)
+    })
+    return result.toString()
+   }
+
+   private iterateCustomerName(){
+    var result:Array<any> = []
+   this.arrayCustomer.forEach(poop => {
+      result.push(poop.name)
+    })
+    return result.toString()
+   }
+
    private getDate(){
     var date = new Date().toLocaleDateString()
     return date.toString()
@@ -65,18 +81,20 @@ export class MakePDFService {
     
     const dateField = form.getTextField('Date')
     const imageField = form.getButton('Image2_af_image')
-    var res = this.iterateCustomer()
-    var embimg = await pdfDoc.embedPng(res)
+    var custSig = this.iterateCustomer()
+    var embimg = await pdfDoc.embedPng(custSig)
     imageField.setImage(embimg)
-    console.log("result" + res)
+    var custName = this.iterateCustomerName()[0]
+    const custNameField = form.getTextField('PrintName2')
+    custNameField.setText(custName)
+    console.log("result" + custSig + custName)
     dateField.setText(this.getDate())
     // dateField.setText("result" + res)
     // dateField.setImage(embimg)
 
-    const marioUrl = 'https://pdf-lib.js.org/assets/small_mario.png'
-    //const marioImageBytes = await fetch(marioUrl).then(res => res.arrayBuffer())
-    const marioImageBytes = res
-    //const marioImage = await pdfDoc.embedPng(marioImageBytes)
+    var doorInstallHeight = this.iterateDoorHeight()
+    const doorInstallHeightField = form.getTextField('ProductHeight')
+    doorInstallHeightField.setText(doorInstallHeight)
 
     //const sigField = form.getButton('Image1_af_image')
     //sigField.setImage(marioImage)
