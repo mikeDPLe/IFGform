@@ -21,7 +21,7 @@ export class CustomerSignaturePadComponent implements OnInit {
     console.log('show', this.show)
   }
 
-  @ViewChild('signaturepad') canvasPad!: ElementRef
+  @ViewChild('signaturepad') canvasPad!: ElementRef<HTMLCanvasElement>
   show: boolean;
   inputName!: string 
   signaturePad!: SignaturePad;

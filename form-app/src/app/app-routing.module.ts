@@ -9,6 +9,7 @@ import { CustomerSignaturePadComponent } from './customer-signature-pad/customer
 import { DimFailEmployee1Component } from './dim-fail-employee1/dim-fail-employee1.component';
 import { DimensionFormComponent } from './dimension-form/dimension-form.component';
 import { DimensionProductComponent } from './dimension-product/dimension-product.component';
+import { EmployeeInfoComponent } from './employee-info/employee-info.component';
 import { LoginComponent } from './login/login.component';
 import { PdfHolderComponent } from './pdf-holder/pdf-holder.component';
 import { ProceedComponent } from './proceed/proceed.component';
@@ -16,6 +17,7 @@ import { SafetyComponent } from './safety/safety.component';
 
 const routes: Routes = [
   {path: "", component: LoginComponent, },
+  {path: "emp-info", component:EmployeeInfoComponent},
   {path:"safety", component:SafetyComponent, outlet:"primary"},
   {path:"dimension-form", component:DimensionFormComponent},
   {path:"check-door", component:CheckDoorComponent},

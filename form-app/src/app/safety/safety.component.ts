@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { DimensionService } from '../dimension.service';
 import { StepService } from '../step.service';
 
 
@@ -14,12 +13,23 @@ export class SafetyComponent implements OnInit {
   constructor(private router: Router, 
     private step:StepService) { }
 
+    showConfirm:boolean = false;
+
   ngOnInit(): void {
   }
 
   next() {
-    this.step.preInstall()
-    this.router.navigate(['dimension-form'])
+    if(!this.showConfirm){
+      this.showConfirm = true;
+    } else {
+      this.step.preInstall()
+      this.router.navigate(['dimension-form'])
+    }
+  }
+  back(){
+    if(this.showConfirm){
+      this.showConfirm = false;
+    }
   }
 
 }

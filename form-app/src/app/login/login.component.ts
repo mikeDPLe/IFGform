@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
   }
   auth() {
    if(this.user.value == this.authUsername && this.password.value == this.authPassword){
-     this.router.navigateByUrl("/safety")
+     this.router.navigateByUrl("emp-info")
    }
    console.log(this.user.value)
    console.log(this.password.value)

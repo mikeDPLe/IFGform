@@ -30,6 +30,7 @@ export class StepService {
   }
   preRemove() {
     this.isRemove = true;
+    this.isInstall = false;
    
     console.log('remove called')
   }

@@ -61,6 +61,7 @@ export class ValidDimService {
       console.log(pWidth, tWidth, pHeight, tHeight)
       isValid = false;
     }
+    console.log(isValid)
     this.checkState(isValid, remove)
     return isValid
   }
