@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { Form, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { EmployeeDetailsService } from '../employee-details.service';
 import {EmployeeInfo} from '../employee-info'
@@ -11,22 +11,20 @@ import {EmployeeInfo} from '../employee-info'
 })
 export class EmployeeInfoComponent implements OnInit {
 
-  constructor(empDetails:EmployeeDetailsService,
+  constructor(private empDetails:EmployeeDetailsService,
     private fb:FormBuilder,
     private route:Router) { 
     this.todaysDate = new Date()
   
   }
   
-  empForm = this.fb.group({
-    date: ['this.todaysDate.toString()'],
-    orderNumber: [' ', Validators.required],
-    salesRep:[' ', Validators.required],
+    empForm = this.fb.group({
+    orderNumber: ['', Validators.required],
+    salesRep:['', Validators.required],
     salesRepContactNumber:['', Validators.required],
-
     installCrew: this.fb.array([
-      this.fb.control('') , Validators.required
-    ])
+      this.fb.control('',{validators:Validators.required}) 
+    ]),
   })
 todaysDate:Date;
 
@@ -43,16 +41,17 @@ todaysDate:Date;
   get salesRepContactNumber(){
     return this.empForm.get('salesRepContactNumber')
   }
-
   get installCrew(){
     return this.empForm.get('installCrew') as FormArray;
   }
+
   addCrew(){
-    this.installCrew.push(this.fb.control(''))
-    this.empForm.controls
+    console.log('poop')
+    this.installCrew.push(this.fb.control('', {validators:Validators.required}))
   }
 
-  next(){
+  next(formdata:FormGroup){
+    this.empDetails.submitData(formdata);
     this.route.navigate(['safety'])
   }
 

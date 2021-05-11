@@ -1,21 +1,36 @@
-<form [formGroup] ="empForm">
+<form [formGroup] ="empForm" (ngSubmit)="next(empForm.value)">
     <div>
         Date: {{todaysDate | date:'shortDate'}}
     </div>
-
+<div class='form-group'>
     <label for="orderNumber ">
         Order Number:
     </label>
     <input type='text' name='orderNumber' formControlName ='orderNumber'>
+</div>
+<div class='form-group'>
     <label for="salesRep">
         Sales Representative Name:
     </label>
      <input type='text' name="salesRep" formControlName ='salesRep'>
+</div>
+<div class='form-group'>    
      <label>
         Sales Representative Contact Number:
         <input type='text' name='salesRepContactNumber' formControlName = 'salesRepContactNumber'>
     </label>
-    
+</div>   
+    <div class='form-group' formArrayName="installCrew">
+        <h3>Install Crew Names</h3>
+        <div *ngFor ="let crew of installCrew.controls; let i= index">
+            <label>
+                Crew Member Name:
+                <input type="text" [formControlName]= "i">
+            </label>
+        </div>
+        <button class='btn' type="button" (click)='addCrew()'>Add additional crew member</button>
+    </div> 
+  <button class='btn btn-primary' type="submit" [disabled] ="!empForm.valid">Next</button>
 </form>
 
 
@@ -28,18 +43,9 @@
     <input type='text' [formControl] = 'salesRepContactNumber'>
 </label>
 
-<div formArrayName="installCrew">
-    <h3>Install Crew Names</h3>
-    <button (click)='addCrew()'>Add additional crew member</button>
-    <div *ngFor ="let crew of installCrew.controls; let i= index">
-        <label>
-            Crew Member Name:
-            <input type="text" [formControlName]= "i">
-        </label>
-    </div>
-</div> -->
+-->
 
-<button (click)= 'next()' [disabled] ="!empForm.valid"></button>
+
 
 
 

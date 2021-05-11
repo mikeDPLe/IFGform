@@ -21,6 +21,7 @@ import { CheckInitialComponent } from './check-initial/check-initial.component';
 import { CompleteComponent } from './complete/complete.component';
 import { PdfHolderComponent } from './pdf-holder/pdf-holder.component';
 import { EmployeeInfoComponent } from './employee-info/employee-info.component';
+import { ManagerContactComponent } from './manager-contact/manager-contact.component';
 
 
 @NgModule({
@@ -42,6 +43,7 @@ import { EmployeeInfoComponent } from './employee-info/employee-info.component';
     CompleteComponent,
     PdfHolderComponent,
     EmployeeInfoComponent,
+    ManagerContactComponent,
   ],
   imports: [
     CommonModule,
