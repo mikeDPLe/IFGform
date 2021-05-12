@@ -1,4 +1,22 @@
 <form [formGroup] ="empForm" (ngSubmit)="next(empForm.value)">
+
+ <div class='alert alert-danger' *ngIf='empForm.invalid && (empForm.touched || empForm.dirty)'>
+    <div  *ngIf='salesRep?.errors?.required && (salesRep?.dirty || salesRep?.touched)'>
+        Sales representative name is required.
+    </div>
+    <div  *ngIf='orderNumber?.errors?.required && (orderNumber?.dirty || orderNumber?.touched)'>
+        Order number is required.
+    </div>
+    <div *ngIf='salesRepContactNumber?.invalid && (salesRepContactNumber?.touched || salesRepContactNumber?.dirty)'>
+        <div *ngIf='salesRepContactNumber?.errors?.required'>
+            Sales representative contact number is required.
+        </div>  
+        <div *ngIf='salesRepContactNumber?.errors?.pattern'>
+            Please type in a valid phone number.
+        </div>
+    </div>
+</div>
+
     <div>
         Date: {{todaysDate | date:'shortDate'}}
     </div>
@@ -7,56 +25,40 @@
         Order Number:
     </label>
     <input type='text' name='orderNumber' formControlName ='orderNumber'>
+    
 </div>
+
 <div class='form-group'>
     <label for="salesRep">
         Sales Representative Name:
     </label>
      <input type='text' name="salesRep" formControlName ='salesRep'>
 </div>
+
 <div class='form-group'>    
      <label>
         Sales Representative Contact Number:
         <input type='text' name='salesRepContactNumber' formControlName = 'salesRepContactNumber'>
     </label>
-</div>   
+</div> 
+
+
     <div class='form-group' formArrayName="installCrew">
         <h3>Install Crew Names</h3>
-        <div *ngFor ="let crew of installCrew.controls; let i= index">
+        <div  *ngFor ="let crew of installCrew.controls; let i= index">
+            <div class='alert alert-danger' *ngIf='crew?.invalid && (crew?.touched || crew?.dirty) '>
+                At least one install crew member's name is required.
+            </div>  
             <label>
                 Crew Member Name:
                 <input type="text" [formControlName]= "i">
             </label>
         </div>
-        <button class='btn' type="button" (click)='addCrew()'>Add additional crew member</button>
+        <button class='btn btn-info' type="button" (click)='addCrew()'>Add additional crew member</button>
+
     </div> 
   <button class='btn btn-primary' type="submit" [disabled] ="!empForm.valid">Next</button>
 </form>
 
-
-<!-- <label>
-    Sales Representative Name:
-    <input type='text' [formControl] ='salesRep'>
-</label>
-<label>
-    Sales Representative Contact Number:
-    <input type='text' [formControl] = 'salesRepContactNumber'>
-</label>
-
--->
-
-
-
-
-
-<!-- <div class="form-group">
-           
-    <h5>  <li> Please enter the following employee information:</li></h5>
-    <label for="order_number">Order Number</label>
-    <input name="order_number" [(ngModel)] = "order_number" type="text" class="form-control"  autocomplete="off">
-    <label for="travel_width">Doorway Width:</label>
-    <input name="travel_width" [(ngModel)] = "travelDim.width" type="text" class="form-control"  autocomplete="off">
- 
- </div>    -->
 
  

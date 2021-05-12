@@ -9,13 +9,39 @@
            
                <h5>  <li> Determine the height and width of the doorway</li></h5>
                <label for="travel_height">Doorway Height:</label>
-               <input name="travel_height" [(ngModel)] = "travelDim.height" type="text" class="form-control"  autocomplete="off">
+               
+               <input name="travel_height" [(ngModel)] = "travelDim.height" 
+               pattern = '([0-9])'
+               required 
+               #travel_height = 'ngModel'
+               type="text" 
+               class="form-control" 
+                autocomplete="off">
+                <div class="alert alert-danger" *ngIf='travel_height.errors?.pattern && (travel_height.touched || travel_height.dirty)'>
+                    Travel height is invalid.
+                </div>
+                <div class="alert alert-danger" *ngIf='travel_height.errors?.required && (travel_height.touched || travel_height.dirty)'>
+                    Travel height is required.
+                </div>
                <label for="travel_width">Doorway Width:</label>
-               <input name="travel_width" [(ngModel)] = "travelDim.width" type="text" class="form-control"  autocomplete="off">
-            
+               <input name="travel_width"
+                [(ngModel)] = "travelDim.width" 
+                pattern = '([0-9])'
+                required 
+                #travel_width = 'ngModel'
+                type="text"
+                 class="form-control"  
+                 autocomplete="off">
+                 <div class="alert alert-danger" *ngIf='travel_width.errors?.pattern && (travel_width.touched || travel_width.dirty)'>
+                    Travel width is not a number.
+                </div>
+                <div class="alert alert-danger" *ngIf='travel_width.errors?.required && (travel_width.touched || travel_width.dirty)'>
+                    Travel width is required.
+                </div>
+
             </div>   
         </ol>
-    <button (click)="check()" class="btn btn-primary">Next</button>
+    <button (click)="check()" class="btn btn-primary">Next</button> 
 </form> 
 </div>
 

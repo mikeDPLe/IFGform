@@ -14,27 +14,24 @@ export class ProceedComponent implements OnInit {
     private route:Router) { 
     valid.installObs.subscribe(install => {this.didInstall = install
        console.log(this.didInstall)})
-    valid.removeObs.subscribe(remove => this.didRemove = remove)
+    valid.removeObs.subscribe(remove =>  {this.didRemove = remove
+      console.log(this.didRemove)})
   }
 
   didInstall!:boolean;
   didRemove!:boolean;
-  needStagger!:boolean;
+  
 
   ngOnInit(): void {
-    if(this.didInstall && this.didRemove)
-    this.needStagger = true;
-    else this.needStagger = false;
   }
 
   next()
   {
-    if(this.needStagger){
-      this.needStagger = false;
-    }
-      else {
-        this.route.navigate(['customer-sign'])
-      }
+    if(this.valid.checkIfEverFalse) 
+     this.route.navigate(['complete'])
+     else 
+     this.route.navigate(['customer-sign'])
+      
   }
 
 }

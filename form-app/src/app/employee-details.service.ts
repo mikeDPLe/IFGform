@@ -34,4 +34,6 @@ export class EmployeeDetailsService {
     this.info.managerInstructions ="";
     this.info.managerProceed = false;
   }
+
+
 }

@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import {NgForm } from '@angular/forms';
 import SignaturePad from 'signature_pad';
+import { EmployeeDetailsService } from '../employee-details.service';
 import { SignatureHandlerService } from '../signature-handler.service';
 import { StepService } from '../step.service';
 
@@ -15,7 +16,7 @@ export class CustomerSignaturePadComponent implements OnInit {
   constructor(
     private signatureService:SignatureHandlerService,
     private step:StepService,
-    
+    public empDetails:EmployeeDetailsService
   ) {
     this.show = signatureService.checkSigIsCust()
     console.log('show', this.show)

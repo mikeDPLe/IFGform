@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Form, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { EmployeeDetailsService } from '../employee-details.service';
-import {EmployeeInfo} from '../employee-info'
+
 
 @Component({
   selector: 'app-employee-info',
@@ -19,11 +19,14 @@ export class EmployeeInfoComponent implements OnInit {
   }
   
     empForm = this.fb.group({
-    orderNumber: ['', Validators.required],
-    salesRep:['', Validators.required],
-    salesRepContactNumber:['', Validators.required],
+    orderNumber: ['', [Validators.required]], 
+    salesRep:[(''), [Validators.required]],
+    salesRepContactNumber:['',  [
+      Validators.required,
+      Validators.pattern('[- +()0-9]+')
+     ]],
     installCrew: this.fb.array([
-      this.fb.control('',{validators:Validators.required}) 
+      this.fb.control('', [Validators.required]) 
     ]),
   })
 todaysDate:Date;
@@ -47,7 +50,7 @@ todaysDate:Date;
 
   addCrew(){
     console.log('poop')
-    this.installCrew.push(this.fb.control('', {validators:Validators.required}))
+    this.installCrew.push(this.fb.control(''))
   }
 
   next(formdata:FormGroup){
@@ -59,3 +62,4 @@ todaysDate:Date;
   }
 
 }
+  

@@ -1,15 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { EmployeeDetailsService } from '../employee-details.service';
 
 @Component({
-  selector: 'app-manager-contact',
+  selector: 'manager-contact',
   templateUrl: './manager-contact.component.html',
   styleUrls: ['./manager-contact.component.css']
 })
 export class ManagerContactComponent implements OnInit {
 
-  constructor(private empDetails:EmployeeDetailsService) { }
+  constructor(private empDetails:EmployeeDetailsService,
+    private route:Router) { }
 
   ngOnInit(): void {
   }
@@ -29,6 +31,9 @@ export class ManagerContactComponent implements OnInit {
       break;
       case 2:
       this.step = 3;
+      break;
+      case 3:
+      this.route.navigate(['customer-sign'])
       break;
       default:
     }

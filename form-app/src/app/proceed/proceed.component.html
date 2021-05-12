@@ -1,7 +1,7 @@
-<div *ngIf="needStagger || (didInstall && !didRemove)" class="nonInit form-group">
+<div *ngIf="didInstall" class="form-group">
     <p>Proceed to installation. Press next after done installing</p>
 </div>
-<div *ngIf="!needStagger || (!didInstall && didRemove)">
+<div *ngIf="didRemove">
     <p>Proceed to uninstallation Press next after done installing</p>
 </div>   
     <button (click)="next()" class="btn btn-default">Next</button>
