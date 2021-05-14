@@ -55,7 +55,8 @@
             </label>
         </div>
         <button class='btn btn-info' type="button" (click)='addCrew()'>Add additional crew member</button>
-
+        
+        <button *ngIf='installCrew.length > 1' class='btn btn-info' type="button" (click)='removeLastCrew()'>Remove additional crew member</button>
     </div> 
   <button class='btn btn-primary' type="submit" [disabled] ="!empForm.valid">Next</button>
 </form>

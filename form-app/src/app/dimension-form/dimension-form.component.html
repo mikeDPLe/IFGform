@@ -7,11 +7,11 @@
       
            <div class="form-group">
            
-               <h5>  <li> Determine the height and width of the doorway</li></h5>
+               <h5>  <li> Determine the height and width of the doorway in FEET</li></h5>
                <label for="travel_height">Doorway Height:</label>
                
                <input name="travel_height" [(ngModel)] = "travelDim.height" 
-               pattern = '([0-9])'
+               pattern = '([0-9])+'
                required 
                #travel_height = 'ngModel'
                type="text" 
@@ -26,7 +26,7 @@
                <label for="travel_width">Doorway Width:</label>
                <input name="travel_width"
                 [(ngModel)] = "travelDim.width" 
-                pattern = '([0-9])'
+                pattern = '([0-9])+'
                 required 
                 #travel_width = 'ngModel'
                 type="text"

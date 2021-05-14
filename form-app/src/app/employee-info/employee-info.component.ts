@@ -49,8 +49,14 @@ todaysDate:Date;
   }
 
   addCrew(){
-    console.log('poop')
+    
     this.installCrew.push(this.fb.control(''))
+    console.log(this.installCrew.length)
+  }
+
+  removeLastCrew(){
+     const index = this.installCrew.length - 1
+     this.installCrew.removeAt(index);
   }
 
   next(formdata:FormGroup){

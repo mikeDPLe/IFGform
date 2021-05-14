@@ -23,6 +23,9 @@ export class ValidDimService {
   removeObs = new BehaviorSubject(this.removeRequiredSigs)
 
   checkIfEverFalse:boolean = false;
+  
+
+
   checkValues(remove:boolean){
     if(remove) {
       var p = this.dimService.productRemoveDimArray
@@ -70,16 +73,18 @@ export class ValidDimService {
 
   private checkState(isValid:boolean, remove:boolean){
     console.log('checkstate')
-    if(!isValid && !remove ) {
+      if(!isValid && !remove ) {
       this.testObs.next(false)
       this.installObs.next(true)
       this.sigNumber += 2
-    } else if (isValid && !remove) this.testObs.next(true)
+    } else 
+    if (isValid && !remove) this.testObs.next(true)
     if(!isValid && remove) {
       this.testObs2.next(false);
       this.removeObs.next(true);
       this.sigNumber += 3
-    } else if (isValid && remove) {
+    } else
+     if (isValid && remove) {
       this.testObs2.next(true)
       this.sigNumber +=1
     }

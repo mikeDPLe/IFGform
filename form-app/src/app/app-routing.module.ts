@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
+import { CaptureImageComponent } from './capture-image/capture-image.component';
 import { CheckDoorComponent } from './check-door/check-door.component';
 import { CheckRemoveComponent } from './check-remove/check-remove.component';
 import { CompleteComponent } from './complete/complete.component';
@@ -28,7 +29,8 @@ const routes: Routes = [
   {path:"check-remove" ,component:CheckRemoveComponent},
   {path:"proceed", component: ProceedComponent},
   {path:"complete", component:CompleteComponent},
-  {path:"pdf", component:PdfHolderComponent}
+  {path:"pdf", component:PdfHolderComponent},
+  {path:"image", component:CaptureImageComponent}
 ];
 
 @NgModule({

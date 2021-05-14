@@ -5,9 +5,12 @@
        <ng-container *ngIf="show == true then success; else elseBlock"></ng-container> 
        <ng-template #success >customer</ng-template>
        <ng-template #elseBlock>employee </ng-template> name: </label>  
-    <input type="text" name="name" [(ngModel)]="inputName" class="form-control" id="name" style="width:inherit" autocomplete="off" required>
+      <div class='alert alert-danger' *ngIf='name.invalid && (name.touched || name.dirty)'>
+            Typed name is required.
+      </div> 
+    <input type="text" name="name" #name = 'ngModel'  [(ngModel)]="inputName" class="form-control" id="name" style="width:inherit" autocomplete="off" required>
     <br>
-    {{inputName}}
+    
     <p>Please sign below </p>
     <label id="errorMsg"></label>
       <div id="wrapper">
@@ -16,7 +19,7 @@
        </canvas> 
    </div>
    <br>
-   <button (click)="clear()">Clear</button>
+   <button (click)="clear()">Clear Signature</button>
    <button type="submit" id="done" [disabled]="!signForm.form.valid || signatureEmpty"> Done </button>
    <br>
    <button *ngIf="show == true" (click) ="onRefuse()" >

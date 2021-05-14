@@ -1,0 +1,20 @@
+<div>
+    <p>Please take images of</p>
+</div>
+
+<form [formGroup]='formGroup' (ngSubmit)='submit()'>
+
+<div class='form-group' formArrayName='imageArray'>
+    <div *ngFor= 'let control of imageArray.controls; let i= index'>
+
+        <input type="file" accept="image/*"  capture="environment" [formControlName]= 'i' (change)='showPreview($event, i)'>
+        <div  class="imagePreview" *ngIf="uriHolder[i]">
+            <img style="width:400px; height: 400px;" [src]="uriHolder[i]">
+         </div>
+    </div>  
+  <button type='button' (click)='addImage()'> Add additional image</button>
+</div>
+
+<button type="submit"> Submit</button>
+</form>
+

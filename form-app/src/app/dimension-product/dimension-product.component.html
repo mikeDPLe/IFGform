@@ -2,14 +2,14 @@
 <div id="productDiv" class="form-group">
                 
     <h5> <li>Determine width and height of equipment to 
-        <div *ngIf="isInstall; else elseBlock"> install </div> 
-        <ng-template #elseBlock> remove</ng-template>
+        <div *ngIf="isInstall; else elseBlock"> install in FEET </div> 
+        <ng-template #elseBlock> remove in feet </ng-template>
     </li>
     </h5>
     <label for="product_height">Equipment Height:</label>
     <input name="product_height" 
      [(ngModel)] = "productDim.height" 
-     pattern = '([0-9])'
+     pattern = '([0-9])+'
      required 
      #product_height = 'ngModel'
      type="text"
@@ -24,7 +24,7 @@
     <label for="product_width">Equipment Width:</label>
     <input name="product_width" 
     [(ngModel)] = "productDim.width"
-    pattern = '([0-9])'
+    pattern = '([0-9])+'
     required 
     #product_width = 'ngModel'
     type="text"

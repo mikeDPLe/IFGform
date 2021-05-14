@@ -12,7 +12,7 @@ export class ProceedComponent implements OnInit {
 
   constructor(private valid:ValidDimService,
     private route:Router) { 
-    valid.installObs.subscribe(install => {this.didInstall = install
+    valid.testObs.subscribe(install => {this.didInstall = install
        console.log(this.didInstall)})
     valid.removeObs.subscribe(remove =>  {this.didRemove = remove
       console.log(this.didRemove)})
@@ -27,10 +27,16 @@ export class ProceedComponent implements OnInit {
 
   next()
   {
-    if(this.valid.checkIfEverFalse) 
-     this.route.navigate(['complete'])
-     else 
-     this.route.navigate(['customer-sign'])
+    if(this.didInstall || this.didRemove)
+    this.route.navigate(['image'], {queryParams: 
+      {
+        install: this.didInstall, 
+        remove: this.didRemove
+      }})
+    // if(this.valid.checkIfEverFalse) 
+    //  this.route.navigate(['complete'])
+    //  else 
+    //  this.route.navigate(['customer-sign'])
       
   }
 
