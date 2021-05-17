@@ -21,6 +21,8 @@ export class SignatureHandlerService {
   passRemoveStatus:boolean = false;
   finalRemoveStep:boolean = false;
  
+  completeCustSig:boolean = false;
+  completeEmpSig:boolean = false;
 
   constructor(
     private router: Router,
@@ -29,6 +31,17 @@ export class SignatureHandlerService {
       this.valid.testObs.subscribe(x => this.passInstallStatus = x)
       this.valid.testObs2.subscribe(x => this.passRemoveStatus = x)
      }
+
+
+
+  checkLength2(){
+    if(this.valid.custSig != this.custSigArray.length) 
+    this.completeCustSig = false;
+    else this.completeCustSig = true;
+    if(this.valid.employeeSig != this.employSigArray.length)
+    this.completeEmpSig = false;
+    else this.completeEmpSig = true;
+  }
     
   checkRepeat(){
     
@@ -37,6 +50,7 @@ export class SignatureHandlerService {
       if(!this.checkComplete()) 
       {
         this.step.reloadComponent()
+        this.checkLength2()
       } else { 
         this.valid.testObs.next(true)
         this.router.navigate(['check-remove'])}

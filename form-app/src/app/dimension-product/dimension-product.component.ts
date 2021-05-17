@@ -56,9 +56,9 @@ export class DimensionProductComponent implements OnInit {
     var result = this.checkService.checkValues(true)
     if(result){
       console.log('placeholder success',result)
-      this.router.navigate(["proceed"],{skipLocationChange:true})
+      this.router.navigate(["proceed"])
     } else [
-      this.router.navigate(["dim-fail"],{skipLocationChange:true})
+      this.router.navigate(["dim-fail"])
     ]
   }
 }

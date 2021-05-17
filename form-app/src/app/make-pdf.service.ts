@@ -14,9 +14,16 @@ export class MakePDFService {
 
   constructor(private sig:SignatureHandlerService,
     private dim:DimensionService) {
+    //signature arrays hold: 1. string uri of the signature 2. a string name of the individual who signed it 
+    //3. if it was a customer or employee signature 4. the step the signature was obtained at
+    // steps are handled in the checkStatus in the signature-handler service
+    // generally the format is '(install||remove)' + _+ '(customer||employee)'
+    // exception are the finalInstallStep and finalRemoveStep
     this.arrayCustomer = this.sig.custSigArray
     this.arrayEmployee = this.sig.employSigArray
-
+    //dimension arrays hold: 1. An array of the widths (doorway/product) parsed in float.
+    // 2. An array of the heights entered.
+    // 3. the units (if applicable) <-- can probably remove this.
     this.arrayInstallDoorDim = this.dim.travelDimArray 
     this.arrayInstallProductDim  = this.dim.productDimArray 
     this.arrayRemoveDoorDim =  this.dim.travelRemoveDimArray
@@ -48,21 +55,24 @@ export class MakePDFService {
    private iterate(){
     var result:Array<any> = []
     if(this.arrayCustomer.length != 0) {
-    this.arrayCustomer.forEach(poop => {
-       switch(poop.step){
+    this.arrayCustomer.forEach(item => {
+       switch(item.step){
          case "install_customer":
-           this.p.Customer_print_sign = poop.name
-           this.p.Image3_af_image = poop.signatureImg           
+           this.p.CustomerPrint1 = item.name
+           this.p.CustomerSign1 = item.signatureImg           
          break;
          case "remove_customer":
+           this.p.CustomerPrint2 = item.name
+           this.p.CustomerSign2 = item.signatureImg
           //needs ids to update class
          break;
          case "customer_installFinal":
-          this.p.Image2_af_image = poop.signatureImg;
-          this.p.Names_print_and_sign = poop.name;
+          this.p.CustomerSign3 = item.signatureImg;
+          this.p.CustomerPrint3= item.name;
          break;
          case "customer_removeFinal":
-          this.p.Image1_af_image = poop.signatureImg
+          this.p.CustomerSign5= item.signatureImg
+          this.p.CustomerPrint5 = item.signatureImg 
          break;
          default:
          break;

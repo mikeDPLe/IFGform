@@ -9,11 +9,11 @@
     </p>
 </div> -->
 
-<div id="travelDisclaimertext" *ngIf="!isCompleteInstall" class="nonInit form-group">
+<div id="travelDisclaimertext" *ngIf="!isCompleteInstall && !hasFinishedEmpStep" class="nonInit form-group">
     <p> 
         By signing here, customer acknowledges IFG has explained the complications regarding installion.
         This may be due to product height, width, or other equipment specifications.
-        Customer also gives permission to continue installation and releases IFG of all liability during installation, including:
+        Customer understands that installation may cause damage to the product including: 
     </p>
         <ul>
                 <li>
@@ -33,12 +33,26 @@
                 </li>
         </ul>
         <p>
+        Customer also releases IFG of all liability during installation. 
         Customer may also decline to sign, but product may not be installed.
     </p>
 </div>
-<div id="travelDisclaimertext" *ngIf="!isCompleteRemove && isCompleteInstall &&!isFinalRemoveStep" class="nonInit form-group">
+<div *ngIf="hasFinishedEmpStep && !hasFinishedCustStep && !isCompleteInstall">
     <p>
-        By signing here, customer acknowledges IFG has explained the risks and conditions regard product removal
+        IFG has informed me (customer owner or customer employee) that there is an issue with placing
+        this product in the final location. This issue is related to the product height, width, or other dimension
+        specs.
+    </p>
+    <p>
+        By signing here,(customer owner or customer employee) has given written consent to IFG to continue with
+        installation.
+        IFG will not be reponsible for any damage to the product during travel or installation.
+    </p>
+</div>
+
+<div id="travelDisclaimertext" *ngIf="!isCompleteRemove && isCompleteInstall && !isFinalRemoveStep" class="nonInit form-group">
+    <p>
+        By signing here, customer acknowledges IFG has explained the risks and conditions regarding product removal
         Customer will accept full liability for possible damages during removal, including:
     </p>
         <ul>

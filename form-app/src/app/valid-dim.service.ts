@@ -12,7 +12,8 @@ export class ValidDimService {
   passInstall:boolean = false;
   passRemoval:boolean = false;
   sigNumber:number = 0;
-
+  custSig:number = 0;
+  employeeSig: number = 0;
   testObs = new BehaviorSubject(this.passInstall)
   testObs2 = new BehaviorSubject (this.passRemoval)
 
@@ -76,12 +77,16 @@ export class ValidDimService {
       if(!isValid && !remove ) {
       this.testObs.next(false)
       this.installObs.next(true)
-      this.sigNumber += 2
+      this.custSig += 2
+      this.employeeSig += 1
+      this.sigNumber += 3
     } else 
     if (isValid && !remove) this.testObs.next(true)
     if(!isValid && remove) {
       this.testObs2.next(false);
       this.removeObs.next(true);
+      this.custSig += 2
+      this.employeeSig += 1
       this.sigNumber += 3
     } else
      if (isValid && remove) {
