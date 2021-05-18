@@ -20,21 +20,18 @@ export class ProblemInstallComponent implements OnInit {
       console.log('completetrue')
       this.isComplete = true;
     } else this.isComplete = false;
-    if(this.sig.finalRemoveStep)
-    {
-      this.isFinalRemoveStep = true;
-    }
-     this.hasFinishedCustStep = this.sig.completeCustSig 
-     this.hasFinishedEmpStep = this.sig.completeEmpSig
+    
   }
-    hasFinishedCustStep: boolean = false;
-    hasFinishedEmpStep:boolean = false; 
+    isCust:boolean = false;
+    step:number = 0;
     isCompleteInstall:boolean = false;
     isCompleteRemove:boolean = false;
     isComplete:boolean;
     isFinalRemoveStep:boolean = false;
 
   ngOnInit(): void {
+    this.isCust = this.sig.isCust
+    this.step = this.sig.subStep
   }
 
 }

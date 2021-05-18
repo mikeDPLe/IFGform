@@ -9,7 +9,7 @@
     </p>
 </div> -->
 
-<div id="travelDisclaimertext" *ngIf="!isCompleteInstall && !hasFinishedEmpStep" class="nonInit form-group">
+<div id="travelDisclaimertext" *ngIf="step == 1  && !isCompleteInstall" class="nonInit form-group">
     <p> 
         By signing here, customer acknowledges IFG has explained the complications regarding installion.
         This may be due to product height, width, or other equipment specifications.
@@ -37,7 +37,7 @@
         Customer may also decline to sign, but product may not be installed.
     </p>
 </div>
-<div *ngIf="hasFinishedEmpStep && !hasFinishedCustStep && !isCompleteInstall">
+<div *ngIf="step == 2 && !isCompleteInstall ">
     <p>
         IFG has informed me (customer owner or customer employee) that there is an issue with placing
         this product in the final location. This issue is related to the product height, width, or other dimension
@@ -50,7 +50,7 @@
     </p>
 </div>
 
-<div id="travelDisclaimertext" *ngIf="!isCompleteRemove && isCompleteInstall && !isFinalRemoveStep" class="nonInit form-group">
+<div id="travelDisclaimertext" *ngIf="step == 1 && !isCompleteRemove && isCompleteInstall" class="nonInit form-group">
     <p>
         By signing here, customer acknowledges IFG has explained the risks and conditions regarding product removal
         Customer will accept full liability for possible damages during removal, including:
@@ -83,7 +83,7 @@
      <p>The customer agrees to release all liability to IFG</p>
  </div>
  
- <div *ngIf="isFinalRemoveStep && !isComplete">
+ <div *ngIf="step == 2 && !isCompleteRemove && isCompleteInstall">
      The customer has giving the permission to IFG to remove the old equipment for dispose. IFG will not reimburse credit
  To the customer for the old unit. IFG will not be responsible if there is any damage done during the product
  movement from the product location to the truck location.

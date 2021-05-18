@@ -23,7 +23,7 @@ export class EmployeeInfoComponent implements OnInit {
     salesRep:[(''), [Validators.required]],
     salesRepContactNumber:['',  [
       Validators.required,
-      Validators.pattern('[- +()0-9]+')
+      Validators.pattern('\\(?\\d+\\)?[-.\\s]?\\d+[-.\\s]?\\d+')
      ]],
     installCrew: this.fb.array([
       this.fb.control('', [Validators.required]) 

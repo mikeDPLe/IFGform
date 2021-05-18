@@ -14,23 +14,24 @@ import { StepService } from '../step.service';
 export class CustomerSignaturePadComponent implements OnInit {
 
   constructor(
-    private signatureService:SignatureHandlerService,
-    private step:StepService,
-    public empDetails:EmployeeDetailsService
-  ) {
-    this.show = signatureService.checkSigIsCust()
-    console.log('show', this.show)
-  }
+    private signatureService: SignatureHandlerService,
+    private step: StepService,
+    public empDetails: EmployeeDetailsService
+  ) {}
 
   @ViewChild('signaturepad') canvasPad!: ElementRef<HTMLCanvasElement>
-  show: boolean;
+  show: boolean = true
   inputName!: string 
   signaturePad!: SignaturePad;
   signatureEmpty:boolean = true;
  
  
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.signatureService.checkDiff()
+    this.show = this.signatureService.isCust
+    console.log('show', this.show)
+  }
   ngAfterViewInit(){
    this.signaturePad = new SignaturePad(this.canvasPad.nativeElement)   
   }

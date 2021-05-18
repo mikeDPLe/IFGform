@@ -1,3 +1,4 @@
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -11,7 +12,9 @@ import { EmployeeDetailsService } from '../employee-details.service';
 export class ManagerContactComponent implements OnInit {
 
   constructor(private empDetails:EmployeeDetailsService,
-    private route:Router) { }
+    private route:Router) { 
+  
+    }
 
   ngOnInit(): void {
   }
@@ -33,10 +36,20 @@ export class ManagerContactComponent implements OnInit {
       this.step = 3;
       break;
       case 3:
+      this.saveData()
+      this.empDetails.info.managerProceed = true;
+      console.log(this.empDetails.info)
       this.route.navigate(['customer-sign'])
       break;
       default:
     }
+  }
+
+  saveData(){
+    this.empDetails.info.managerName = this.managerName.value;
+    this.empDetails.info.managerNumber = this.managerContact.value;
+    this.empDetails.info.managerInstructions = this.managerResponse.value;
+    
   }
 
 }
