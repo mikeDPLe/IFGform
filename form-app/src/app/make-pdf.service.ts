@@ -51,18 +51,20 @@ export class MakePDFService {
     this.arrayCustomer.forEach(poop => {
        switch(poop.step){
          case "install_customer":
-           this.p.Customer_print_sign = poop.name
-           this.p.Image3_af_image = poop.signatureImg           
+           this.p.CustomerPrint1 = poop.name
+           this.p.CustomerSign1 = poop.signatureImg           
          break;
          case "remove_customer":
-          //needs ids to update class
+           this.p.CustomerPrint2 = poop.name
+           this.p.CustomerSign2 = poop.signatureImg           
          break;
          case "customer_installFinal":
-          this.p.Image2_af_image = poop.signatureImg;
-          this.p.Names_print_and_sign = poop.name;
+          //this.p.Image2_af_image = poop.signatureImg;
+          //this.p.Names_print_and_sign = poop.name;
          break;
          case "customer_removeFinal":
-          this.p.Image1_af_image = poop.signatureImg
+          this.p.CustomerPrint5 = poop.name
+          this.p.CustomerSign5 = poop.signatureImg           
          break;
          default:
          break;
@@ -109,7 +111,8 @@ export class MakePDFService {
     const pdfDoc = await PDFDocument.load(formPdfBytes);
     const form = pdfDoc.getForm();
 
-  
+    // iterate to get your info
+    iterate();
     console.log(this.iterateCustomer())
     
     const dateField = form.getTextField('Date')
