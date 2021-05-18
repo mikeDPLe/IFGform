@@ -16,7 +16,7 @@ export class PdfHolderComponent implements OnInit {
   
   //access by tying /pdf in root
  async ngOnInit(): Promise<void> {
-    this.pdf.poopy().then(x =>
+    this.pdf.makePdf().then(x =>
       this.uri = this.sanitizer.bypassSecurityTrustResourceUrl(x)
     )
   }
