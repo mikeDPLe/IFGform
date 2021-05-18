@@ -1,5 +1,5 @@
   import { Injectable } from '@angular/core';
-import { Params, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { SignatureInfo } from './classes/signature-info';
 import { DimensionService } from './dimension.service';
@@ -27,20 +27,39 @@ export class SignatureHandlerService {
   constructor(
     private router: Router,
     private step: StepService,
-    private valid: ValidDimService) {
+    private valid: ValidDimService,
+    private route:ActivatedRoute) {
       this.valid.testObs.subscribe(x => this.passInstallStatus = x)
       this.valid.testObs2.subscribe(x => this.passRemoveStatus = x)
+
      }
 
+  private getCustArrayDiff(){
+    var result =  this.valid.custSig - this.custSigArray.length
+    return result
+  }
+  private getEmpArrayDiff(){
+    var result =  this.valid.employeeSig - this.employSigArray.length
+    return result
+  }
 
-
-  checkLength2(){
-    if(this.valid.custSig != this.custSigArray.length) 
-    this.completeCustSig = false;
-    else this.completeCustSig = true;
-    if(this.valid.employeeSig != this.employSigArray.length)
-    this.completeEmpSig = false;
-    else this.completeEmpSig = true;
+   checkDiff(){
+     const custDiff = this.getCustArrayDiff()
+     const empDiff = this.getEmpArrayDiff()
+     var nextStep;
+     var stepNumber;
+     if(custDiff > empDiff) 
+     {nextStep = 'customer'
+      stepNumber = 1}
+     if(custDiff == empDiff) {
+       nextStep ='employee'
+       stepNumber = 1
+     }
+     if(custDiff < empDiff){
+       nextStep ='customer'
+       stepNumber = 2
+     }
+  
   }
     
   checkRepeat(){
@@ -50,9 +69,10 @@ export class SignatureHandlerService {
       if(!this.checkComplete()) 
       {
         this.step.reloadComponent()
-        this.checkLength2()
+        this.route.params
+        this.checkDiff()
       } else { 
-        this.valid.testObs.next(true)
+        this.valid.installComplete()
         this.router.navigate(['check-remove'])}
       break;
       case 2: if(!this.checkComplete())
@@ -60,7 +80,7 @@ export class SignatureHandlerService {
         this.checkIfRemoveFinal()
         this.step.reloadComponent()
       } else {
-        this.valid.testObs2.next(true)
+        this.valid.removeComplete()
         this.router.navigate(['proceed'])}
         break;
       case 3: 

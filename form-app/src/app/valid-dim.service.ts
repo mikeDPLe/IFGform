@@ -75,31 +75,49 @@ export class ValidDimService {
   private checkState(isValid:boolean, remove:boolean){
     console.log('checkstate')
       if(!isValid && !remove ) {
-      this.testObs.next(false)
-      this.installObs.next(true)
-      this.custSig += 2
-      this.employeeSig += 1
-      this.sigNumber += 3
+      this.installIncomplete()
+      this.needInstallSigs()
     } else 
-    if (isValid && !remove) this.testObs.next(true)
+    if (isValid && !remove) this.installComplete()
     if(!isValid && remove) {
-      this.testObs2.next(false);
-      this.removeObs.next(true);
-      this.custSig += 2
-      this.employeeSig += 1
-      this.sigNumber += 3
+      this.removeIncomplete();
+      this.needRemoveSigs();
     } else
      if (isValid && remove) {
-      this.testObs2.next(true)
+      this.removeComplete()
       this.sigNumber +=1
+      this.employeeSig += 1
     }
   }
   
   private checkifEverFalse(bool:boolean) {
     if(!bool) this.checkIfEverFalse = true;
   }
+
+  private needInstallSigs(){
+    this.installObs.next(true)
+    this.custSig += 2
+    this.employeeSig += 1
+    this.sigNumber += 3
+  }
+  private needRemoveSigs(){
+    this.removeObs.next(true);
+    this.custSig += 2
+    this.employeeSig += 1
+    this.sigNumber += 3
+  }
   
-   
-  
+   installComplete(){
+    this.testObs.next(true);
+   }
+   removeComplete(){
+     this.testObs2.next(true);
+   }
+   installIncomplete(){
+     this.testObs.next(false);
+   }
+   removeIncomplete(){
+     this.testObs2.next(false);
+   }
 
 }

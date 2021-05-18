@@ -59,6 +59,10 @@ todaysDate:Date;
      this.installCrew.removeAt(index);
   }
 
+  removeCrew(index: number){
+     this.installCrew.removeAt(index);
+  }
+
   next(formdata:FormGroup){
     this.empDetails.submitData(formdata);
     this.route.navigate(['safety'])

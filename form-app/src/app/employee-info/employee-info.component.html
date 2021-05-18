@@ -45,7 +45,7 @@
 
     <div class='form-group' formArrayName="installCrew">
         <h3>Install Crew Names</h3>
-        <div  *ngFor ="let crew of installCrew.controls; let i= index">
+        <div *ngFor ="let crew of installCrew.controls; let i= index">
             <div class='alert alert-danger' *ngIf='crew?.invalid && (crew?.touched || crew?.dirty) '>
                 At least one install crew member's name is required.
             </div>  
@@ -53,10 +53,11 @@
                 Crew Member Name:
                 <input type="text" [formControlName]= "i">
             </label>
+            <!-- add some kind of button here-->
+            <button *ngIf='installCrew.length > 1' class='btn btn-info' type="button" (click)='removeCrew(i)'>Remove crew member</button>
         </div>
         <button class='btn btn-info' type="button" (click)='addCrew()'>Add additional crew member</button>
         
-        <button *ngIf='installCrew.length > 1' class='btn btn-info' type="button" (click)='removeLastCrew()'>Remove additional crew member</button>
     </div> 
   <button class='btn btn-primary' type="submit" [disabled] ="!empForm.valid">Next</button>
 </form>
