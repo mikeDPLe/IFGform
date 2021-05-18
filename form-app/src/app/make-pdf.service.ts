@@ -20,8 +20,8 @@ export class MakePDFService {
     //signature arrays hold: 1. string uri of the signature 2. a string name of the individual who signed it 
     //3. if it was a customer or employee signature 4. the step the signature was obtained at
     // steps are handled in the checkStatus in the signature-handler service
-    // generally the format is '(install||remove)' + _+ '(customer||employee)'
-    // exception are the finalInstallStep and finalRemoveStep
+    // generally the format is '(install||remove)' + _+ '(customer||employee) + (step_number)'
+    // example install_customer1 or remove_employee2
     this.arrayCustomer = this.sig.custSigArray
     this.arrayEmployee = this.sig.employSigArray
     //dimension arrays hold: 1. An array of the widths (doorway/product) parsed in float.
@@ -47,13 +47,13 @@ export class MakePDFService {
 
   formUrl = 'assets/equipment.pdf'
 
-  async poopy() {
+  async makePdf() {
     const formPdfBytes = await fetch(this.formUrl).then(res => res.arrayBuffer());
     const pdfDoc = await PDFDocument.load(formPdfBytes);
     const form = pdfDoc.getForm();
 
     // iterate to get your info
-    this.iterate();
+    await this.iterate();
 
     if (!(this.checkEmployeeInfoIsRefuse())) {
 
@@ -126,26 +126,52 @@ export class MakePDFService {
 
   }
 
+  private async iterate() {
+
+    this.p.EmployeePrint1 = "Kevin Chow"
+    //filler sign just to make the pdf render.
+    this.p.EmployeeSign1 = "data:image/png;base64,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IECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQILCMwH9ryBtfLsuJpwAAAABJRU5ErkJggg=="
+    this.p.CustomerSign1 = this.p.EmployeeSign1
+    this.p.CustomerPrint1 = "Bob Hui"
+    this.p.CustomerSign2 = this.p.EmployeeSign1
+    this.p.CustomerPrint2 = "Bob Hui"
+    this.p.CustomerSign3 = this.p.EmployeeSign1
+    this.p.CustomerPrint3 = "Bob Hui"
+    this.p.CustomerSign4 = this.p.EmployeeSign1
+    this.p.CustomerPrint4 = "Bob Hui"
+    this.p.CustomerSign5 = this.p.EmployeeSign1
+    this.p.CustomerPrint5 = "Bob Hui"
+    this.p.EmployeeSign2 = this.p.EmployeeSign1
+    this.p.EmployeePrint2 = "Kevin Chow"
+    this.iterateCustomer()
+    this.iterateEmployee()
+    this.iterateInstallDoorDimensions()
+    this.iterateRemoveDoorDimensions()
+    this.iterateNewProductDimensions()
+    this.iterateOldProductDimensions()
+
+  }
+
 
   private iterateCustomer() {
     if (this.arrayCustomer.length != 0) {
       this.arrayCustomer.forEach(item => {
         switch (item.step) {
-          case "install_customer1":
+          case "customer_install1":
             this.p.CustomerPrint1 = item.name
             this.p.CustomerSign1 = item.signatureImg
             break;
-          case "remove_customer1":
+          case "customer_remove1":
             this.p.CustomerPrint2 = item.name
             this.p.CustomerSign2 = item.signatureImg
             break;
           case "customer_install2":
-            this.p.CustomerSign3 = item.signatureImg;
             this.p.CustomerPrint3 = item.name;
+            this.p.CustomerSign3 = item.signatureImg;
             break;
           case "customer_remove2":
+            this.p.CustomerPrint5 = item.name
             this.p.CustomerSign5 = item.signatureImg
-            this.p.CustomerPrint5 = item.signatureImg
             break;
           default:
             break;
@@ -158,11 +184,11 @@ export class MakePDFService {
     if (this.arrayEmployee.length != 0) {
       this.arrayEmployee.forEach(item => {
         switch (item.step) {
-          case "install_employee1":
+          case "employee_install1":
             this.p.EmployeePrint1 = item.name;
             this.p.EmployeeSign1 = item.signatureImg;
             break;
-          case "remove_employee1":
+          case "employee_remove1":
             this.p.EmployeePrint2 = item.name;
             this.p.EmployeeSign2 = item.signatureImg;
         }
@@ -239,32 +265,6 @@ export class MakePDFService {
     this.p.ManagerNumber = obj.managerNumber
     this.p.ManagerProceed = obj.managerProceed
   }
-  private iterate() {
-
-
-    this.p.EmployeePrint1 = "Kevin Chow"
-    //filler sign just to make the pdf render.
-    this.p.EmployeeSign1 = "data:image/png;base64,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IECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQILCMwH9ryBtfLsuJpwAAAABJRU5ErkJggg=="
-    this.p.CustomerSign1 = this.p.EmployeeSign1
-    this.p.CustomerPrint1 = "Bob Hui"
-    this.p.CustomerSign2 = this.p.EmployeeSign1
-    this.p.CustomerPrint2 = "Bob Hui"
-    this.p.CustomerSign3 = this.p.EmployeeSign1
-    this.p.CustomerPrint3 = "Bob Hui"
-    this.p.CustomerSign4 = this.p.EmployeeSign1
-    this.p.CustomerPrint4 = "Bob Hui"
-    this.p.CustomerSign5 = this.p.EmployeeSign1
-    this.p.CustomerPrint5 = "Bob Hui"
-    this.p.EmployeeSign2 = this.p.EmployeeSign1
-    this.p.EmployeePrint2 = "Kevin Chow"
-    this.iterateCustomer()
-    this.iterateEmployee()
-    this.iterateInstallDoorDimensions()
-    this.iterateRemoveDoorDimensions()
-    this.iterateNewProductDimensions()
-    this.iterateOldProductDimensions()
-
-  }
-
+ 
 
 }

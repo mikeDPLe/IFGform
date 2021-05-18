@@ -14,8 +14,7 @@ export class LoginComponent implements OnInit {
   authPassword= "1234";
   authUsername= "Admin";
 
-  constructor(private router: Router, 
-    private route:ActivatedRoute) { }
+  constructor(private router: Router) { }
 
   
 
