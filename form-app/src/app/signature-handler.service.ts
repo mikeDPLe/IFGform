@@ -39,7 +39,9 @@ export class SignatureHandlerService {
   checkDiff() {
     const custDiff = this.getCustArrayDiff()
     const empDiff = this.getEmpArrayDiff()
-    var cust = this.checkCust(custDiff, empDiff)
+    if (!(this.passInstallStatus && this.passRemoveStatus)) {
+      var cust = this.checkCust(custDiff, empDiff)
+    } else cust = true;
     var step = this.checkStep1(custDiff, empDiff)
     this.subStep = step;
     this.isCust = cust;
@@ -168,6 +170,7 @@ export class SignatureHandlerService {
       this.isEmployee = false;
       state = "installFinal"
       person = "customer"
+      return   person + "_" + state
     }
     return (person + "_" + state + this.subStep)
   }

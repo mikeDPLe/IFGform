@@ -61,6 +61,7 @@ export class MakePDFService {
       var textsize = 10
       var labelX = 30;
       var textX = 150;
+      
 
       var mNY1 = 300
       page.drawText('Manager Name:', { x: labelX, y: mNY1, size: textsize })
@@ -154,27 +155,37 @@ export class MakePDFService {
 
 
   private iterateCustomer() {
+    console.log('called change')
     if (this.arrayCustomer.length != 0) {
       this.arrayCustomer.forEach(item => {
         switch (item.step) {
           case "customer_install1":
+            console.log('c1install')
             this.p.CustomerPrint1 = item.name
             this.p.CustomerSign1 = item.signatureImg
             break;
           case "customer_remove1":
+            console.log('c1remove')
             this.p.CustomerPrint2 = item.name
             this.p.CustomerSign2 = item.signatureImg
             break;
           case "customer_install2":
+            console.log('c2install')
             this.p.CustomerPrint3 = item.name;
             this.p.CustomerSign3 = item.signatureImg;
             break;
           case "customer_remove2":
+            console.log('c2remove')
             this.p.CustomerPrint5 = item.name
             this.p.CustomerSign5 = item.signatureImg
             break;
-          default:
+          case "customer_installFinal":
+            console.log('specialstep')
+            this.p.CustomerPrint4 = item.name
+            this.p.CustomerSign4 = item.signatureImg
+            console.log(this.p.CustomerPrint4)
             break;
+          default:
         }
       })
     }
