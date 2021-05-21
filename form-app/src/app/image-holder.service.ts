@@ -16,4 +16,10 @@ export class ImageHolderService {
   saveRemove(array:Array<string>){
     this.removeImage = array;
   }
+  getInstallImages(){
+    return this.installImage
+  }
+  getRemoveImage(){
+    return this.removeImage
+  }
 }

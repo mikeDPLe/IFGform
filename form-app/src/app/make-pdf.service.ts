@@ -8,6 +8,7 @@ import { PdfInfo } from './classes/pdf-info';
 import download from 'downloadjs'
 import { EmployeeInfo } from './employee-info';
 import { EmployeeDetailsService } from './employee-details.service';
+import { ImageHolderService } from './image-holder.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,8 @@ export class MakePDFService {
 
   constructor(private sig: SignatureHandlerService,
     private dim: DimensionService,
-    private emp: EmployeeDetailsService) {
+    private emp: EmployeeDetailsService,
+    private image: ImageHolderService) {
     //signature arrays hold: 1. string uri of the signature 2. a string name of the individual who signed it 
     //3. if it was a customer or employee signature 4. the step the signature was obtained at
     // steps are handled in the checkStatus in the signature-handler service
@@ -381,6 +383,10 @@ export class MakePDFService {
       this.p.OldProductWidth = resultWidth.toString()
     }
   }
+  private iterateImages(){
+    this.image.getInstallImages()
+    this.image.getRemoveImage()
+  }
 
   private getHeight(array: Array<Dimensions>) {
     var result: Array<number> = []
@@ -416,6 +422,6 @@ export class MakePDFService {
     this.p.ManagerNumber = obj.managerNumber
     this.p.ManagerProceed = obj.managerProceed
   }
- 
+
 
 }

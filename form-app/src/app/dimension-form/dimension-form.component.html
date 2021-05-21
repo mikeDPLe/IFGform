@@ -1,30 +1,35 @@
     <div *ngIf="!checkDoor" >
         <h3>
             Assess the travel path
-         </h3>
+        </h3>
+    <mat-divider></mat-divider>
   <form #f= "ngForm" class="nonInit" id="specForm" action="#">      
     <ol>
-      
+        <h3>  Determine the height and width of the doorway in FEET</h3>
            <div class="form-group">
-           
-               <h5>  <li> Determine the height and width of the doorway in FEET</li></h5>
-               <label for="travel_height">Doorway Height:</label>
+           <mat-form-field appearance="fill">
                
+               <mat-label for="travel_height">Doorway Height:</mat-label>
                <input name="travel_height" [(ngModel)] = "travelDim.height" 
+               matInput
                pattern = '([0-9])+'
                required 
                #travel_height = 'ngModel'
                type="text" 
                class="form-control" 
                 autocomplete="off">
-                <div class="alert alert-danger" *ngIf='travel_height.errors?.pattern && (travel_height.touched || travel_height.dirty)'>
+                <mat-error *ngIf='travel_height.errors?.pattern'>
                     Travel height is invalid.
-                </div>
-                <div class="alert alert-danger" *ngIf='travel_height.errors?.required && (travel_height.touched || travel_height.dirty)'>
+                </mat-error>
+                <mat-error *ngIf='travel_height.errors?.required'>
                     Travel height is required.
-                </div>
-               <label for="travel_width">Doorway Width:</label>
+                </mat-error>
+            </mat-form-field>
+            <br>313
+            <mat-form-field appearance="fill">
+               <mat-label for="travel_width">Doorway Width:</mat-label>
                <input name="travel_width"
+               matInput
                 [(ngModel)] = "travelDim.width" 
                 pattern = '([0-9])+'
                 required 
@@ -32,16 +37,16 @@
                 type="text"
                  class="form-control"  
                  autocomplete="off">
-                 <div class="alert alert-danger" *ngIf='travel_width.errors?.pattern && (travel_width.touched || travel_width.dirty)'>
+                 <mat-error *ngIf='travel_width.errors?.pattern'>
                     Travel width is not a number.
-                </div>
-                <div class="alert alert-danger" *ngIf='travel_width.errors?.required && (travel_width.touched || travel_width.dirty)'>
+                 </mat-error>
+                 <mat-error *ngIf='travel_width.errors?.required'>
                     Travel width is required.
-                </div>
-
+                 </mat-error>
+            </mat-form-field>
             </div>   
         </ol>
-    <button (click)="check()" class="btn btn-primary">Next</button> 
+    <button mat-flat-button color="primary" (click)="check()" >Next</button> 
 </form> 
 </div>
 
@@ -51,10 +56,10 @@
         Is there another doorway?
     </p>
     <div style="padding:5px" >
-    <button (click)='yes()' class="btn btn-primary"> Yes</button> 
+    <button  mat-flat-button color="primary" (click)='yes()' > Yes</button> 
     </div>
     <div style="padding:5px">
-    <button (click)='no()' class="btn btn-danger"> No </button>
+    <button  mat-flat-button color="warn" (click)='no()'> No </button>
     </div>
 
 </div>

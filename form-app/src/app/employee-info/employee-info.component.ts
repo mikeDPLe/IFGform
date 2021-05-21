@@ -14,27 +14,24 @@ export class EmployeeInfoComponent implements OnInit {
   constructor(private empDetails:EmployeeDetailsService,
     private fb:FormBuilder,
     private route:Router) { 
-    this.todaysDate = new Date()
-  
+      this.empForm = this.fb.group({
+        inputDate: ['', [Validators.required]],
+        orderNumber: ['', [Validators.required]], 
+        salesRep:[(''), [Validators.required]],
+        salesRepContactNumber:['',  [
+          Validators.required,
+          Validators.pattern('\\(?\\d+\\)?[-.\\s]?\\d+[-.\\s]?\\d+')
+         ]],
+        installCrew: this.fb.array([
+          this.fb.control('', [Validators.required]) 
+        ]),
+      })
   }
   
-    empForm = this.fb.group({
-    orderNumber: ['', [Validators.required]], 
-    salesRep:[(''), [Validators.required]],
-    salesRepContactNumber:['',  [
-      Validators.required,
-      Validators.pattern('\\(?\\d+\\)?[-.\\s]?\\d+[-.\\s]?\\d+')
-     ]],
-    installCrew: this.fb.array([
-      this.fb.control('', [Validators.required]) 
-    ]),
-  })
-todaysDate:Date;
+    empForm:FormGroup 
 
 
-  get date (){
-    return this.empForm.get('date')
-  }
+
   get orderNumber(){
     return this.empForm.get('orderNumber')
   }
@@ -46,6 +43,10 @@ todaysDate:Date;
   }
   get installCrew(){
     return this.empForm.get('installCrew') as FormArray;
+  }
+
+  get inputDate(){
+    return this.empForm.get('inputDate')
   }
 
   addCrew(){
@@ -69,6 +70,30 @@ todaysDate:Date;
   }
 
   ngOnInit(): void {
+  }
+
+  getErrorDate(){
+    if(this.inputDate?.hasError('required')) {
+      return 'Please select a date'
+    }
+    return 
+  }
+  getErrorOrder(){
+    if(this.orderNumber?.hasError('required'))
+    return 'Please type in an order number'
+    return
+  }
+  getErrorSalesRep(){
+    if(this.salesRep?.hasError('required'))
+    return 'Please enter sales represenative name'
+    return
+  }
+  getErrorSalesRepNumber(){
+    if(this.salesRepContactNumber?.hasError('required')) {
+      return 'Please enter sales rep contact number'
+    }
+  
+    return this.salesRepContactNumber?.hasError('pattern') ? 'Not a valid phone number' :'';
   }
 
 }

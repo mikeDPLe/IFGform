@@ -3,10 +3,10 @@
         Is there another doorway?
     </p>
     <div style="padding:5px" >
-    <button [routerLink]="['dimension-form']"class="btn btn-primary"> Yes</button> 
+    <button mat-stroked-button color="primary" [routerLink]="['dimension-form']"> Yes</button> 
     </div>
     <div style="padding:5px">
-    <button (click)="next()" class="btn btn-danger"> No </button>
+    <button mat-stroked-button color="warn"  (click)="next()" > No </button>
     </div>
 
 </div>

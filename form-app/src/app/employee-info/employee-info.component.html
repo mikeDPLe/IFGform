@@ -1,5 +1,8 @@
-<form [formGroup] ="empForm" (ngSubmit)="next(empForm.value)">
 
+<h3> Please enter pre-installation information</h3>
+<mat-divider></mat-divider>
+<form [formGroup] ="empForm" (ngSubmit)="next(empForm.value)">
+<!-- 
  <div class='alert alert-danger' *ngIf='empForm.invalid && (empForm.touched || empForm.dirty)'>
     <div  *ngIf='salesRep?.errors?.required && (salesRep?.dirty || salesRep?.touched)'>
         Sales representative name is required.
@@ -14,52 +17,70 @@
         <div *ngIf='salesRepContactNumber?.errors?.pattern'>
             Please type in a valid phone number.
         </div>
+      
     </div>
-</div>
+</div> -->
 
     <div>
-        Date: {{todaysDate | date:'shortDate'}}
+        <mat-form-field appearance="standard">
+            <mat-label>Choose a date: </mat-label>
+            <input formControlName='inputDate' [matDatepicker]="picker" matInput>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="inputDate?.invalid">{{getErrorDate()}}</mat-error>
+        </mat-form-field>
     </div>
 <div class='form-group'>
-    <label for="orderNumber ">
-        Order Number:
-    </label>
-    <input type='text' name='orderNumber' formControlName ='orderNumber'>
-    
+    <mat-form-field appearance="standard">
+        <mat-label for="orderNumber "> 
+            Order Number: 
+        </mat-label>
+        <input type='text' name='orderNumber' formControlName ='orderNumber' matInput >
+        <mat-error *ngIf="orderNumber?.invalid">{{getErrorOrder()}}</mat-error>
+    </mat-form-field>
 </div>
 
 <div class='form-group'>
-    <label for="salesRep">
-        Sales Representative Name:
-    </label>
-     <input type='text' name="salesRep" formControlName ='salesRep'>
+    <mat-form-field appearance="standard">
+        <mat-label for="salesRep">
+            Sales Representative Name:
+        </mat-label>
+        <input type='text' name="salesRep" formControlName ='salesRep' matInput>
+        <mat-error *ngIf="salesRep?.invalid">{{getErrorSalesRep()}}</mat-error>
+    </mat-form-field>
 </div>
 
 <div class='form-group'>    
-     <label>
-        Sales Representative Contact Number:
-        <input type='text' name='salesRepContactNumber' formControlName = 'salesRepContactNumber'>
-    </label>
+    <mat-form-field appearance="standard">
+        <mat-label>
+            Sales Representative Contact Number: 
+        </mat-label>
+        <input type='text' name='salesRepContactNumber' formControlName = 'salesRepContactNumber' matInput>
+        <mat-error *ngIf="salesRepContactNumber?.invalid"> {{getErrorSalesRepNumber()}}</mat-error>
+    </mat-form-field>
 </div> 
 
-
+<mat-divider></mat-divider>
     <div class='form-group' formArrayName="installCrew">
         <h3>Install Crew Names</h3>
         <div *ngFor ="let crew of installCrew.controls; let i= index">
             <div class='alert alert-danger' *ngIf='crew?.invalid && (crew?.touched || crew?.dirty) '>
                 At least one install crew member's name is required.
-            </div>  
-            <label>
-                Crew Member Name:
-                <input type="text" [formControlName]= "i">
-            </label>
+            </div> 
+            <mat-form-field appearance="standard"> 
+                <mat-label> Crew Member Name: </mat-label>
+                <input type="text" [formControlName]= "i" matInput>
+            </mat-form-field>
+           
             <!-- add some kind of button here-->
-            <button *ngIf='installCrew.length > 1' class='btn btn-info' type="button" (click)='removeCrew(i)'>Remove crew member</button>
+            <button *ngIf='installCrew.length > 1' mat-stroked-button type="button" (click)='removeCrew(i)'>Remove crew member</button>
+            
         </div>
-        <button class='btn btn-info' type="button" (click)='addCrew()'>Add additional crew member</button>
+        <button mat-button color="primary" type="button" (click)='addCrew()'>Add additional crew member</button>
         
+    
     </div> 
-  <button class='btn btn-primary' type="submit" [disabled] ="!empForm.valid">Next</button>
+  <button mat-flat-button color="primary" type="submit" [disabled] ="!empForm.valid">Next</button>
 </form>
 
 

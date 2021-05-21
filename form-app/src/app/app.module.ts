@@ -3,6 +3,13 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
+import { MatDatepickerModule} from '@angular/material/datepicker'
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatNativeDateModule,  } from '@angular/material/core';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule} from '@angular/material/button'; 
+import {MatDividerModule} from '@angular/material/divider'; 
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -23,6 +30,8 @@ import { PdfHolderComponent } from './pdf-holder/pdf-holder.component';
 import { EmployeeInfoComponent } from './employee-info/employee-info.component';
 import { ManagerContactComponent } from './manager-contact/manager-contact.component';
 import { CaptureImageComponent } from './capture-image/capture-image.component';
+import { NavbarBelowComponent } from './navbar-below/navbar-below.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -46,6 +55,7 @@ import { CaptureImageComponent } from './capture-image/capture-image.component';
     EmployeeInfoComponent,
     ManagerContactComponent,
     CaptureImageComponent,
+    NavbarBelowComponent,
   ],
   imports: [
     CommonModule,
@@ -53,6 +63,13 @@ import { CaptureImageComponent } from './capture-image/capture-image.component';
     ReactiveFormsModule,
     BrowserModule,
     AppRoutingModule,
+    NoopAnimationsModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatNativeDateModule,
+    MatInputModule,
+    MatButtonModule,
+    MatDividerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

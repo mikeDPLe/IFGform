@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder } from '@angular/forms';
+import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PDFOptionList, values } from 'pdf-lib';
 import { ImageHolderService } from '../image-holder.service';
@@ -22,7 +22,7 @@ export class CaptureImageComponent implements OnInit {
 
 
  formGroup = this.fb.group({
- imageArray: this.fb.array([])
+ imageArray: this.fb.array([], [Validators.required])
  })
 
  needsInstallImages:boolean = false;
@@ -43,7 +43,8 @@ export class CaptureImageComponent implements OnInit {
       reader.onload = () => {
         this.uriHolder[index] = reader.result as string
       }
-      reader.readAsDataURL(file)
+       reader.readAsDataURL(file)
+      
     }
   }
 
@@ -51,28 +52,35 @@ export class CaptureImageComponent implements OnInit {
     this.imageArray.push(this.fb.control(['']))
   }
 
+  removeImage(index:number){
+    this.imageArray.removeAt(index)
+  }
+
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-     this.needsInstallImages = params.install;
-     this.needsRemoveImages = params.remove;
- 
+      if(params) {
+        this.needsInstallImages = params.install;
+        this.needsRemoveImages = params.remove;
+      }
+     console.log(this.needsRemoveImages)
+     console.log(this.needsInstallImages)
+    
     })
   }
 
   submit(){
     if(this.needsRemoveImages && !this.needsInstallImages)
-    {
-      this.image.saveRemove(this.uriHolder)
-    } else
+    this.image.saveRemove(this.uriHolder)
+    else
     if(this.needsInstallImages) 
     this.image.saveInstall(this.uriHolder)
 
-    if(this.needsInstallImages && this.needsRemoveImages)
-    {
+    if(this.needsInstallImages && this.needsRemoveImages == true)
+    { console.log(this.needsRemoveImages)
       this.step.reloadComponent('image')
       this.needsRemoveImages = true;
     } else
-     if(this.valid.checkIfEverFalse) 
+     if(this.valid.checkIfEverNotValid) 
      this.router.navigate(['complete'])
      else 
      this.router.navigate(['customer-sign'])

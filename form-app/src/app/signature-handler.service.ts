@@ -76,8 +76,9 @@ export class SignatureHandlerService {
     return v
   }
 
-  createSigInfo(uri: string, name: string) {
+  createSigInfo(uri: string, name: string, date:Date) {
     var y = new SignatureInfo
+    y.date = date;
     y.isCustomer = this.isCust
     y.isEmployee = !this.isCust
     y.step = this.checkStep()

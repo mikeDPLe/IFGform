@@ -1,7 +1,15 @@
 <div>
-    <p>Please take images of</p>
+    <p>Please take images of
+  
+        <span *ngIf="needsInstallImages ||  (needsInstallImages && needsRemoveImages)">
+            the installation site.
+        </span> 
+        <span *ngIf="needsRemoveImages && !needsInstallImages">
+            the removal site.
+        </span>
+    </p>
 </div>
-
+<mat-divider></mat-divider>
 <form [formGroup]='formGroup' (ngSubmit)='submit()'>
 
 <div class='form-group' formArrayName='imageArray'>
@@ -11,10 +19,11 @@
         <div  class="imagePreview" *ngIf="uriHolder[i]">
             <img style="width:400px; height: 400px;" [src]="uriHolder[i]">
          </div>
+         <button type='button' *ngIf="imageArray.length > 1" (click)='removeImage(i)'> Remove image </button>
     </div>  
-  <button type='button' (click)='addImage()'> Add additional image</button>
+  <button mat-stroked-button color="primary" type='button' (click)='addImage()'> Add additional image</button>
 </div>
 
-<button type="submit"> Submit</button>
+<button mat-flat-button color="primary" type="submit"> Submit</button>
 </form>
 
