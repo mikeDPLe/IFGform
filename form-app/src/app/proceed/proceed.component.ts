@@ -16,8 +16,10 @@ export class ProceedComponent implements OnInit {
        console.log(this.didInstall)})
     valid.removeObs.subscribe(remove =>  {this.didRemove = remove
       console.log(this.didRemove)})
+      this.needRemoval= valid.neededRemoval 
   }
 
+  needRemoval: boolean;
   didInstall!:boolean;
   didRemove!:boolean;
   

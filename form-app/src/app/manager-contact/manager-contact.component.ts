@@ -20,7 +20,9 @@ export class ManagerContactComponent implements OnInit {
   }
   step:number = 0 
   managerName = new FormControl("", [Validators.required]);
-  managerContact = new FormControl("",  [Validators.required]);
+  managerContact = new FormControl("",  
+  [Validators.required,  
+  Validators.pattern('\\(?\\d+\\)?[-.\\s]?\\d+[-.\\s]?\\d+')]);
   managerResponse = new FormControl("",  [Validators.required]);
 
   proceed(){
@@ -50,6 +52,25 @@ export class ManagerContactComponent implements OnInit {
     this.empDetails.info.managerNumber = this.managerContact.value;
     this.empDetails.info.managerInstructions = this.managerResponse.value;
     
+  }
+
+  //template error functions
+
+  getErrorManagerName(){
+    if(this.managerName.hasError('required'))
+    return "Please enter the name of the manager"
+    return
+  }
+  getErrorManagerContact(){
+    if(this.managerContact.hasError('required'))
+    return "Please enter manager's phone number"
+
+    return this.managerContact.hasError('pattern') ? 'Not a valid phone number' : ''
+  }
+  getErrorManagerResponse(){
+    if(this.managerResponse.hasError('required'))
+    return "Please enter a short summary of your conversation."
+    return
   }
 
 }

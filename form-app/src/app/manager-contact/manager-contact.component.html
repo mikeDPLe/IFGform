@@ -1,23 +1,42 @@
 <div *ngIf='step == 0'>
-    <label for="managerName"> Manager's name: </label>
-    <input name='managerName' type="text" [formControl]='managerName'> 
-    <label for="managerContact"> Manager's contact number:</label>
-    <input name='managerContact' type="text" [formControl]='managerContact'>
-    <button [disabled]='!(managerName.valid && managerContact.valid)' (click)="proceed()"> Next </button> 
+    <mat-form-field appearance="fill">
+        <mat-label for="managerName"> Manager's name: </mat-label>
+        <input matInput name='managerName' type="text" [formControl]='managerName'> 
+        <mat-error *ngIf="managerName.invalid">
+            {{getErrorManagerName()}}
+        </mat-error>
+    </mat-form-field>
+<br>
+<mat-form-field appearance="fill">
+    <mat-label for="managerContact"> Manager's contact number:</mat-label>
+    <input matInput name='managerContact' type="text" [formControl]='managerContact'>
+    <mat-error *ngIf="managerContact.invalid">
+        {{getErrorManagerContact()}}
+    </mat-error>
+</mat-form-field>
+<br>
+    <button mat-flat-button color="primary" [disabled]='!(managerName.valid && managerContact.valid)' (click)="proceed()"> Next </button> 
 </div>
 <div *ngIf='step == 1' >
     Were you able to contact your manager?
-    <button (click)='proceed()'> Yes</button>
-    <button> No </button>
+    <button mat-flat-button color="primary" (click)='proceed()'> Yes</button>
+    <button mat-flat-button color="warn"> No </button>
 </div>
 <div *ngIf='step == 2'>
-    Please write a summary of what your manager told you
-    <input name="managerResponse" type="text" [formControl]='managerResponse'>
-    <button  (click)='proceed()'[disabled] ='managerResponse.valid ? false : true'> Next </button>
+    <mat-form-field appearance="fill">
+        <mat-label>
+            Please write a summary of what your manager told you
+        </mat-label>
+        <textarea matInput placeholder="Instructions go here..." name="managerResponse" type="text" [formControl]='managerResponse'>        </textarea>
+            <mat-error *ngIf="managerResponse.invalid">
+                {{getErrorManagerResponse()}}
+            </mat-error>
+        </mat-form-field>
+    <button mat-flat-button color="primary" (click)='proceed()' [disabled] ='managerResponse.valid ? false : true'> Next </button>
 </div>
 <div *ngIf='step == 3'>
     Were you instructed to continue or not to continue installation/removal? 
-    <button (click)='proceed()'> Yes</button>
-    <button> No </button>
+    <button mat-flat-button color="primary" (click)='proceed()'> Yes</button>
+    <button mat-flat-button color="warn"> No </button>
 </div>
 

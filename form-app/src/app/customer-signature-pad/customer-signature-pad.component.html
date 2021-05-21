@@ -1,28 +1,46 @@
 <form #signForm="ngForm" (ngSubmit)="onSubmit(signForm)" >
 <div id= signatureDiv class="form-group">
-    <problem-install></problem-install>
-    <label for="customer_name">Type and sign
-       <ng-container *ngIf="show == true then success; else elseBlock"></ng-container> 
-       <ng-template #success >customer</ng-template>
-       <ng-template #elseBlock>employee </ng-template> name: </label>  
-      <div class='alert alert-danger' *ngIf='name.invalid && (name.touched || name.dirty)'>
-            Typed name is required.
-      </div> 
-    <input type="text" name="name" #name = 'ngModel'  [(ngModel)]="inputName" class="form-control" id="name" style="width:inherit" autocomplete="off" required>
+   
+ <mat-form-field appearance="fill">
+  <mat-label>Choose a date</mat-label>
+  <input name='picker' matInput [matDatepicker]="picker" [(ngModel)] = 'picker1'>
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker #picker></mat-datepicker>
+ </mat-form-field> 
+  
+    <problem-install>
+    </problem-install>
+    <mat-form-field appearance="fill">
+       <mat-label for="customer_name">
+         Type 
+         <ng-container *ngIf="show == true then success; else elseBlock"></ng-container> 
+         <ng-template #success >customer</ng-template>
+         <ng-template #elseBlock> witnessing employee </ng-template> name:
+      </mat-label>
+         <input matInput type="text" name="name" #name = 'ngModel'  [(ngModel)]="inputName" class="form-control" id="name" style="width:inherit" autocomplete="off" required > 
+         <mat-error *ngIf="name.invalid">Please type a name.</mat-error>
+
+    </mat-form-field>
     <br>
     
-    <p>Please sign below </p>
-    <label id="errorMsg"></label>
+    <p>Please sign 
+      <ng-container *ngIf="show == true then success; else elseBlock"></ng-container> 
+      <ng-template #success >customer's</ng-template>
+      <ng-template #elseBlock> witnessing employee's </ng-template>
+      name below </p>
+    <mat-error *ngIf="signatureEmpty && signatureTouched" id="errorMsg">
+      Please provide a signature.
+    </mat-error>
       <div id="wrapper">
        <canvas #signaturepad  width=400 height="200" style="border:1px black solid" (mouseleave)="change()" >
 
        </canvas> 
    </div>
    <br>
-   <button (click)="clear()">Clear Signature</button>
-   <button type="submit" id="done" [disabled]="!signForm.form.valid || signatureEmpty"> Done </button>
+   <button mat-button (click)="clear()">Clear Signature</button>
+   <button mat-flat-button color='primary' type="submit" id="done" [disabled]="!signForm.form.valid || signatureEmpty"> Done </button>
    <br>
-   <button *ngIf="show == true" (click) ="onRefuse()" >
+   <button mat-flat-button color='warn' *ngIf="show == true" (click) ="onRefuse()" >
       customer refuses to sign
    </button>
   </div>

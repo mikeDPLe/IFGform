@@ -34,7 +34,6 @@ export class DimensionFormComponent implements OnInit {
 
   ngOnInit(): void {
     console.log("poopp",this.DimService.travelDimArray)
-
   }
 
   check() {

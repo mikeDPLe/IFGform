@@ -11,9 +11,12 @@ export class ValidDimService {
 
   passInstall:boolean = false;
   passRemoval:boolean = false;
+  neededRemoval:boolean = false;
+
   sigNumber:number = 0;
   custSig:number = 0;
   employeeSig: number = 0;
+
   testObs = new BehaviorSubject(this.passInstall)
   testObs2 = new BehaviorSubject (this.passRemoval)
 
@@ -23,7 +26,7 @@ export class ValidDimService {
   installObs = new BehaviorSubject(this.installRequiredSigs)
   removeObs = new BehaviorSubject(this.removeRequiredSigs)
 
-  checkIfEverFalse:boolean = false;
+  checkIfEverNotValid:boolean = false;
   
 
 
@@ -80,10 +83,12 @@ export class ValidDimService {
     } else 
     if (isValid && !remove) this.installComplete()
     if(!isValid && remove) {
+      this.neededRemoval = true;
       this.removeIncomplete();
       this.needRemoveSigs();
     } else
      if (isValid && remove) {
+      this.neededRemoval = true;
       this.removeComplete()
       this.sigNumber +=1
       this.employeeSig += 1
@@ -91,7 +96,7 @@ export class ValidDimService {
   }
   
   private checkifEverFalse(bool:boolean) {
-    if(!bool) this.checkIfEverFalse = true;
+    if(!bool) this.checkIfEverNotValid = true;
   }
 
   private needInstallSigs(){

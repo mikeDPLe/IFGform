@@ -2,7 +2,7 @@
     <div *ngIf="!showConfirm" class="form-group" style="border: black 1px solid; padding: 20px;">
       <label for="safety">Safety</label>
       <p>Make sure you have proper PPE prior to installation.</p>
-      <button (click)="next()" class="btn btn-primary">Next</button>
+      <button (click)="next()" mat-flat-button color="primary">Next</button>
     </div>
 
 <div *ngIf="showConfirm" class="form-group">
@@ -10,8 +10,8 @@
      Do you have proper PPE equipped?
   </p>
 <div style="padding:5px">
-  <button (click)="next()"  class="btn btn-primary"> Yes</button>
+  <button (click)="next()"  mat-flat-button color="primary"> Yes</button>
 </div>
 <div style="padding:5px">
-<button (click)="back()" style="padding:5px" class="btn btn-danger">  No </button>
+<button (click)="back()" style="padding:5px" mat-flat-button color="warn">  No </button>
 </div>

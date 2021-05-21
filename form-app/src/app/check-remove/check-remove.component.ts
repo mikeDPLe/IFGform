@@ -42,6 +42,7 @@ export class CheckRemoveComponent implements OnInit {
      this.router.navigate(['proceed'])
     }else{
       this.step.preRemove();
+      this.valid.neededRemoval = true;
       this.router.navigate(['dimension-form'])
     } 
   }

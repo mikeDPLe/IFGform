@@ -43,13 +43,18 @@ export class StepService {
     this.route.navigate(['cust-refuse']);
   }
 
+  restart() {
+    this.route.navigate(['emp-info'])
+    this.reloadComponent()
+  }
+
   reloadComponent(hasParams?:string) {
     let currentUrl = this.route.url;
         this.route.routeReuseStrategy.shouldReuseRoute = () => false;
         this.route.onSameUrlNavigation = 'reload';
         if(hasParams)
         {
-          this.route.navigate([hasParams])
+          this.route.navigate([hasParams],{queryParams:{}})
         } else
         this.route.navigate([currentUrl]);
     }

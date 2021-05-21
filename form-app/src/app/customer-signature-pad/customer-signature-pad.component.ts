@@ -24,7 +24,8 @@ export class CustomerSignaturePadComponent implements OnInit {
   inputName!: string 
   signaturePad!: SignaturePad;
   signatureEmpty:boolean = true;
- 
+  signatureTouched:boolean = false;
+  picker1 = new Date
  
 
   ngOnInit(): void {
@@ -40,11 +41,13 @@ export class CustomerSignaturePadComponent implements OnInit {
   }
   change(){
    this.signatureEmpty =  this.signaturePad.isEmpty()
+   this.signatureTouched = true;
   }
   onSubmit(f:NgForm) {
+   var date = this.picker1
    var uri =  this.signaturePad.toDataURL()
    var name = this.inputName
-   var y = this.signatureService.createSigInfo(uri,name)
+   var y = this.signatureService.createSigInfo(uri,name,date)
    this.signatureService.pushtoArray(y);
    this.signatureService.checkRepeat()
   }

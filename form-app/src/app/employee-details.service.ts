@@ -19,7 +19,7 @@ export class EmployeeDetailsService {
   }
 
   public submitData(data:any){
-     this.info.date = new Date()
+     this.info.date = data.inputDate
      this.info.orderNumber = data.orderNumber;
      this.info.salesRep = data.salesRep;
      this.info.salesRepContactNumber = data.salesRepContactNumber;
