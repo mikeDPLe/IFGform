@@ -12,6 +12,7 @@ export class PdfInfo {
     
     EmployeeSign1:string =""
     EmployeePrint1:string =""
+    //EmployeeDate1:string =""
 
     CustomerSign1:string =""
     CustomerPrint1:string =""
@@ -26,21 +27,12 @@ export class PdfInfo {
 
     CustomerSign2:string =""
     CustomerPrint2:string =""    
-    
-    EmployeeSign3:string =""
-    EmployeePrint3:string =""
 
     CustomerSign3:string =""
     CustomerPrint3:string =""
 
-    EmployeeSign4:string =""
-    EmployeePrint4:string =""
-
     CustomerSign4:string =""
     CustomerPrint4:string =""
-
-    EmployeeSign5:string =""
-    EmployeePrint5:string =""
 
     CustomerSign5:string =""
     CustomerPrint5:string =""
