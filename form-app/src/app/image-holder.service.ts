@@ -6,7 +6,8 @@ import { Injectable } from '@angular/core';
 export class ImageHolderService {
 
   constructor() { }
-
+  
+  //contains string uri's of images
   installImage:Array<string> = []
   removeImage:Array<string> = []
 

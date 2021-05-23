@@ -25,6 +25,7 @@ export class CaptureImageComponent implements OnInit {
  imageArray: this.fb.array([], [Validators.required])
  })
 
+
  needsInstallImages:boolean = false;
  needsRemoveImages:boolean = false
  uriHolder:Array<string> = [] 
@@ -35,7 +36,8 @@ export class CaptureImageComponent implements OnInit {
 
   showPreview(event: Event, index:number) {
     var file = (event.target as HTMLInputElement).files?.item(0)
-
+    var control =   event.target as HTMLInputElement
+    control.style.visibility = 'hidden'
     if (file) {
       // File Preview
       console.log(file)
@@ -55,6 +57,7 @@ export class CaptureImageComponent implements OnInit {
   removeImage(index:number){
     this.imageArray.removeAt(index)
   }
+  
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -67,6 +70,7 @@ export class CaptureImageComponent implements OnInit {
     
     })
   }
+
 
   submit(){
     if(this.needsRemoveImages && !this.needsInstallImages)

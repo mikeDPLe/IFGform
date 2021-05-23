@@ -11,16 +11,19 @@
 </div>
 <mat-divider></mat-divider>
 <form [formGroup]='formGroup' (ngSubmit)='submit()'>
-
 <div class='form-group' formArrayName='imageArray'>
     <div *ngFor= 'let control of imageArray.controls; let i= index'>
-
-        <input type="file" accept="image/*"  capture="environment" [formControlName]= 'i' (change)='showPreview($event, i)'>
-        <div  class="imagePreview" *ngIf="uriHolder[i]">
+        <br>
+        <input type="file" accept="image/*" capture="environment" id='i' [formControlName]= 'i' (change)='showPreview($event, i)'>
+        <div  class= "imagePreview" *ngIf="uriHolder[i]">
             <img style="width:400px; height: 400px;" [src]="uriHolder[i]">
          </div>
-         <button type='button' *ngIf="imageArray.length > 1" (click)='removeImage(i)'> Remove image </button>
+         <label style='border:1px black' *ngIf="uriHolder[i]" for="i" >
+            Retake Image
+         </label>   
+         <button mat-stroked-button color='warn' type='button' *ngIf="imageArray.length > 1 && uriHolder[i] " (click)='removeImage(i)'> Remove image </button>
     </div>  
+    <br>
   <button mat-stroked-button color="primary" type='button' (click)='addImage()'> Add additional image</button>
 </div>
 

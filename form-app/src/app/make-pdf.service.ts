@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DimensionService } from './dimension.service';
 import { SignatureHandlerService } from './signature-handler.service';
-import { PDFDocument, StandardFonts, rgb, values } from 'pdf-lib'
+import { PDFDocument, StandardFonts, rgb, values, showText } from 'pdf-lib'
 import { Dimensions } from './classes/dimensions';
 import { SignatureInfo } from './classes/signature-info';
 import { PdfInfo } from './classes/pdf-info';
@@ -9,6 +9,7 @@ import download from 'downloadjs'
 import { EmployeeInfo } from './employee-info';
 import { EmployeeDetailsService } from './employee-details.service';
 import { ImageHolderService } from './image-holder.service';
+import { DatePipe } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,8 @@ export class MakePDFService {
   constructor(private sig: SignatureHandlerService,
     private dim: DimensionService,
     private emp: EmployeeDetailsService,
-    private image: ImageHolderService) {
+    private image: ImageHolderService, 
+    private datePipe:DatePipe) {
     //signature arrays hold: 1. string uri of the signature 2. a string name of the individual who signed it 
     //3. if it was a customer or employee signature 4. the step the signature was obtained at
     // steps are handled in the checkStatus in the signature-handler service
@@ -33,7 +35,7 @@ export class MakePDFService {
     this.arrayInstallProductDim = this.dim.productDimArray
     this.arrayRemoveDoorDim = this.dim.travelRemoveDimArray
     this.arrayRemoveProductDim = this.dim.productRemoveDimArray
-    this.employeeInfo = emp.info
+    this.employeeInfo = this.emp.info
 
   }
   arrayCustomer: Array<SignatureInfo> = []
@@ -87,6 +89,7 @@ export class MakePDFService {
     
     // mandatory fields (door height, order number etc)
     const dateField = form.getTextField('Date')
+    console.log('prep',this.p.Date)
     dateField.setText(this.p.Date)
     //dateField.setText("5/10")
     
@@ -237,7 +240,15 @@ export class MakePDFService {
   }
 
   private async iterate() {
-    this.p.Date = new Date().toLocaleDateString()
+    var tempDate = new Date().toLocaleString()
+    var shortDate = this.datePipe.transform(tempDate, 'MM-dd-YYYY')
+      if(shortDate)
+      
+      {console.log(shortDate)
+       this.p.Date = shortDate
+       console.log('after',this.p.Date)
+      }
+   
     /*
     //all this is filler
      
@@ -288,6 +299,8 @@ export class MakePDFService {
     this.iterateRemoveDoorDimensions()
     this.iterateNewProductDimensions()
     this.iterateOldProductDimensions()
+
+
     
 
   }
@@ -405,7 +418,7 @@ export class MakePDFService {
 
   private checkEmployeeInfoIsRefuse() {
     var obj = this.employeeInfo
-    this.p.Date = obj.date.toString()
+    // this.p.Date = obj.date.toString()
     this.p.CrewName = obj.installCrew.toString()
     this.p.OrderNumber = obj.orderNumber.toString()
     this.p.IFGSaleRepName = obj.salesRep
