@@ -26,7 +26,6 @@
     "downloadjs": "^1.4.7",
     "ng2-pdfjs-viewer": "^6.0.1",
     "pdf-lib": "^1.16.0",
-    "pdfjs-dist": "^2.7.570",
     "rxjs": "~6.6.0",
     "signature_pad": "^3.0.0-beta.4",
     "tslib": "^2.0.0",
