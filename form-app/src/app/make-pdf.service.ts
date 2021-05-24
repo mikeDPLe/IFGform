@@ -10,6 +10,7 @@ import { EmployeeInfo } from './employee-info';
 import { EmployeeDetailsService } from './employee-details.service';
 import { ImageHolderService } from './image-holder.service';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -49,11 +50,15 @@ export class MakePDFService {
 
   formUrl = 'assets/equipment.pdf'
 
+ 
+ 
+
   async makePdf() {
     const formPdfBytes = await fetch(this.formUrl).then(res => res.arrayBuffer());
     const pdfDoc = await PDFDocument.load(formPdfBytes);
     const form = pdfDoc.getForm();
 
+    
     // iterate to get your info
     await this.iterate();
 
@@ -119,13 +124,15 @@ export class MakePDFService {
 
 
 
-    const pdfDataUri = await pdfDoc.saveAsBase64({ dataUri: true });
+    // const pdfDataUri = await pdfDoc.saveAsBase64({ dataUri: true });
+    const Uint8bitDataUri = await pdfDoc.save()
 
     //trigger auto downloading (broken)
     //const pdfBytes = await pdfDoc.save()
     //download(pdfBytes, "pdf-lib_form_creation_example.pdf", "application/pdf");
 
-    return pdfDataUri
+    return Uint8bitDataUri
+    // return pdfDataUri
 
   }
 

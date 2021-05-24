@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { DatePipe } from '@angular/common';
+import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
 
 import { MatDatepickerModule} from '@angular/material/datepicker'
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -69,7 +71,10 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
     MatNativeDateModule,
     MatInputModule,
     MatButtonModule,
-    MatDividerModule
+    MatDividerModule,
+    PdfJsViewerModule,
+    
+    
   ],
   providers: [],
   bootstrap: [AppComponent]
