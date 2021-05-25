@@ -20,9 +20,15 @@ export class PdfHolderComponent implements OnInit {
       this.uri = this.sanitizer.bypassSecurityTrustResourceUrl(x)
     )
   }
+
+  async downloadPDF(){
+    this.pdf.downloadPdf()
+  }
   ngAfterViewInit(){
     
   }
+
+
 
   
 }

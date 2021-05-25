@@ -42,4 +42,7 @@ export class PdfInfo {
     ManagerName?:string;
     ManagerNumber?:string;
     ManagerProceed?:boolean
+
+    InstallImages?:string[];
+    RemoveImages?:string[];
 }

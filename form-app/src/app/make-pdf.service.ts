@@ -49,6 +49,8 @@ export class MakePDFService {
   //defines all of the fields in the pdf to fill
   p = new PdfInfo
 
+  finalPDF: any
+
   formUrl = 'assets/equipment.pdf'
 
   async makePdf() {
@@ -85,7 +87,75 @@ export class MakePDFService {
         page.drawText('yes', { x: textX, y: pY, size: textsize })
       } else page.drawText('no', { x: textX, y: pY, size: textsize })
     }
-    console.log("here4")
+
+    //add images, abstract some of this shit away into functions
+
+    if (this.p.InstallImages) {
+      for (const value of this.p.InstallImages) {
+        console.log("value", value)
+
+        const page = pdfDoc.addPage()
+        
+        var pageWidth = page.getWidth()
+        var pageHeight = page.getHeight()
+
+        var imageA = await pdfDoc.embedJpg(value)
+        const imageDims = imageA.scaleToFit(pageWidth - 100, pageHeight - 100)
+        var imageWidth = imageDims.width
+        var imageHeight = imageDims.height
+
+        // center the boy
+        var startingX = (pageWidth - imageWidth)/2
+        var startingY = (pageHeight - imageHeight)/2
+
+        page.drawImage(imageA, {
+          x: startingX,
+          y: startingY,
+          width: imageWidth,
+          height: imageHeight,
+        })
+      }
+    }
+
+    if (this.p.RemoveImages) {
+      for (const value of this.p.RemoveImages) {
+        console.log("value", value)
+
+        const page = pdfDoc.addPage()
+        
+        var pageWidth = page.getWidth()
+        var pageHeight = page.getHeight()
+
+        var imageA = await pdfDoc.embedJpg(value)
+        const imageDims = imageA.scaleToFit(pageWidth - 100, pageHeight - 100)
+        var imageWidth = imageDims.width
+        var imageHeight = imageDims.height
+
+        // center the boy
+        var startingX = (pageWidth - imageWidth)/2
+        var startingY = (pageHeight - imageHeight)/2
+
+        page.drawImage(imageA, {
+          x: startingX,
+          y: startingY,
+          width: imageWidth,
+          height: imageHeight,
+        })
+      }
+    }
+
+    
+
+
+        
+
+      
+
+
+
+    
+    
+    
     
     // mandatory fields (door height, order number etc)
     const dateField = form.getTextField('Date')
@@ -231,12 +301,21 @@ export class MakePDFService {
 
     const pdfDataUri = await pdfDoc.saveAsBase64({ dataUri: true });
 
-    //trigger auto downloading (broken)
+    //trigger auto downloading 
     //const pdfBytes = await pdfDoc.save()
     //download(pdfBytes, "pdf-lib_form_creation_example.pdf", "application/pdf");
 
+    this.finalPDF = pdfDoc
     return pdfDataUri
 
+  }
+
+  async downloadPdf() {
+    const pdfBytes = await this.finalPDF.save()
+    //fileName = date, order, IFGSaleRepName, CustomerPrint1, EmployeePrint1
+    const fileName = "equipment_installation_" + this.p.Date + "_" + this.p.IFGSaleRepName + "_" + this.p.CustomerPrint1 + "_" + this.p.EmployeePrint1 + ".pdf"
+    download(pdfBytes, fileName, "application/pdf");
+    console.log("downloadPDF")
   }
 
   private async iterate() {
@@ -299,7 +378,7 @@ export class MakePDFService {
     this.iterateRemoveDoorDimensions()
     this.iterateNewProductDimensions()
     this.iterateOldProductDimensions()
-
+    this.iterateImages()
 
     
 
@@ -397,8 +476,8 @@ export class MakePDFService {
     }
   }
   private iterateImages(){
-    this.image.getInstallImages()
-    this.image.getRemoveImage()
+    this.p.InstallImages = this.image.getInstallImages()
+    this.p.RemoveImages = this.image.getRemoveImage()
   }
 
   private getHeight(array: Array<Dimensions>) {
