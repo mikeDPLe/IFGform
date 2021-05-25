@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { StepService } from '../step.service';
+import { ValidDimService } from '../valid-dim.service';
 
 
 @Component({
@@ -11,14 +11,20 @@ import { StepService } from '../step.service';
 export class DimFailEmployee1Component implements OnInit {
 
   constructor(private router: Router,
-    private step: StepService) {
-      if(this.step.isRemove) this.isRemove = true;
+   private valid:ValidDimService) {
+    this.valid.removeObs.subscribe(needsRemovesigs =>{
+        this.isRemove = needsRemovesigs
+      })
+     this.valid.installObs.subscribe(needsInstallSigs => {
+       this.isInstall = needsInstallSigs
+     })
      }
 
 
   ngOnInit(): void {
   }
   showConfirm: Boolean = false;
+  isInstall:boolean = false;
   isRemove: boolean = false;
 
   next(){

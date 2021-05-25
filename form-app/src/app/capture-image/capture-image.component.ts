@@ -14,11 +14,13 @@ import { ValidDimService } from '../valid-dim.service';
 export class CaptureImageComponent implements OnInit {
 
   constructor(private fb:FormBuilder, 
-    private route:ActivatedRoute,
     private router:Router,
     private valid:ValidDimService,
     private step:StepService,
-    private image:ImageHolderService) { }
+    private image:ImageHolderService) { 
+      this.needsInstallImages = image.needsInstallImages
+      this.needsRemoveImages = image.needsRemoveImages
+    }
 
 
  formGroup = this.fb.group({
@@ -26,8 +28,8 @@ export class CaptureImageComponent implements OnInit {
  })
 
 
- needsInstallImages:boolean = false;
- needsRemoveImages:boolean = false
+ needsInstallImages:boolean 
+ needsRemoveImages:boolean 
  uriHolder:Array<string> = [] 
  
  get imageArray(){
@@ -60,31 +62,26 @@ export class CaptureImageComponent implements OnInit {
   
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-      if(params) {
-        this.needsInstallImages = params.install;
-        this.needsRemoveImages = params.remove;
-      }
-     console.log(this.needsRemoveImages)
-     console.log(this.needsInstallImages)
-    
-    })
-  }
+   }
 
 
   submit(){
-    if(this.needsRemoveImages && !this.needsInstallImages)
-    this.image.saveRemove(this.uriHolder)
-    else
-    if(this.needsInstallImages) 
-    this.image.saveInstall(this.uriHolder)
-
-    if(this.needsInstallImages && this.needsRemoveImages == true)
-    { console.log(this.needsRemoveImages)
+    if(this.needsInstallImages && this.needsRemoveImages)
+    { 
+      this.image.finishInstall()
+      this.image.saveInstall(this.uriHolder)
       this.step.reloadComponent('image')
-      this.needsRemoveImages = true;
-    } else
-     if(this.valid.checkIfEverNotValid) 
+      return
+    }
+    if(this.needsRemoveImages) {
+      this.image.finishRemove()
+      this.image.saveRemove(this.uriHolder)
+    }
+    if(this.needsInstallImages) {
+      this.image.finishInstall()
+      this.image.saveInstall(this.uriHolder)
+    }
+     if(this.valid.installEverFalse) 
      this.router.navigate(['complete'])
      else 
      this.router.navigate(['customer-sign'])

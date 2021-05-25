@@ -1,21 +1,19 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { DimensionService } from './dimension.service';
+import { ImageHolderService } from './image-holder.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ValidDimService {
 
-  constructor(private dimService:DimensionService) { }
+  constructor(private dimService:DimensionService, 
+    private image:ImageHolderService) { }
 
   passInstall:boolean = false;
   passRemoval:boolean = false;
   neededRemoval:boolean = false;
-
-  sigNumber:number = 0;
-  custSig:number = 0;
-  employeeSig: number = 0;
 
   testObs = new BehaviorSubject(this.passInstall)
   testObs2 = new BehaviorSubject (this.passRemoval)
@@ -26,9 +24,11 @@ export class ValidDimService {
   installObs = new BehaviorSubject(this.installRequiredSigs)
   removeObs = new BehaviorSubject(this.removeRequiredSigs)
 
+  installEverFalse:boolean = false;
   checkIfEverNotValid:boolean = false;
-  
-
+  sigNumber:number = 0;
+  custSig:number = 0;
+  employeeSig: number = 0;
 
   checkValues(remove:boolean){
     if(remove) {
@@ -78,18 +78,24 @@ export class ValidDimService {
   private checkState(isValid:boolean, remove:boolean){
     console.log('checkstate')
       if(!isValid && !remove ) {
+      this.image.needsInstall()
       this.installIncomplete()
       this.needInstallSigs()
     } else 
-    if (isValid && !remove) this.installComplete()
+    if (isValid && !remove){
+      this.installComplete()
+      this.image.finishInstall()
+    }
     if(!isValid && remove) {
       this.neededRemoval = true;
+      this.image.needsRemove()
       this.removeIncomplete();
       this.needRemoveSigs();
     } else
      if (isValid && remove) {
-      this.neededRemoval = true;
       this.removeComplete()
+      this.neededRemoval = true;
+      this.image.finishRemove()
       this.sigNumber +=1
       this.employeeSig += 1
     }
@@ -114,12 +120,15 @@ export class ValidDimService {
   
    installComplete(){
     this.testObs.next(true);
+    this.installObs.next(false)
    }
    removeComplete(){
      this.testObs2.next(true);
+     this.removeObs.next(false);
    }
    installIncomplete(){
      this.testObs.next(false);
+     this.installEverFalse = true;
    }
    removeIncomplete(){
      this.testObs2.next(false);

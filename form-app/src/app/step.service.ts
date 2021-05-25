@@ -16,26 +16,10 @@ export class StepService {
       this.$remove = this.valid.testObs2.subscribe(value => {console.log('testobs2', value)})
      }
 
-  currentStep:string = ""
-  incrementTimes:number = 0
-  isRemove!: boolean;
-  isInstall!: boolean;
+
   $install:Subscription
   $remove:Subscription
 
-
-
-
-  preInstall (){
-    this.isInstall = true;
-    console.log('install called');
-  }
-  preRemove() {
-    this.isRemove = true;
-    this.isInstall = false;
-   
-    console.log('remove called')
-  }
 
 
   setStepRefuse(){

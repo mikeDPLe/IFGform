@@ -1,9 +1,15 @@
 <div *ngIf="didInstall" class="form-group">
-    <p>Proceed to installation. Press next to take images of installation.</p>
+    <p>Proceed to installation. </p>
 </div>
-<div *ngIf="didRemove || needRemoval">
-    <p>Proceed to uninstallation Press next to take images of removal.</p>
+<div *ngIf="needInstallImage"> 
+    Press next to take images of installation.
+</div>
+<div *ngIf="needRemoval">
+    <p>Proceed to uninstallation. </p>
 </div>   
+<div *ngIf='needRemoveImage'>
+    Press next to take images of removal.
+</div>
     <button (click)="next()" class="btn btn-default">Next</button>
 
     

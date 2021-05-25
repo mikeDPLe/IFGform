@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MakePDFService } from '../make-pdf.service';
-import {DomSanitizer } from '@angular/platform-browser'
+import { PdfJsViewerComponent } from 'ng2-pdfjs-viewer';
+
 @Component({
   selector: 'app-pdf-holder',
   templateUrl: './pdf-holder.component.html',
@@ -8,19 +9,24 @@ import {DomSanitizer } from '@angular/platform-browser'
 })
 export class PdfHolderComponent implements OnInit {
 
-  constructor(private pdf:MakePDFService,
-    private sanitizer:DomSanitizer) { }
+  constructor(private pdf:MakePDFService
+  ) { }
 
   @ViewChild('pdf') pagePdf!:ElementRef;
-  uri!:any;
+  @ViewChild('pdfViewer') public pdfViewer!:PdfJsViewerComponent
+  uri!:any
+  arrayUri!:Uint8Array
   
   //access by tying /pdf in root
  async ngOnInit(): Promise<void> {
-    this.pdf.makePdf().then(x =>
-      this.uri = this.sanitizer.bypassSecurityTrustResourceUrl(x)
-    )
+    // this.pdf.makePdf().then(x =>
+    //   this.uri = this.sanitizer.bypassSecurityTrustResourceUrl(x)
+    // )
+    this.pdf.makePdf().then(uri => {
+      this.pdfViewer.pdfSrc = uri;
+      this.pdfViewer.refresh();
+    })
   }
-
   async downloadPDF(){
     this.pdf.downloadPdf()
   }

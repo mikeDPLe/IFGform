@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { StepService } from '../step.service';
+import { ImageHolderService } from '../image-holder.service';
 import { ValidDimService } from '../valid-dim.service';
 
 @Component({
@@ -11,35 +11,36 @@ import { ValidDimService } from '../valid-dim.service';
 export class ProceedComponent implements OnInit {
 
   constructor(private valid:ValidDimService,
-    private route:Router) { 
+    private route:Router, 
+    private image:ImageHolderService) { 
     valid.testObs.subscribe(install => {this.didInstall = install
        console.log(this.didInstall)})
-    valid.removeObs.subscribe(remove =>  {this.didRemove = remove
-      console.log(this.didRemove)})
+     valid.removeObs.subscribe(neededSig => {
+       this.didRemove = neededSig
+     })  
       this.needRemoval= valid.neededRemoval 
+   
   }
 
   needRemoval: boolean;
   didInstall!:boolean;
   didRemove!:boolean;
-  
+  needRemoveImage!:boolean;
+  needInstallImage!:boolean;
 
   ngOnInit(): void {
+    this.needInstallImage = this.image.needsInstallImages
+    this.needRemoveImage = this.image.needsRemoveImages
   }
 
   next()
   {
-    if(this.didInstall || this.didRemove)
-    this.route.navigate(['image'], {queryParams: 
-      {
-        install: this.didInstall, 
-        remove: this.didRemove
-      }})
-    // if(this.valid.checkIfEverFalse) 
-    //  this.route.navigate(['complete'])
-    //  else 
-    //  this.route.navigate(['customer-sign'])
-      
+    console.log('evernotvalid', this.valid.checkIfEverNotValid)
+    if(this.image.needsInstallImages || this.image.needsRemoveImages)
+    this.route.navigate(['image']) 
+    else if(this.valid.installEverFalse == false){
+      this.route.navigate(['customer-sign'])
+    } else 
+    this.route.navigate(['complete'])
   }
-
 }

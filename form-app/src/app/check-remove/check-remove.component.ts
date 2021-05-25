@@ -29,8 +29,7 @@ export class CheckRemoveComponent implements OnInit {
 
   yes(){
     if(this.showConfirm) {
-      this.step.preRemove()
-      this.dim.useOldTravel();
+     this.dim.useOldTravel();
       this.router.navigate(['dimension-product'])
     } 
      this.showConfirm = true;
@@ -41,7 +40,6 @@ export class CheckRemoveComponent implements OnInit {
      this.valid.testObs2.next(true);
      this.router.navigate(['proceed'])
     }else{
-      this.step.preRemove();
       this.valid.neededRemoval = true;
       this.router.navigate(['dimension-form'])
     } 

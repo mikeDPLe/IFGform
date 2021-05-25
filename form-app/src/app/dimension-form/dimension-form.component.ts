@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { DimensionService } from '../dimension.service';
 import { Dimensions } from '../classes/dimensions';
 import { StepService } from '../step.service';
+import { ValidDimService } from '../valid-dim.service';
 
 
 @Component({
@@ -19,17 +20,18 @@ export class DimensionFormComponent implements OnInit {
     width: "",
     height: "",
   }
-  isInstall:boolean;
+  isInstall:boolean = false;
   checkDoor:boolean = false;
  
   
     
   constructor(private DimService:DimensionService, 
     private router: Router,
-    private step:StepService) {
-    if(!this.step.isInstall) this.isInstall = false;
-    else this.isInstall = true;
-    
+    private valid :ValidDimService) {
+      this.valid.testObs.subscribe(passedInstall => this.isInstall = !passedInstall)
+    // if(!this.step.isInstall) this.isInstall = false;
+    // else this.isInstall = true;
+
   }
 
   ngOnInit(): void {

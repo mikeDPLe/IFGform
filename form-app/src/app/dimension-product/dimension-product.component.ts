@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { DimensionService } from '../dimension.service';
 import { Dimensions } from '../classes/dimensions';
 import { ValidDimService } from '../valid-dim.service';
-import { StepService } from '../step.service';
+
 
 @Component({
   selector: 'app-dimension-product',
@@ -12,21 +12,23 @@ import { StepService } from '../step.service';
 })
 export class DimensionProductComponent implements OnInit {
 
-  constructor(private dimService:DimensionService, 
-    private router:Router, 
-    private checkService:ValidDimService, 
-    private step: StepService) { 
-      if(!this.step.isInstall) this.isInstall = false; 
-      else this.isInstall = true;
+  constructor(private dimService: DimensionService,
+    private router: Router,
+    private checkService: ValidDimService
+  ) {
+    checkService.testObs.subscribe(passedInstall => {
+      this.isInstall = !passedInstall
       console.log('isinstall', this.isInstall)
-    }
+    })
+
+  }
 
   productDimArray:Array<Dimensions> = []
   productDim = {
     width:"",
     height:""
   }
-  isInstall:boolean;
+  isInstall!:boolean;
  
 
   ngOnInit(): void { 
@@ -40,9 +42,9 @@ export class DimensionProductComponent implements OnInit {
       console.log('dimservice product', this.dimService.productDimArray)
       var result = this.checkService.checkValues(false)
       if (result) {
-        this.router.navigate(["check-remove"], { skipLocationChange: true })
+        this.router.navigate(["check-remove"])
       } else[
-        this.router.navigate(["dim-fail"], { skipLocationChange: true })
+        this.router.navigate(["dim-fail"])
       ]
 
     } else {

@@ -22,7 +22,6 @@ export class SafetyComponent implements OnInit {
     if(!this.showConfirm){
       this.showConfirm = true;
     } else {
-      this.step.preInstall()
       this.router.navigate(['dimension-form'])
     }
   }

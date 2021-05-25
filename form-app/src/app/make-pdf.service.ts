@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DimensionService } from './dimension.service';
 import { SignatureHandlerService } from './signature-handler.service';
-import { PDFDocument, StandardFonts, rgb, values, showText } from 'pdf-lib'
+import { PDFDocument, StandardFonts, rgb, values, showText, PDFForm } from 'pdf-lib'
 import { Dimensions } from './classes/dimensions';
 import { SignatureInfo } from './classes/signature-info';
 import { PdfInfo } from './classes/pdf-info';
@@ -61,253 +61,27 @@ export class MakePDFService {
     // iterate to get your info
     await this.iterate();
     
-    if (!(this.checkEmployeeInfoIsRefuse())) {
-
-      const page = pdfDoc.addPage([350, 350])
-      var textsize = 10
-      var labelX = 30;
-      var textX = 150;
-      
-
-      var mNY1 = 300
-      page.drawText('Manager Name:', { x: labelX, y: mNY1, size: textsize })
-      page.drawText(this.p.ManagerName!, { x: textX, y: mNY1, size: textsize })
-
-      var miY = 240
-      page.drawText('Manager Instructions', { x: labelX, y: miY, size: textsize })
-      page.drawText(this.p.ManagerInstructions!, { x: textX, y: miY, size: textsize, })
-
-      var mnY = 180
-      page.drawText('Manager Number:', { x: labelX, y: mnY, size: textsize })
-      page.drawText(this.p.ManagerNumber!, { x: textX, y: mnY, size: textsize })
-
-      var pY = 120
-      page.drawText('Instructed to proceed?:', { x: labelX, y: pY, size: textsize })
-      if (this.p.ManagerProceed) {
-        page.drawText('yes', { x: textX, y: pY, size: textsize })
-      } else page.drawText('no', { x: textX, y: pY, size: textsize })
-    }
-
+    // checks if Manager response was necessary and adds a page with details if it exists
+    this.embedManagerResponse(pdfDoc)
+    
     //add images, abstract some of this shit away into functions
+    this.embedImages(pdfDoc)
 
-    if (this.p.InstallImages) {
-      for (const value of this.p.InstallImages) {
-        console.log("value", value)
-
-        const page = pdfDoc.addPage()
-        
-        var pageWidth = page.getWidth()
-        var pageHeight = page.getHeight()
-
-        var imageA = await pdfDoc.embedJpg(value)
-        const imageDims = imageA.scaleToFit(pageWidth - 100, pageHeight - 100)
-        var imageWidth = imageDims.width
-        var imageHeight = imageDims.height
-
-        // center the boy
-        var startingX = (pageWidth - imageWidth)/2
-        var startingY = (pageHeight - imageHeight)/2
-
-        page.drawImage(imageA, {
-          x: startingX,
-          y: startingY,
-          width: imageWidth,
-          height: imageHeight,
-        })
-      }
-    }
-
-    if (this.p.RemoveImages) {
-      for (const value of this.p.RemoveImages) {
-        console.log("value", value)
-
-        const page = pdfDoc.addPage()
-        
-        var pageWidth = page.getWidth()
-        var pageHeight = page.getHeight()
-
-        var imageA = await pdfDoc.embedJpg(value)
-        const imageDims = imageA.scaleToFit(pageWidth - 100, pageHeight - 100)
-        var imageWidth = imageDims.width
-        var imageHeight = imageDims.height
-
-        // center the boy
-        var startingX = (pageWidth - imageWidth)/2
-        var startingY = (pageHeight - imageHeight)/2
-
-        page.drawImage(imageA, {
-          x: startingX,
-          y: startingY,
-          width: imageWidth,
-          height: imageHeight,
-        })
-      }
-    }
-
-    
-
-
-        
-
-      
-
-
-
-    
-    
-    
-    
     // mandatory fields (door height, order number etc)
-    const dateField = form.getTextField('Date')
-    console.log('prep',this.p.Date)
-    dateField.setText(this.p.Date)
-    //dateField.setText("5/10")
-    
-    const CrewName = form.getTextField('CrewName')
-    CrewName.setText(this.p.CrewName)
-
-    const OrderNumber = form.getTextField('OrderNumber')
-    OrderNumber.setText(this.p.OrderNumber)
-
-    const IFGSaleRepName = form.getTextField('IFGSaleRepName')
-    IFGSaleRepName.setText(this.p.IFGSaleRepName)
-
-    const IFGSaleRepContactNumber = form.getTextField('IFGSaleRepContactNumber')
-    IFGSaleRepContactNumber.setText(this.p.IFGSaleRepContactNumber)
-
-    var doorInstallHeight = this.p.DoorHeight
-    const doorInstallHeightField = form.getTextField('DoorHeight')
-    doorInstallHeightField.setText(doorInstallHeight)
-
-    var doorInstallWidth = this.p.DoorWidth
-    const doorInstallWidthField = form.getTextField('DoorWidth')
-    doorInstallWidthField.setText(doorInstallWidth)
-
-    var oldDoorInstallHeight = this.p.OldDoorHeight
-    const oldDoorInstallHeightField = form.getTextField('OldDoorHeight')
-    oldDoorInstallHeightField.setText(oldDoorInstallHeight)
-
-    var oldDoorInstallWidth = this.p.OldDoorWidth
-    const oldDoorInstallWidthField = form.getTextField('OldDoorWidth')
-    oldDoorInstallWidthField.setText(oldDoorInstallWidth)
-
-    var productInstallHeight = this.p.ProductHeight
-    const productInstallHeightField = form.getTextField('ProductHeight')
-    productInstallHeightField.setText(productInstallHeight)
-
-    var productInstallWidth = this.p.ProductWidth
-    const productInstallWidthField = form.getTextField('ProductWidth')
-    productInstallWidthField.setText(productInstallWidth)
-
-    var oldProductInstallHeight = this.p.OldProductHeight
-    const oldProductInstallHeightField = form.getTextField('OldProductHeight')
-    oldProductInstallHeightField.setText(oldProductInstallHeight)
-
-    var oldProductInstallWidth = this.p.OldProductWidth
-    const oldProductInstallWidthField = form.getTextField('OldProductWidth')
-    oldProductInstallWidthField.setText(oldProductInstallWidth)
-    
-
+    this.embedMandatoryFields(form)
+   
     // conditional fields (logic needed to fill depending on circumstance)
-    
-    if (this.p.EmployeeSign1.length > 0) {
-      const EmployeeSign1 = form.getButton('EmployeeSign1')
-      var embimg = await pdfDoc.embedPng(this.p.EmployeeSign1)
-      EmployeeSign1.setImage(embimg)
-
-      const EmployeePrint1 = form.getTextField('EmployeePrint1')
-      EmployeePrint1.setText(this.p.EmployeePrint1)
-
-      const EmployeeDate1 = form.getTextField('EmployeeDate1')
-      EmployeeDate1.setText(this.p.Date)
-    }
-
-    console.log("here5")
-
-
-    if (this.p.EmployeeSign2.length > 0) {
-      const EmployeeSign2 = form.getButton('EmployeeSign2')
-      var embimg = await pdfDoc.embedPng(this.p.EmployeeSign2)
-      EmployeeSign2.setImage(embimg)
-
-      const EmployeePrint2 = form.getTextField('EmployeePrint2')
-      EmployeePrint2.setText(this.p.EmployeePrint2)
-
-      const EmployeeDate2 = form.getTextField('EmployeeDate2')
-      EmployeeDate2.setText(this.p.Date)
-    }
-
-    if (this.p.CustomerSign1.length > 0) {
-      const CustomerSign1 = form.getButton('CustomerSign1')
-      var embimg = await pdfDoc.embedPng(this.p.CustomerSign1)
-      CustomerSign1.setImage(embimg)
-
-      const CustomerPrint1 = form.getTextField('CustomerPrint1')
-      CustomerPrint1.setText(this.p.CustomerPrint1)
-
-      const CustomerDate1 = form.getTextField('CustomerDate1')
-      CustomerDate1.setText(this.p.Date)
-    }
-    
-
-    if (this.p.CustomerSign2.length > 0) {
-      const CustomerSign2 = form.getButton('CustomerSign2')
-      var embimg = await pdfDoc.embedPng(this.p.CustomerSign2)
-      CustomerSign2.setImage(embimg)
-
-      const CustomerPrint2 = form.getTextField('CustomerPrint2')
-      CustomerPrint2.setText(this.p.CustomerPrint2)
-
-      const CustomerDate2 = form.getTextField('CustomerDate2')
-      CustomerDate2.setText(this.p.Date)
-    }
-
-    if (this.p.CustomerSign3.length > 0) {
-      const CustomerSign3 = form.getButton('CustomerSign3')
-      var embimg = await pdfDoc.embedPng(this.p.CustomerSign3)
-      CustomerSign3.setImage(embimg)
-
-      const CustomerPrint3 = form.getTextField('CustomerPrint3')
-      CustomerPrint3.setText(this.p.CustomerPrint3)
-
-      const CustomerDate3 = form.getTextField('CustomerDate3')
-      CustomerDate3.setText(this.p.Date)
-    }
-
-    if (this.p.CustomerSign4.length > 0) {
-      const CustomerSign4 = form.getButton('CustomerSign4')
-      var embimg = await pdfDoc.embedPng(this.p.CustomerSign4)
-      CustomerSign4.setImage(embimg)
-
-      const CustomerPrint4 = form.getTextField('CustomerPrint4')
-      CustomerPrint4.setText(this.p.CustomerPrint4)
-
-      const CustomerDate4 = form.getTextField('CustomerDate4')
-      CustomerDate4.setText(this.p.Date)
-    }
-
-    if (this.p.CustomerSign5.length > 0) {
-      const CustomerSign5 = form.getButton('CustomerSign5')
-      var embimg = await pdfDoc.embedPng(this.p.CustomerSign5)
-      CustomerSign5.setImage(embimg)
-
-      const CustomerPrint5 = form.getTextField('CustomerPrint5')
-      CustomerPrint5.setText(this.p.CustomerPrint5)
-
-      const CustomerDate5 = form.getTextField('CustomerDate5')
-      CustomerDate5.setText(this.p.Date)
-    }
-    
-
+    this.embedConditionalFields(pdfDoc,form)
+   
     const pdfDataUri = await pdfDoc.saveAsBase64({ dataUri: true });
-
+    const pdf8bit = await pdfDoc.save()
     //trigger auto downloading 
     //const pdfBytes = await pdfDoc.save()
     //download(pdfBytes, "pdf-lib_form_creation_example.pdf", "application/pdf");
 
     this.finalPDF = pdfDoc
-    return pdfDataUri
-
+    // return pdfDataUri
+    return pdf8bit
   }
 
   async downloadPdf() {
@@ -318,6 +92,7 @@ export class MakePDFService {
     console.log("downloadPDF")
   }
 
+  // sets class properties from data
   private async iterate() {
     var tempDate = new Date().toLocaleString()
     var shortDate = this.datePipe.transform(tempDate, 'MM-dd-YYYY')
@@ -383,8 +158,6 @@ export class MakePDFService {
     
 
   }
-
-
   private iterateCustomer() {
     console.log('called change')
     if (this.arrayCustomer.length != 0) {
@@ -421,7 +194,6 @@ export class MakePDFService {
       })
     }
   }
-
   private iterateEmployee() {
   console.log("here1")
     if (this.arrayEmployee.length != 0) {
@@ -515,5 +287,237 @@ export class MakePDFService {
     this.p.ManagerProceed = obj.managerProceed
   }
 
+  // abstracted pdf embed functions
+  
+  private embedManagerResponse(pdfDoc: PDFDocument) {
+    if (!(this.checkEmployeeInfoIsRefuse())) {
+
+      const page = pdfDoc.addPage([350, 350])
+      var textsize = 10
+      var labelX = 30;
+      var textX = 150;
+
+
+      var mNY1 = 300
+      page.drawText('Manager Name:', { x: labelX, y: mNY1, size: textsize })
+      page.drawText(this.p.ManagerName!, { x: textX, y: mNY1, size: textsize })
+
+      var miY = 240
+      page.drawText('Manager Instructions', { x: labelX, y: miY, size: textsize })
+      page.drawText(this.p.ManagerInstructions!, { x: textX, y: miY, size: textsize, })
+
+      var mnY = 180
+      page.drawText('Manager Number:', { x: labelX, y: mnY, size: textsize })
+      page.drawText(this.p.ManagerNumber!, { x: textX, y: mnY, size: textsize })
+
+      var pY = 120
+      page.drawText('Instructed to proceed?:', { x: labelX, y: pY, size: textsize })
+      if (this.p.ManagerProceed) {
+        page.drawText('yes', { x: textX, y: pY, size: textsize })
+      } else page.drawText('no', { x: textX, y: pY, size: textsize })
+    }
+  }
+  private async embedImages(pdfDoc: PDFDocument) {
+    if (this.p.InstallImages) {
+      for (const value of this.p.InstallImages) {
+        console.log("value", value)
+
+        const page = pdfDoc.addPage()
+
+        var pageWidth = page.getWidth()
+        var pageHeight = page.getHeight()
+
+        var imageA = await pdfDoc.embedJpg(value)
+        const imageDims = imageA.scaleToFit(pageWidth - 100, pageHeight - 100)
+        var imageWidth = imageDims.width
+        var imageHeight = imageDims.height
+
+        // center the boy
+        var startingX = (pageWidth - imageWidth) / 2
+        var startingY = (pageHeight - imageHeight) / 2
+
+        page.drawImage(imageA, {
+          x: startingX,
+          y: startingY,
+          width: imageWidth,
+          height: imageHeight,
+        })
+      }
+    }
+
+    if (this.p.RemoveImages) {
+      for (const value of this.p.RemoveImages) {
+        console.log("value", value)
+
+        const page = pdfDoc.addPage()
+
+        var pageWidth = page.getWidth()
+        var pageHeight = page.getHeight()
+
+        var imageA = await pdfDoc.embedJpg(value)
+        const imageDims = imageA.scaleToFit(pageWidth - 100, pageHeight - 100)
+        var imageWidth = imageDims.width
+        var imageHeight = imageDims.height
+
+        // center the boy
+        var startingX = (pageWidth - imageWidth) / 2
+        var startingY = (pageHeight - imageHeight) / 2
+
+        page.drawImage(imageA, {
+          x: startingX,
+          y: startingY,
+          width: imageWidth,
+          height: imageHeight,
+        })
+      }
+    }
+
+  }
+  private embedMandatoryFields(form: PDFForm) {
+    // mandatory fields (door height, order number etc)
+    const dateField = form.getTextField('Date')
+    console.log('prep', this.p.Date)
+    dateField.setText(this.p.Date)
+    //dateField.setText("5/10")
+
+    const CrewName = form.getTextField('CrewName')
+    CrewName.setText(this.p.CrewName)
+
+    const OrderNumber = form.getTextField('OrderNumber')
+    OrderNumber.setText(this.p.OrderNumber)
+
+    const IFGSaleRepName = form.getTextField('IFGSaleRepName')
+    IFGSaleRepName.setText(this.p.IFGSaleRepName)
+
+    const IFGSaleRepContactNumber = form.getTextField('IFGSaleRepContactNumber')
+    IFGSaleRepContactNumber.setText(this.p.IFGSaleRepContactNumber)
+
+    var doorInstallHeight = this.p.DoorHeight
+    const doorInstallHeightField = form.getTextField('DoorHeight')
+    doorInstallHeightField.setText(doorInstallHeight)
+
+    var doorInstallWidth = this.p.DoorWidth
+    const doorInstallWidthField = form.getTextField('DoorWidth')
+    doorInstallWidthField.setText(doorInstallWidth)
+
+    var oldDoorInstallHeight = this.p.OldDoorHeight
+    const oldDoorInstallHeightField = form.getTextField('OldDoorHeight')
+    oldDoorInstallHeightField.setText(oldDoorInstallHeight)
+
+    var oldDoorInstallWidth = this.p.OldDoorWidth
+    const oldDoorInstallWidthField = form.getTextField('OldDoorWidth')
+    oldDoorInstallWidthField.setText(oldDoorInstallWidth)
+
+    var productInstallHeight = this.p.ProductHeight
+    const productInstallHeightField = form.getTextField('ProductHeight')
+    productInstallHeightField.setText(productInstallHeight)
+
+    var productInstallWidth = this.p.ProductWidth
+    const productInstallWidthField = form.getTextField('ProductWidth')
+    productInstallWidthField.setText(productInstallWidth)
+
+    var oldProductInstallHeight = this.p.OldProductHeight
+    const oldProductInstallHeightField = form.getTextField('OldProductHeight')
+    oldProductInstallHeightField.setText(oldProductInstallHeight)
+
+    var oldProductInstallWidth = this.p.OldProductWidth
+    const oldProductInstallWidthField = form.getTextField('OldProductWidth')
+    oldProductInstallWidthField.setText(oldProductInstallWidth)
+  }
+  private embedConditionalFields(pdfDoc: PDFDocument, form: PDFForm) {
+    this.checkCustomerFields(pdfDoc, form)
+    this.checkEmployeeFields(pdfDoc, form)
+  }
+
+  private async checkCustomerFields(pdfDoc: PDFDocument, form: PDFForm) {
+    if (this.p.CustomerSign1.length > 0) {
+      const CustomerSign1 = form.getButton('CustomerSign1')
+      var embimg = await pdfDoc.embedPng(this.p.CustomerSign1)
+      CustomerSign1.setImage(embimg)
+
+      const CustomerPrint1 = form.getTextField('CustomerPrint1')
+      CustomerPrint1.setText(this.p.CustomerPrint1)
+
+      const CustomerDate1 = form.getTextField('CustomerDate1')
+      CustomerDate1.setText(this.p.Date)
+    }
+
+
+    if (this.p.CustomerSign2.length > 0) {
+      const CustomerSign2 = form.getButton('CustomerSign2')
+      var embimg = await pdfDoc.embedPng(this.p.CustomerSign2)
+      CustomerSign2.setImage(embimg)
+
+      const CustomerPrint2 = form.getTextField('CustomerPrint2')
+      CustomerPrint2.setText(this.p.CustomerPrint2)
+
+      const CustomerDate2 = form.getTextField('CustomerDate2')
+      CustomerDate2.setText(this.p.Date)
+    }
+
+    if (this.p.CustomerSign3.length > 0) {
+      const CustomerSign3 = form.getButton('CustomerSign3')
+      var embimg = await pdfDoc.embedPng(this.p.CustomerSign3)
+      CustomerSign3.setImage(embimg)
+
+      const CustomerPrint3 = form.getTextField('CustomerPrint3')
+      CustomerPrint3.setText(this.p.CustomerPrint3)
+
+      const CustomerDate3 = form.getTextField('CustomerDate3')
+      CustomerDate3.setText(this.p.Date)
+    }
+
+    if (this.p.CustomerSign4.length > 0) {
+      const CustomerSign4 = form.getButton('CustomerSign4')
+      var embimg = await pdfDoc.embedPng(this.p.CustomerSign4)
+      CustomerSign4.setImage(embimg)
+
+      const CustomerPrint4 = form.getTextField('CustomerPrint4')
+      CustomerPrint4.setText(this.p.CustomerPrint4)
+
+      const CustomerDate4 = form.getTextField('CustomerDate4')
+      CustomerDate4.setText(this.p.Date)
+    }
+
+    if (this.p.CustomerSign5.length > 0) {
+      const CustomerSign5 = form.getButton('CustomerSign5')
+      var embimg = await pdfDoc.embedPng(this.p.CustomerSign5)
+      CustomerSign5.setImage(embimg)
+
+      const CustomerPrint5 = form.getTextField('CustomerPrint5')
+      CustomerPrint5.setText(this.p.CustomerPrint5)
+
+      const CustomerDate5 = form.getTextField('CustomerDate5')
+      CustomerDate5.setText(this.p.Date)
+    }
+  }
+  private async checkEmployeeFields(pdfDoc: PDFDocument, form: PDFForm) {
+    if (this.p.EmployeeSign1.length > 0) {
+      const EmployeeSign1 = form.getButton('EmployeeSign1')
+      var embimg = await pdfDoc.embedPng(this.p.EmployeeSign1)
+      EmployeeSign1.setImage(embimg)
+
+      const EmployeePrint1 = form.getTextField('EmployeePrint1')
+      EmployeePrint1.setText(this.p.EmployeePrint1)
+
+      const EmployeeDate1 = form.getTextField('EmployeeDate1')
+      EmployeeDate1.setText(this.p.Date)
+    }
+
+    console.log("here5")
+
+    if (this.p.EmployeeSign2.length > 0) {
+      const EmployeeSign2 = form.getButton('EmployeeSign2')
+      var embimg = await pdfDoc.embedPng(this.p.EmployeeSign2)
+      EmployeeSign2.setImage(embimg)
+
+      const EmployeePrint2 = form.getTextField('EmployeePrint2')
+      EmployeePrint2.setText(this.p.EmployeePrint2)
+
+      const EmployeeDate2 = form.getTextField('EmployeeDate2')
+      EmployeeDate2.setText(this.p.Date)
+    }
+  }
 
 }
+  

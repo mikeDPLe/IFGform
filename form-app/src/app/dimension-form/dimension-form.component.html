@@ -3,12 +3,11 @@
             Assess the travel path
         </h3>
     <mat-divider></mat-divider>
-  <form #f= "ngForm" class="nonInit" id="specForm" action="#">      
-    <ol>
+  <form #f= "ngForm" id="specForm" action="#">      
+
         <h3>  Determine the height and width of the doorway in FEET</h3>
            <div class="form-group">
            <mat-form-field appearance="fill">
-               
                <mat-label for="travel_height">Doorway Height:</mat-label>
                <input name="travel_height" [(ngModel)] = "travelDim.height" 
                matInput
@@ -45,8 +44,8 @@
                  </mat-error>
             </mat-form-field>
             </div>   
-        </ol>
-    <button mat-flat-button color="primary" (click)="check()" >Next</button> 
+        
+    <button [disabled]='!(f.valid)' mat-flat-button color="primary" (click)="check()" >Next</button> 
 </form> 
 </div>
 
