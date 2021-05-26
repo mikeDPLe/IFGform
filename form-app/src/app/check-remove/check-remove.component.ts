@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DimensionService } from '../dimension.service';
-import { SignatureHandlerService } from '../signature-handler.service';
-
 import { StepService } from '../step.service';
 import { ValidDimService } from '../valid-dim.service';
 

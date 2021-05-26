@@ -29,6 +29,7 @@ export class ProblemInstallComponent implements OnInit {
   ngOnInit(): void {
     this.isCust = this.sig.isCust
     this.step = this.sig.subStep
+    
   }
 
 }

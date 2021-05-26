@@ -1,3 +1,7 @@
+
+<h2>Signature Form</h2>
+<mat-divider> </mat-divider>
+<br>
 <form #signForm="ngForm" (ngSubmit)="onSubmit(signForm)" >
 <div id= signatureDiv class="form-group">
    
@@ -39,10 +43,11 @@
    <br>
    <button mat-button (click)="clear()">Clear Signature</button>
    <button mat-flat-button color='primary' type="submit" id="done" [disabled]="!signForm.form.valid || signatureEmpty"> Done </button>
-   <br>
-   <button mat-flat-button color='warn' *ngIf="show == true" (click) ="onRefuse()" >
-      customer refuses to sign
+   <div style='margin-top: 20px;' *ngIf="show == true" >
+   <button mat-flat-button color='warn'  (click) ="onRefuse()" >
+      Customer refuses to sign
    </button>
+  </div>
   </div>
 </form>
 

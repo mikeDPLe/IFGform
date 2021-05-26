@@ -1,7 +1,7 @@
 
-<h3> Please enter pre-installation information</h3>
+<h3 style='text-align:center;'> Please enter pre-installation information</h3>
 <mat-divider></mat-divider>
-<form [formGroup] ="empForm" (ngSubmit)="next(empForm.value)">
+<form [formGroup] ="empForm" (ngSubmit)="next(empForm.value)" >
     <div>
         <mat-form-field appearance="standard">
             <mat-label>Date:</mat-label>
@@ -43,7 +43,7 @@
 
 <mat-divider></mat-divider>
     <div class='form-group' formArrayName="installCrew">
-        <h3>Install Crew Names</h3>
+        <h3 style='text-align: center;'>Install Crew Names</h3>
         <div *ngFor ="let crew of installCrew.controls; let i= index">
             <div class='alert alert-danger' *ngIf='crew?.invalid && (crew?.touched || crew?.dirty) '>
                 At least one install crew member's name is required.

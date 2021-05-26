@@ -28,7 +28,6 @@ export class DimFailEmployee1Component implements OnInit {
   isRemove: boolean = false;
 
   next(){
-    console.log(this.isRemove)
     if(this.showConfirm){
       this.router.navigate(['customer-sign'])
     } else 

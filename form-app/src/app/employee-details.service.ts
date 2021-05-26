@@ -24,7 +24,6 @@ export class EmployeeDetailsService {
      this.info.salesRep = data.salesRep;
      this.info.salesRepContactNumber = data.salesRepContactNumber;
      this.info.installCrew = data.installCrew
-     console.log(this.info)
   }
 
   public custRefusePrep(){

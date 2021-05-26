@@ -1,0 +1,41 @@
+/* You can add global styles to this file, and also import other style files */
+@import"~bootstrap/dist/css/bootstrap.css";
+@import '~@angular/material/theming';
+
+// Include non-theme styles for core.
+@include mat-core();
+
+// Define a theme.
+$primary: mat-palette($mat-indigo);
+$accent:  mat-palette($mat-pink, A200, A100, A400);
+$warn: mat-palette($mat-red);
+
+$theme: mat-light-theme($primary, $accent);
+
+// Include all theme styles for the components.
+@include angular-material-theme($theme);
+
+
+// Define a custom mixin that takes in the current theme
+@mixin theme-color-grabber($theme) {
+    // Parse the theme and create variables for each color in the pallete
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $warn: map-get($theme, warn);
+    // Create theme specfic styles
+    .primaryColorBG {
+     color: mat-color($primary);
+    }
+    .accentColorBG {
+      color: mat-color($accent);
+    }
+    .warnColorBG {
+      background-color: mat-color($warn);
+    }
+  }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+h3,h2,h1{
+    text-align: center;
+}

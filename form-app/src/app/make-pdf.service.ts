@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DimensionService } from './dimension.service';
 import { SignatureHandlerService } from './signature-handler.service';
-import { PDFDocument, StandardFonts, rgb, values, showText, PDFForm } from 'pdf-lib'
+import { PDFDocument,PDFForm } from 'pdf-lib'
 import { Dimensions } from './classes/dimensions';
 import { SignatureInfo } from './classes/signature-info';
 import { PdfInfo } from './classes/pdf-info';
@@ -73,14 +73,11 @@ export class MakePDFService {
     // conditional fields (logic needed to fill depending on circumstance)
     this.embedConditionalFields(pdfDoc,form)
    
-    const pdfDataUri = await pdfDoc.saveAsBase64({ dataUri: true });
     const pdf8bit = await pdfDoc.save()
     //trigger auto downloading 
-    //const pdfBytes = await pdfDoc.save()
-    //download(pdfBytes, "pdf-lib_form_creation_example.pdf", "application/pdf");
-
+   
     this.finalPDF = pdfDoc
-    // return pdfDataUri
+  
     return pdf8bit
   }
 

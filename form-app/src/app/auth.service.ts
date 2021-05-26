@@ -39,7 +39,7 @@ export class AuthService {
   didLogin() {
     this.passedLoginObs.next(true)
     sessionStorage.setItem('authstate', 'true')
-    console.log('passed login')
+    
   }
 
   

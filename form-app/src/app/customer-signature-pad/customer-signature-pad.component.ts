@@ -31,7 +31,6 @@ export class CustomerSignaturePadComponent implements OnInit {
   ngOnInit(): void {
     this.signatureService.checkDiff()
     this.show = this.signatureService.isCust
-    console.log('show', this.show)
   }
   ngAfterViewInit(){
    this.signaturePad = new SignaturePad(this.canvasPad.nativeElement)   

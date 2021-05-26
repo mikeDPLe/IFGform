@@ -42,7 +42,7 @@ export class CaptureImageComponent implements OnInit {
     control.style.visibility = 'hidden'
     if (file) {
       // File Preview
-      console.log(file)
+
       const reader = new FileReader();
       reader.onload = () => {
         this.uriHolder[index] = reader.result as string

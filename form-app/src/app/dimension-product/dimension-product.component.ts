@@ -18,7 +18,6 @@ export class DimensionProductComponent {
   ) {
     checkService.testObs.subscribe(passedInstall => {
       this.isInstall = !passedInstall
-      console.log('isinstall', this.isInstall)
     })
 
   }
@@ -34,7 +33,6 @@ export class DimensionProductComponent {
     if (this.isInstall) {
       this.dimService.pushDimensionArray(this.productDimArray, this.productDim.width, this.productDim.height)
       this.dimService.productDimArray = this.productDimArray
-      console.log('dimservice product', this.dimService.productDimArray)
       var result = this.checkService.checkValues(false)
       if (result) {
         this.router.navigate(["check-remove"])
@@ -51,7 +49,6 @@ export class DimensionProductComponent {
     this.dimService.productRemoveDimArray = this.productDimArray
     var result = this.checkService.checkValues(true)
     if(result){
-      console.log('placeholder success',result)
       this.router.navigate(["customer-sign"])
     } else [
       this.router.navigate(["dim-fail"])

@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import {Router } from '@angular/router';
 import { SignatureInfo } from './classes/signature-info';
-import { DimensionService } from './dimension.service';
 import { StepService } from './step.service';
 import { ValidDimService } from './valid-dim.service';
 

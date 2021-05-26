@@ -36,6 +36,7 @@ import { NavbarBelowComponent } from './navbar-below/navbar-below.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -58,6 +59,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
     ManagerContactComponent,
     CaptureImageComponent,
     NavbarBelowComponent,
+ 
   ],
   imports: [
     CommonModule,

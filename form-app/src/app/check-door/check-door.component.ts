@@ -9,7 +9,7 @@ import { StepService } from '../step.service';
 })
 export class CheckDoorComponent implements OnInit {
 
-  constructor(private step:StepService, private route: Router) { }
+  constructor(private route: Router) { }
 
   ngOnInit(): void {
   }

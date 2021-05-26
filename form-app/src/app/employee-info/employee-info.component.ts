@@ -52,7 +52,6 @@ export class EmployeeInfoComponent implements OnInit {
   addCrew(){
     
     this.installCrew.push(this.fb.control(''))
-    console.log(this.installCrew.length)
   }
 
   removeLastCrew(){

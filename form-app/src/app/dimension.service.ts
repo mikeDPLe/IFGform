@@ -36,7 +36,6 @@ export class DimensionService {
 
   useOldTravel() {
     this.travelRemoveDimArray = this.travelDimArray
-    console.log('oldtravel called', this.travelRemoveDimArray)
   }
   setTravelRemoveArray (pArray:Array<Dimensions>){
     this.travelRemoveArraysubject.next(pArray)

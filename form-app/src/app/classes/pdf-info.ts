@@ -12,7 +12,7 @@ export class PdfInfo {
     
     EmployeeSign1:string =""
     EmployeePrint1:string =""
-    //EmployeeDate1:string =""
+    
 
     CustomerSign1:string =""
     CustomerPrint1:string =""

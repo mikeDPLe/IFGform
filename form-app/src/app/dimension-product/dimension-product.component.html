@@ -1,9 +1,9 @@
 <div class='form-group'>
-    <h3>Determine width and height of equipment to
-  <div *ngIf="isInstall; else elseBlock"> install in inches </div>
-        <ng-template #elseBlock> remove in inches </ng-template>
+    
+  <div *ngIf="isInstall; else elseBlock"> <h2>Determine width and height of equipment to install in inches </h2> </div>
+        <ng-template #elseBlock> <h2>Determine width and height of equipment to remove in inches </h2></ng-template>
 
-</h3>
+
 <mat-divider></mat-divider>
 <form #f="ngForm" class="nonInit" id="specForm" action="#">
     <div class='form-group>'>

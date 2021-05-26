@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Subscription } from 'rxjs';
 import { EmployeeDetailsService } from './employee-details.service';
-import { ValidDimService } from './valid-dim.service';
+
 
 @Injectable({
   providedIn: 'root'
@@ -10,16 +9,8 @@ import { ValidDimService } from './valid-dim.service';
 export class StepService {
 
   constructor(private route: Router,
-    private emp: EmployeeDetailsService,
-    private valid:ValidDimService) {
-      this.$install = this.valid.testObs.subscribe(value => {console.log('testobs', value)})
-      this.$remove = this.valid.testObs2.subscribe(value => {console.log('testobs2', value)})
+    private emp: EmployeeDetailsService) {
      }
-
-
-  $install:Subscription
-  $remove:Subscription
-
 
 
   setStepRefuse(){
