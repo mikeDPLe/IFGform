@@ -2,28 +2,9 @@
 <h3> Please enter pre-installation information</h3>
 <mat-divider></mat-divider>
 <form [formGroup] ="empForm" (ngSubmit)="next(empForm.value)">
-<!-- 
- <div class='alert alert-danger' *ngIf='empForm.invalid && (empForm.touched || empForm.dirty)'>
-    <div  *ngIf='salesRep?.errors?.required && (salesRep?.dirty || salesRep?.touched)'>
-        Sales representative name is required.
-    </div>
-    <div  *ngIf='orderNumber?.errors?.required && (orderNumber?.dirty || orderNumber?.touched)'>
-        Order number is required.
-    </div>
-    <div *ngIf='salesRepContactNumber?.invalid && (salesRepContactNumber?.touched || salesRepContactNumber?.dirty)'>
-        <div *ngIf='salesRepContactNumber?.errors?.required'>
-            Sales representative contact number is required.
-        </div>  
-        <div *ngIf='salesRepContactNumber?.errors?.pattern'>
-            Please type in a valid phone number.
-        </div>
-      
-    </div>
-</div> -->
-
     <div>
         <mat-form-field appearance="standard">
-            <mat-label>Choose a date: </mat-label>
+            <mat-label>Date:</mat-label>
             <input formControlName='inputDate' [matDatepicker]="picker" matInput>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
@@ -71,10 +52,7 @@
                 <mat-label> Crew Member Name: </mat-label>
                 <input type="text" [formControlName]= "i" matInput>
             </mat-form-field>
-           
-            <!-- add some kind of button here-->
-            <button *ngIf='installCrew.length > 1' mat-stroked-button type="button" (click)='removeCrew(i)'>Remove crew member</button>
-            
+            <button *ngIf='installCrew.length > 1' mat-stroked-button type="button" (click)='removeCrew(i)'>Remove crew member</button>   
         </div>
         <button mat-button color="primary" type="button" (click)='addCrew()'>Add additional crew member</button>
         

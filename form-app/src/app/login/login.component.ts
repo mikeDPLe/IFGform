@@ -30,8 +30,6 @@ export class LoginComponent implements OnInit {
        value: 'true',
      })
    }
-   console.log(this.user.value)
-   console.log(this.password.value)
   }
 
 

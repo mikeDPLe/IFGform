@@ -1,6 +1,6 @@
-<div *ngIf='step == 0'>
+<div *ngIf='step == 0 && !unableContact'>
     <mat-form-field appearance="fill">
-        <mat-label for="managerName"> Manager's name: </mat-label>
+        <mat-label for="managerName"> Salesperson/Manager's name: </mat-label>
         <input matInput name='managerName' type="text" [formControl]='managerName'> 
         <mat-error *ngIf="managerName.invalid">
             {{getErrorManagerName()}}
@@ -8,7 +8,7 @@
     </mat-form-field>
 <br>
 <mat-form-field appearance="fill">
-    <mat-label for="managerContact"> Manager's contact number:</mat-label>
+    <mat-label for="managerContact"> Salesperson/Manager's contact number:</mat-label>
     <input matInput name='managerContact' type="text" [formControl]='managerContact'>
     <mat-error *ngIf="managerContact.invalid">
         {{getErrorManagerContact()}}
@@ -17,16 +17,18 @@
 <br>
     <button mat-flat-button color="primary" [disabled]='!(managerName.valid && managerContact.valid)' (click)="proceed()"> Next </button> 
 </div>
-<div *ngIf='step == 1' >
-    Were you able to contact your manager?
+<div *ngIf='step == 1 && !unableContact'  >
+    Were you able to contact your salesperson/manager?
+    <br>
     <button mat-flat-button color="primary" (click)='proceed()'> Yes</button>
-    <button mat-flat-button color="warn"> No </button>
+    <button mat-flat-button color="warn" (click)='no()'> No </button>
 </div>
-<div *ngIf='step == 2'>
-    <mat-form-field appearance="fill">
+<div *ngIf='step == 2 && !unableContact'>
+    <mat-form-field style="width:100%;"appearance="fill">
         <mat-label>
-            Please write a summary of what your manager told you
+            Please write a summary of what your salesperson/manager told you
         </mat-label>
+        <br>
         <textarea matInput placeholder="Instructions go here..." name="managerResponse" type="text" [formControl]='managerResponse'>        </textarea>
             <mat-error *ngIf="managerResponse.invalid">
                 {{getErrorManagerResponse()}}
@@ -34,9 +36,15 @@
         </mat-form-field>
     <button mat-flat-button color="primary" (click)='proceed()' [disabled] ='managerResponse.valid ? false : true'> Next </button>
 </div>
-<div *ngIf='step == 3'>
-    Were you instructed to continue or not to continue installation/removal? 
-    <button mat-flat-button color="primary" (click)='proceed()'> Yes</button>
-    <button mat-flat-button color="warn"> No </button>
+<div *ngIf='step == 3 && !unableContact'>
+    Were you instructed to continue or not to continue installation/removal?
+    <br>
+    <button mat-flat-button color="primary" (click)='proceed()'> Continue</button>
+    <button mat-flat-button color="warn" (click)='no()'> Not to continue </button>
+</div>
+
+<div *ngIf='unableContact'>
+    <br>
+    Refer to instructions above.
 </div>
 

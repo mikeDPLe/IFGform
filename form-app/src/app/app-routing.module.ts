@@ -30,7 +30,8 @@ const routes: Routes = [
   {path:"proceed", component: ProceedComponent},
   {path:"complete", component:CompleteComponent},
   {path:"pdf", component:PdfHolderComponent},
-  {path:"image", component:CaptureImageComponent}
+  {path:"image", component:CaptureImageComponent},
+  {path: '**', redirectTo:""}
 ];
 
 @NgModule({

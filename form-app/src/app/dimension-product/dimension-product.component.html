@@ -1,7 +1,7 @@
 <div class='form-group'>
     <h3>Determine width and height of equipment to
-  <div *ngIf="isInstall; else elseBlock"> install in FEET </div>
-        <ng-template #elseBlock> remove in FEET </ng-template>
+  <div *ngIf="isInstall; else elseBlock"> install in inches </div>
+        <ng-template #elseBlock> remove in inches </ng-template>
 
 </h3>
 <mat-divider></mat-divider>
@@ -9,7 +9,10 @@
     <div class='form-group>'>
         <mat-form-field appearance="fill">
             <mat-label for="product_height">Equipment Height:</mat-label>
-            <input matInput name="product_height" [(ngModel)]="productDim.height" pattern='([0-9])+' required
+            <input matInput name="product_height" 
+            [(ngModel)]="productDim.height" 
+            pattern='^[+-]?((\d+(\.\d*)?)|(\.\d+))$' 
+            required
                 #product_height='ngModel' type="text" class="form-control" autocomplete="off">
             <mat-error *ngIf='product_height.errors?.pattern'>
                 Product height is not a number.
@@ -21,7 +24,10 @@
         <br>
         <mat-form-field appearance="fill">
             <mat-label for="product_width">Equipment Width:</mat-label>
-            <input matInput name="product_width" [(ngModel)]="productDim.width" pattern='([0-9])+' required
+            <input matInput name="product_width" 
+            [(ngModel)]="productDim.width"
+             pattern='^[+-]?((\d+(\.\d*)?)|(\.\d+))$' 
+             required
                 #product_width='ngModel' type="text" class="form-control" autocomplete="off">
             <mat-error *ngIf='product_width.errors?.pattern'>
                 Product width is not a number.

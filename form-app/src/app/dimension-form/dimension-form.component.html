@@ -5,23 +5,23 @@
     <mat-divider></mat-divider>
   <form #f= "ngForm" id="specForm" action="#">      
 
-        <h3>  Determine the height and width of the doorway in FEET</h3>
+        <h3>  Determine the height and width of the doorway in inches</h3>
            <div class="form-group">
            <mat-form-field appearance="fill">
                <mat-label for="travel_height">Doorway Height:</mat-label>
                <input name="travel_height" [(ngModel)] = "travelDim.height" 
                matInput
-               pattern = '([0-9])+'
+               pattern ='^[+-]?((\d+(\.\d*)?)|(\.\d+))$'
                required 
                #travel_height = 'ngModel'
                type="text" 
                class="form-control" 
                 autocomplete="off">
                 <mat-error *ngIf='travel_height.errors?.pattern'>
-                    Travel height is invalid.
+                    Doorway height is not a number
                 </mat-error>
                 <mat-error *ngIf='travel_height.errors?.required'>
-                    Travel height is required.
+                    Doorway height is required.
                 </mat-error>
             </mat-form-field>
             <br>
@@ -30,17 +30,17 @@
                <input name="travel_width"
                matInput
                 [(ngModel)] = "travelDim.width" 
-                pattern = '([0-9])+'
+                pattern = '^[+-]?((\d+(\.\d*)?)|(\.\d+))$'
                 required 
                 #travel_width = 'ngModel'
                 type="text"
                  class="form-control"  
                  autocomplete="off">
                  <mat-error *ngIf='travel_width.errors?.pattern'>
-                    Travel width is not a number.
+                    Doorway width is not a number.
                  </mat-error>
                  <mat-error *ngIf='travel_width.errors?.required'>
-                    Travel width is required.
+                    Doorway width is required.
                  </mat-error>
             </mat-form-field>
             </div>   

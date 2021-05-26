@@ -19,9 +19,6 @@ export class PdfHolderComponent implements OnInit {
   
   //access by tying /pdf in root
  async ngOnInit(): Promise<void> {
-    // this.pdf.makePdf().then(x =>
-    //   this.uri = this.sanitizer.bypassSecurityTrustResourceUrl(x)
-    // )
     this.pdf.makePdf().then(uri => {
       this.pdfViewer.pdfSrc = uri;
       this.pdfViewer.refresh();
@@ -30,12 +27,5 @@ export class PdfHolderComponent implements OnInit {
   async downloadPDF(){
     this.pdf.downloadPdf()
   }
-  ngAfterViewInit(){
-    
-  }
-
-
-
-  
 }
 

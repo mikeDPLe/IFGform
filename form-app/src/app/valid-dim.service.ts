@@ -84,7 +84,8 @@ export class ValidDimService {
     } else 
     if (isValid && !remove){
       this.installComplete()
-      this.image.finishInstall()
+      this.image.needsInstall()
+      
     }
     if(!isValid && remove) {
       this.neededRemoval = true;
@@ -93,11 +94,10 @@ export class ValidDimService {
       this.needRemoveSigs();
     } else
      if (isValid && remove) {
-      this.removeComplete()
       this.neededRemoval = true;
-      this.image.finishRemove()
+      this.image.needsRemove()
       this.sigNumber +=1
-      this.employeeSig += 1
+      this.custSig+= 1
     }
   }
   

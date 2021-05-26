@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DimensionService } from '../dimension.service';
 import { SignatureHandlerService } from '../signature-handler.service';
-import { StepService } from '../step.service';
 import { ValidDimService } from '../valid-dim.service';
 
 @Component({
@@ -17,7 +15,6 @@ export class ProblemInstallComponent implements OnInit {
     this.valid.testObs2.subscribe(remove => this.isCompleteRemove = remove)
     if(this.isCompleteInstall && this.isCompleteRemove) 
     {
-      console.log('completetrue')
       this.isComplete = true;
     } else this.isComplete = false;
     

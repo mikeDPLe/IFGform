@@ -1,4 +1,4 @@
-import { Component, destroyPlatform, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DimensionService } from '../dimension.service';
 import { Dimensions } from '../classes/dimensions';
@@ -10,7 +10,7 @@ import { ValidDimService } from '../valid-dim.service';
   templateUrl: './dimension-product.component.html',
   styleUrls: ['./dimension-product.component.css']
 })
-export class DimensionProductComponent implements OnInit {
+export class DimensionProductComponent {
 
   constructor(private dimService: DimensionService,
     private router: Router,
@@ -30,11 +30,6 @@ export class DimensionProductComponent implements OnInit {
   }
   isInstall!:boolean;
  
-
-  ngOnInit(): void { 
-  }
-
-
   check() {
     if (this.isInstall) {
       this.dimService.pushDimensionArray(this.productDimArray, this.productDim.width, this.productDim.height)
@@ -48,7 +43,6 @@ export class DimensionProductComponent implements OnInit {
       ]
 
     } else {
-      console.log('hello')
       this.check2()
     }
   }
@@ -58,7 +52,7 @@ export class DimensionProductComponent implements OnInit {
     var result = this.checkService.checkValues(true)
     if(result){
       console.log('placeholder success',result)
-      this.router.navigate(["proceed"])
+      this.router.navigate(["customer-sign"])
     } else [
       this.router.navigate(["dim-fail"])
     ]

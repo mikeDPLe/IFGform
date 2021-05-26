@@ -15,12 +15,12 @@ export class EmployeeInfoComponent implements OnInit {
     private fb:FormBuilder,
     private route:Router) { 
       this.empForm = this.fb.group({
-        inputDate: ['', [Validators.required]],
+        inputDate: [{value:new Date(), disabled:true}, [Validators.required]],
         orderNumber: ['', [Validators.required]], 
         salesRep:[(''), [Validators.required]],
         salesRepContactNumber:['',  [
           Validators.required,
-          Validators.pattern('\\(?\\d+\\)?[-.\\s]?\\d+[-.\\s]?\\d+')
+          Validators.pattern('^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$')
          ]],
         installCrew: this.fb.array([
           this.fb.control('', [Validators.required]) 
@@ -29,7 +29,7 @@ export class EmployeeInfoComponent implements OnInit {
   }
   
     empForm:FormGroup 
-
+  
 
 
   get orderNumber(){

@@ -19,11 +19,13 @@ export class ManagerContactComponent implements OnInit {
   ngOnInit(): void {
   }
   step:number = 0 
+  unableContact:boolean = false;
   managerName = new FormControl("", [Validators.required]);
   managerContact = new FormControl("",  
   [Validators.required,  
-  Validators.pattern('\\(?\\d+\\)?[-.\\s]?\\d+[-.\\s]?\\d+')]);
+  Validators.pattern('^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$')]);
   managerResponse = new FormControl("",  [Validators.required]);
+
 
   proceed(){
     switch(this.step)
@@ -45,6 +47,10 @@ export class ManagerContactComponent implements OnInit {
       break;
       default:
     }
+  }
+
+  no(){
+    this.unableContact = true;
   }
 
   saveData(){
