@@ -72,7 +72,7 @@
      <p>The customer agrees to release all liability to IFG</p>
  </div>
  
- <div *ngIf="!isCompleteRemove && isCompleteInstall" class="form-group">
+ <div *ngIf="step == 2 && !isCompleteRemove && isCompleteInstall" class="form-group">
      The customer is giving IFG permission to remove the old equipment for disposal. IFG will not reimburse credit
  to the customer for the old unit. IFG will not be responsible if there is any damage done while moving the product
  from the product location to the truck location.
