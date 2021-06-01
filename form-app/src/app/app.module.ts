@@ -14,25 +14,24 @@ import { MatDividerModule} from '@angular/material/divider';
   
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
-import { SafetyComponent } from './safety/safety.component';
-import { DimensionFormComponent } from './dimension-form/dimension-form.component';
-import { NavbarComponent } from './navbar/navbar.component';
-import { CheckDoorComponent } from './check-door/check-door.component';
-import { DimensionProductComponent } from './dimension-product/dimension-product.component';
-import { DimFailEmployee1Component } from './dim-fail-employee1/dim-fail-employee1.component';
-import { CustomerSignaturePadComponent } from './customer-signature-pad/customer-signature-pad.component';
-import { ProblemInstallComponent } from './problem-install/problem-install.component';
-import { CustRefuseComponent } from './cust-refuse/cust-refuse.component';
-import { CheckRemoveComponent } from './check-remove/check-remove.component';
-import { ProceedComponent } from './proceed/proceed.component';
-import { CheckInitialComponent } from './check-initial/check-initial.component';
-import { CompleteComponent } from './complete/complete.component';
-import { PdfHolderComponent } from './pdf-holder/pdf-holder.component';
-import { EmployeeInfoComponent } from './employee-info/employee-info.component';
-import { ManagerContactComponent } from './manager-contact/manager-contact.component';
-import { CaptureImageComponent } from './capture-image/capture-image.component';
-import { NavbarBelowComponent } from './navbar-below/navbar-below.component';
+import { LoginComponent } from './components/login/login.component';
+import { SafetyComponent } from './components/safety/safety.component';
+import { DimensionFormComponent } from './components/dimension-form/dimension-form.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { CheckDoorComponent } from './components/check-door/check-door.component';
+import { DimensionProductComponent } from './components/dimension-product/dimension-product.component';
+import { DimFailEmployee1Component } from './components/dim-fail-employee1/dim-fail-employee1.component';
+import { CustomerSignaturePadComponent } from './components/customer-signature-pad/customer-signature-pad.component';
+import { ProblemInstallComponent } from './components/problem-install/problem-install.component';
+import { CustRefuseComponent } from './components/cust-refuse/cust-refuse.component';
+import { CheckRemoveComponent } from './components/check-remove/check-remove.component';
+import { ProceedComponent } from './components/proceed/proceed.component';
+import { CompleteComponent } from './components/complete/complete.component';
+import { PdfHolderComponent } from './components/pdf-holder/pdf-holder.component';
+import { EmployeeInfoComponent } from './components/employee-info/employee-info.component';
+import { ManagerContactComponent } from './components/manager-contact/manager-contact.component';
+import { CaptureImageComponent } from './components/capture-image/capture-image.component';
+import { NavbarBelowComponent } from './components/navbar-below/navbar-below.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 
@@ -52,7 +51,6 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
     CustRefuseComponent,
     CheckRemoveComponent,
     ProceedComponent,
-    CheckInitialComponent,
     CompleteComponent,
     PdfHolderComponent,
     EmployeeInfoComponent,

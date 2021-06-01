@@ -1,4 +1,3 @@
-import { Dimensions } from "./dimensions";
 
 export class SignatureInfo {
 

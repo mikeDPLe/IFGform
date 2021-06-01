@@ -1,0 +1,44 @@
+<div class='form-group'>
+    
+  <div *ngIf="isInstall; else elseBlock"> <h3>Determine width and height of <span class='units'>equipment </span>to install in <span class='units'> inches</span> </h3> </div>
+        <ng-template #elseBlock> <h3>Determine width and height of <span class='units'>equipment </span>to remove in 
+            <span class='units'> inches</span>  </h3></ng-template>
+
+
+<mat-divider></mat-divider>
+<form  #f="ngForm" class="nonInit" id="specForm" action="#">
+    <div class='form-group subheader' >
+        <mat-form-field appearance="fill">
+            <mat-label for="product_height">Equipment Height:</mat-label>
+            <input matInput name="product_height" 
+            [(ngModel)]="productDim.height" 
+            pattern='^[+-]?((\d+(\.\d*)?)|(\.\d+))$' 
+            required
+                #product_height='ngModel' type="text" class="form-control" autocomplete="off">
+            <mat-error *ngIf='product_height.errors?.pattern'>
+                Product height is not a number.
+            </mat-error>
+            <mat-error *ngIf="product_height.errors?.required">
+                Product height is required.
+            </mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="fill">
+            <mat-label for="product_width">Equipment Width:</mat-label>
+            <input matInput name="product_width" 
+            [(ngModel)]="productDim.width"
+             pattern='^[+-]?((\d+(\.\d*)?)|(\.\d+))$' 
+             required
+                #product_width='ngModel' type="text" class="form-control" autocomplete="off">
+            <mat-error *ngIf='product_width.errors?.pattern'>
+                Product width is not a number.
+            </mat-error>
+            <mat-error *ngIf='product_width.errors?.required'>
+                Product width is required.
+            </mat-error>
+        </mat-form-field>
+    </div>
+    <button [disabled]='!(f.valid)' mat-flat-button color="primary" (click)="check()">Next</button>
+
+</form>
+</div>
