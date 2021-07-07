@@ -32,7 +32,7 @@
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
-              "src/styles.css"
+              "src/styles.scss"
             ],
             "scripts": ["node_modules/signature_pad/dist/signature_pad.js"],
             "vendorChunk": true,
