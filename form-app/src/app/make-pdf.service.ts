@@ -75,18 +75,16 @@ export class MakePDFService {
    
     const pdfDataUri = await pdfDoc.saveAsBase64({ dataUri: true });
     const pdf8bit = await pdfDoc.save()
-    //trigger auto downloading 
-    //const pdfBytes = await pdfDoc.save()
-    //download(pdfBytes, "pdf-lib_form_creation_example.pdf", "application/pdf");
+
 
     this.finalPDF = pdfDoc
-    // return pdfDataUri
+  
     return pdf8bit
   }
 
   async downloadPdf() {
     const pdfBytes = await this.finalPDF.save()
-    //fileName = date, order, IFGSaleRepName, CustomerPrint1, EmployeePrint1
+  
     const fileName = "equipment_installation_" + this.p.Date + "_" + this.p.IFGSaleRepName + "_" + this.p.CustomerPrint1 + "_" + this.p.EmployeePrint1 + ".pdf"
     download(pdfBytes, fileName, "application/pdf");
     console.log("downloadPDF")
@@ -103,49 +101,7 @@ export class MakePDFService {
        console.log('after',this.p.Date)
       }
    
-    /*
-    //all this is filler
-     
-    this.p.EmployeePrint1 = "Kevin Chow"
-    //filler sign just to make the pdf render.
-    this.p.EmployeeSign1 = "data:image/png;base64,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IECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQIECAAAECBAgQILCMwH9ryBtfLsuJpwAAAABJRU5ErkJggg=="
-    //this.p.EmployeeDate1 = "5/2/21"
-    this.p.CustomerSign1 = this.p.EmployeeSign1
-    this.p.CustomerPrint1 = "Bob Hui"
-    //this.p.CustomerDate1 = "5/2/21"
-    this.p.CustomerSign2 = this.p.EmployeeSign1
-    this.p.CustomerPrint2 = "Bob Hui"
-    //this.p.CustomerDate2 = "5/2/21"
-    this.p.CustomerSign3 = this.p.EmployeeSign1
-    this.p.CustomerPrint3 = "Bob Hui"
-    //this.p.CustomerDate3 = "5/2/21"
-    this.p.CustomerSign4 = this.p.EmployeeSign1
-    this.p.CustomerPrint4 = "Bob Hui"
-    //this.p.CustomerDate4 = "5/2/21"
-    this.p.CustomerSign5 = this.p.EmployeeSign1
-    this.p.CustomerPrint5 = "Bob Hui"
-    //this.p.CustomerDate5 = "5/2/21"
-    this.p.EmployeeSign2 = this.p.EmployeeSign1
-    this.p.EmployeePrint2 = "Kevin Chow"
-    //this.p.EmployeeDate2 = "5/2/21"
-
-    this.p.CrewName = "Boy"
-    this.p.OrderNumber = "42"
-    this.p.IFGSaleRepName = "Girl"
-    this.p.IFGSaleRepContactNumber = "813"
-
-    this.p.DoorHeight = "1,2,3"
-    this.p.DoorWidth = "4,5,6"
-
-    this.p.OldDoorHeight = "71,81,91"
-    this.p.OldDoorWidth = "101,111,121"
-
-    this.p.ProductHeight = "11,21,31"
-    this.p.ProductWidth = "41,51,61"
-
-    this.p.OldProductHeight = "7,8,9"
-    this.p.OldProductWidth = "10,11,12"
-    */
+  
     
     this.iterateCustomer()
     this.iterateEmployee()
@@ -213,8 +169,8 @@ export class MakePDFService {
   private iterateInstallDoorDimensions() {
     var array = this.arrayInstallDoorDim
     if (array.length != 0) {
-      const resultHeight = this.getHeight(array) + 'in'
-      const resultWidth = this.getWidth(array) + 'in'
+      const resultHeight = this.getHeight(array) + " " + 'in'
+      const resultWidth = this.getWidth(array) + " " + 'in'
       this.p.DoorHeight = resultHeight.toString()
       this.p.DoorWidth = resultWidth.toString()
     }
@@ -376,7 +332,7 @@ export class MakePDFService {
     const dateField = form.getTextField('Date')
     console.log('prep', this.p.Date)
     dateField.setText(this.p.Date)
-    //dateField.setText("5/10")
+ 
 
     const CrewName = form.getTextField('CrewName')
     CrewName.setText(this.p.CrewName)
