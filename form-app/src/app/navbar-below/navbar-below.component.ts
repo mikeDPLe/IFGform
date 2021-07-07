@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {  Observable } from 'rxjs';
-import {filter, map, pluck} from 'rxjs/operators'
+import {filter, pluck} from 'rxjs/operators'
 import { AuthService } from '../auth.service';
 import { StepService } from '../step.service';
 

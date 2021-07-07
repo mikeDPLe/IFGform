@@ -213,8 +213,8 @@ export class MakePDFService {
   private iterateInstallDoorDimensions() {
     var array = this.arrayInstallDoorDim
     if (array.length != 0) {
-      const resultHeight = this.getHeight(array)
-      const resultWidth = this.getWidth(array)
+      const resultHeight = this.getHeight(array) + 'in'
+      const resultWidth = this.getWidth(array) + 'in'
       this.p.DoorHeight = resultHeight.toString()
       this.p.DoorWidth = resultWidth.toString()
     }
@@ -222,8 +222,8 @@ export class MakePDFService {
   private iterateRemoveDoorDimensions() {
     var array = this.arrayRemoveDoorDim
     if (array.length != 0) {
-      const resultHeight = this.getHeight(array)
-      const resultWidth = this.getWidth(array)
+      const resultHeight = this.getHeight(array) + " " + 'in'
+      const resultWidth = this.getWidth(array) + " " + 'in'
       this.p.OldDoorHeight = resultHeight.toString()
       this.p.OldDoorWidth = resultWidth.toString()
     }
@@ -231,18 +231,17 @@ export class MakePDFService {
   private iterateNewProductDimensions() {
     var array = this.arrayInstallProductDim
     if (array.length != 0) {
-      const resultHeight = this.getHeight(array)
-      const resultWidth = this.getWidth(array)
+      const resultHeight = this.getHeight(array) + " " + 'in'
+      const resultWidth = this.getWidth(array) + " " + 'in'
       this.p.ProductHeight = resultHeight.toString()
       this.p.ProductWidth = resultWidth.toString()
     }
   }
   private iterateOldProductDimensions() {
-  console.log("Here3")
     var array = this.arrayRemoveProductDim
     if (array.length != 0) {
-      const resultHeight = this.getHeight(array)
-      const resultWidth = this.getWidth(array)
+      const resultHeight = this.getHeight(array) + " " + 'in'
+      const resultWidth = this.getWidth(array) + " " + 'in'
       this.p.OldProductHeight = resultHeight.toString()
       this.p.OldProductWidth = resultWidth.toString()
     }
@@ -269,7 +268,6 @@ export class MakePDFService {
 
   private checkEmployeeInfoIsRefuse() {
     var obj = this.employeeInfo
-    // this.p.Date = obj.date.toString()
     this.p.CrewName = obj.installCrew.toString()
     this.p.OrderNumber = obj.orderNumber.toString()
     this.p.IFGSaleRepName = obj.salesRep
@@ -332,7 +330,7 @@ export class MakePDFService {
         var imageWidth = imageDims.width
         var imageHeight = imageDims.height
 
-        // center the boy
+        // center the box
         var startingX = (pageWidth - imageWidth) / 2
         var startingY = (pageHeight - imageHeight) / 2
 
@@ -359,7 +357,7 @@ export class MakePDFService {
         var imageWidth = imageDims.width
         var imageHeight = imageDims.height
 
-        // center the boy
+        // center the box
         var startingX = (pageWidth - imageWidth) / 2
         var startingY = (pageHeight - imageHeight) / 2
 
