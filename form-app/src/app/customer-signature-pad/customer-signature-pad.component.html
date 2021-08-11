@@ -32,12 +32,12 @@
       Please provide a signature.
     </mat-error>
       <div id="wrapper">
-       <canvas #signaturepad  width=400 height="200" style="border:1px black solid" (mouseleave)="change()" >
+       <canvas #signaturepad  width=400 height="200" style="border:1px black solid" (mouseleave)="change()" (touchend)="change()" >
 
        </canvas> 
    </div>
    <br>
-   <button mat-button (click)="clear()">Clear Signature</button>
+   <button mat-button type="button" (click)="clear()">Clear Signature</button>
    <button mat-flat-button color='primary' type="submit" id="done" [disabled]="!signForm.form.valid || signatureEmpty"> Done </button>
    <br>
    <button mat-flat-button color='warn' *ngIf="show == true" (click) ="onRefuse()" >

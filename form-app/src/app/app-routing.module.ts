@@ -17,8 +17,8 @@ import { ProceedComponent } from './proceed/proceed.component';
 import { SafetyComponent } from './safety/safety.component';
 
 const routes: Routes = [
-  {path: "", component: LoginComponent, },
-  {path: "emp-info", component:EmployeeInfoComponent},
+ 
+  {path: "", component:EmployeeInfoComponent},
   {path:"safety", component:SafetyComponent, outlet:"primary"},
   {path:"dimension-form", component:DimensionFormComponent},
   {path:"check-door", component:CheckDoorComponent},
